@@ -1,0 +1,40 @@
+<section class="about-section about-section--impact" id="impact">
+  <div class="about-wrap about-wrap--py fade-left-init" appAnimationsOnScroll>
+    <p class="about-label">{{ 'about_us.our_impact.badge' | translate }}</p>
+    <h2 class="about-h2">
+      {{ 'about_us.our_impact.title' | translate }}
+      <span>{{ 'about_us.our_impact.title_highlight' | translate }}</span>
+    </h2>
+    <p class="about-lead">{{ 'about_us.our_impact.subtitle' | translate }}</p>
+
+    <div class="about-metrics" role="list">
+      @for (item of our_impact; track item.value; let i = $index) {
+      <article
+        class="about-metric"
+        [class.about-metric--featured]="i === 0"
+        role="listitem">
+        <div class="about-metric__icon" aria-hidden="true">
+          <i-lucide [name]="item.icon" class="size-5"></i-lucide>
+        </div>
+        <div class="about-metric__value-row">
+          <p
+            appCountUp
+            suffix=""
+            [duration]="2200"
+            [end]="item.value"
+            class="about-metric__value"></p>
+          @if (item.artefact) {
+          <span class="about-metric__suffix">{{ item.artefact }}</span>
+          }
+        </div>
+        <h3 class="about-metric__title">
+          {{ 'about_us.our_impact.items.item_' + (i + 1) + '.title' | translate }}
+        </h3>
+        <p class="about-metric__desc">
+          {{ 'about_us.our_impact.items.item_' + (i + 1) + '.description' | translate }}
+        </p>
+      </article>
+      }
+    </div>
+  </div>
+</section>

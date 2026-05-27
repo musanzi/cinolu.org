@@ -1,0 +1,95 @@
+<div class="gallery-upload">
+  <label class="gallery-upload__dropzone" [class.is-dragover]="dragOver()">
+    <input
+      type="file"
+      class="sr-only"
+      accept="image/jpeg,image/png,image/webp"
+      multiple
+      [disabled]="uploading()"
+      (change)="onFileInput($event)" />
+    <div
+      class="gallery-upload__dropzone-inner"
+      (drop)="onDrop($event)"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()">
+      <i-lucide [name]="icons.imagePlus" class="gallery-upload__icon" aria-hidden="true"></i-lucide>
+      <p class="gallery-upload__title">Glissez-déposez vos images ici</p>
+      <p class="gallery-upload__hint">
+        ou <span class="gallery-upload__link">parcourir</span> — JPG, PNG, WEBP · max. {{ maxSizeMb() }} Mo
+      </p>
+    </div>
+  </label>
+
+  @if (error()) {
+  <p class="gallery-upload__error" role="alert">{{ error() }}</p>
+  }
+
+  @if (pending().length > 0) {
+  <div class="gallery-upload__preview">
+    <div class="gallery-upload__preview-head">
+      <p class="gallery-upload__preview-title">
+        Aperçu ({{ pending().length }} image{{ pending().length > 1 ? 's' : '' }})
+      </p>
+      <button type="button" class="gallery-upload__text-btn" [disabled]="uploading()" (click)="clearAll()">
+        Tout effacer
+      </button>
+    </div>
+
+    <div class="gallery-upload__grid" role="list">
+      @for (item of pending(); track item.id; let idx = $index) {
+      <div class="gallery-upload__thumb" role="listitem">
+        <button
+          type="button"
+          class="image-preview-btn image-preview-btn--sm gallery-upload__thumb-trigger"
+          (click)="openPreview(idx)"
+          [attr.aria-label]="'gallery.viewFullscreen' | translate">
+          <img [src]="item.previewUrl" [alt]="item.file.name" class="image-preview-btn__img gallery-upload__thumb-img" />
+          <span class="image-preview-btn__overlay" aria-hidden="true">
+            <span class="image-preview-btn__eye">
+              <i-lucide [name]="icons.eye" class="size-4"></i-lucide>
+            </span>
+          </span>
+        </button>
+        <button
+          type="button"
+          class="gallery-upload__remove"
+          [disabled]="uploading()"
+          (click)="removePending(item.id)"
+          [attr.aria-label]="'Retirer ' + item.file.name">
+          <i-lucide [name]="icons.trash" class="size-4" aria-hidden="true"></i-lucide>
+        </button>
+        <p class="gallery-upload__filename">{{ item.file.name }}</p>
+      </div>
+      }
+    </div>
+
+    <div class="gallery-upload__actions">
+      <button
+        type="button"
+        class="gallery-upload__btn gallery-upload__btn--primary"
+        [disabled]="uploading()"
+        (click)="uploadAll()">
+        @if (uploading()) {
+        <span class="gallery-upload__spinner" aria-hidden="true"></span>
+        <span>Téléversement…</span>
+        } @else {
+        <i-lucide [name]="icons.upload" class="size-4" aria-hidden="true"></i-lucide>
+        <span>Téléverser {{ pending().length }} image{{ pending().length > 1 ? 's' : '' }}</span>
+        }
+      </button>
+      <button
+        type="button"
+        class="gallery-upload__btn gallery-upload__btn--ghost"
+        [disabled]="uploading()"
+        (click)="clearAll()">
+        Annuler
+      </button>
+    </div>
+  </div>
+  }
+
+  <app-image-lightbox
+    [(open)]="lightboxOpen"
+    [images]="lightboxItems()"
+    [(activeIndex)]="lightboxIndex" />
+</div>

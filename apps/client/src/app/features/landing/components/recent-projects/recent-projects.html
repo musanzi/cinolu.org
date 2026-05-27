@@ -1,0 +1,44 @@
+<app-public-section variant="default" className="overflow-hidden">
+  <app-public-container>
+    <div class="fade-left-init" id="projects" appAnimationsOnScroll>
+    <app-landing-section-header
+      badgeKey="recent_projects.badge"
+      titleKey="recent_projects.title"
+      titleHighlightKey="recent_projects.title_highlight"
+      descriptionKey="recent_projects.description">
+      <div headerEnd class="hidden lg:flex items-center gap-2 shrink-0 text-sm font-semibold text-slate-400">
+        <i-lucide [name]="icons.moveRight" class="size-4" />
+        <span>Selection recente</span>
+      </div>
+    </app-landing-section-header>
+    @if (store.isLoading()) {
+    <div class="mt-8 grid grid-cols-1 gap-x-5 gap-y-10 md:grid-cols-2 lg:grid-cols-3 pb-10">
+      @for (p of [1, 3, 3]; track p) {
+      <app-project-card-skeleton />
+      }
+    </div>
+    }
+    <div class="space-y-6 lg:space-y-8 mt-8 lg:mt-12">
+      <app-cards-carousel
+        [items]="store.projects()"
+        [trackBy]="trackByProjectId"
+        [itemTemplate]="projectSlide"
+        ariaLabel="Programmes recents">
+      </app-cards-carousel>
+
+      <ng-template #projectSlide let-project>
+        <app-project-card class="block h-full" [project]="project" [buttonTextKey]="'recent_projects.explore'" />
+      </ng-template>
+
+      <div class="mt-12 flex w-full items-center justify-center">
+        <app-public-button variant="secondary" routerLink="/programs" className="group">
+          <span>{{ 'recent_projects.view_all' | translate }}</span>
+          <i-lucide
+            class="size-5 transition-transform duration-300 group-hover:translate-x-1"
+            [name]="icons.moveRight" />
+        </app-public-button>
+      </div>
+    </div>
+    </div>
+  </app-public-container>
+</app-public-section>

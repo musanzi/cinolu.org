@@ -1,0 +1,133 @@
+<section class="relative min-h-screen bg-white pt-28 pb-8 selection:bg-primary-100 sm:pb-12 lg:pt-32 lg:pb-28">
+  <div class="absolute top-0 right-0 w-1/3 h-screen bg-slate-100/50 -z-10 hidden lg:block"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    @if (store.isLoading()) {
+    <app-product-detail-skeleton />
+    } @else { @if (store.product(); as product) {
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-20 items-start">
+      <div class="lg:col-span-5 space-y-8 lg:space-y-12 lg:sticky lg:top-28">
+        <header class="space-y-6">
+          @if (product.venture) {
+          <a
+            [routerLink]="['/entrepreneurs/venture', product.venture.slug]"
+            class="group inline-flex gap-4 text-xs font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-slate-400 hover:text-primary-600 transition-all min-h-[44px] items-center">
+            <span class="w-10 h-px bg-slate-200 group-hover:bg-primary-200 group-hover:w-16 transition-all"></span>
+            {{ product.venture.name }}
+          </a>
+          }
+
+          <h1
+            class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-6xl">
+            {{ product.name }}
+          </h1>
+
+          <div class="flex items-center gap-4 sm:gap-6 pt-4">
+            <div class="relative group">
+              <span class="text-3xl font-bold tabular-nums text-brand-700 sm:text-4xl">
+                {{ product.price }}<span class="text-lg sm:text-xl ml-1 font-bold italic">$</span>
+              </span>
+            </div>
+            <div class="h-8 sm:h-10 w-px bg-slate-200 hidden sm:block"></div>
+            <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest"
+              >Édition limitée</span
+            >
+          </div>
+        </header>
+
+        <section class="space-y-6">
+          <h2 class="text-xs font-black uppercase tracking-[0.3em] text-slate-900 flex items-center gap-3">
+            <span class="size-1.5 rounded-full bg-primary-500"></span>
+            Description
+          </h2>
+          <p class="text-lg text-slate-500 font-light leading-relaxed italic border-l-2 border-slate-100 pl-6">
+            {{ product.description }}
+          </p>
+        </section>
+
+        @if (product.venture) {
+
+        <div class="pt-2">
+          <a
+            [routerLink]="['/entrepreneurs/venture', product.venture.slug]"
+            class="group/link inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-brand-700 transition-colors hover:text-brand-800">
+            Voir l'entreprise
+
+            <i-lucide
+              class="size-4 transition-transform duration-300 group-hover/link:translate-x-1"
+              [name]="icons.moveRight" />
+          </a>
+        </div>
+        }
+      </div>
+
+      <div class="lg:col-span-7 space-y-6 sm:space-y-8">
+        @if (product.gallery && product.gallery.length > 0) {
+        <button
+          type="button"
+          (click)="openLightbox(product.gallery, 0)"
+          class="group relative block h-[260px] w-full touch-manipulation overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 text-left sm:h-[340px] lg:h-[400px]">
+          <img
+            alt="{{ product.name }}"
+            [src]="product.gallery[0] | apiIMG: 'gallery'"
+            class="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <div
+            class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+            <span
+              class="opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center size-14 rounded-full bg-white/90 text-slate-900">
+              <i-lucide [name]="icons.eye" [size]="28"></i-lucide>
+            </span>
+          </div>
+          <div
+            class="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg pointer-events-none">
+            <span class="text-white text-[10px] font-bold uppercase tracking-widest"
+              >Visual Assets — 0{{ product.gallery.length }}</span
+            >
+          </div>
+        </button>
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-4">
+          @for (image of product.gallery; track image.id; let idx = $index) {
+          <button
+            type="button"
+            (click)="openLightbox(product.gallery, idx)"
+            class="group/thumb relative aspect-square min-h-[80px] touch-manipulation overflow-hidden rounded-xl border border-gray-200 transition-colors hover:border-primary-300 active:scale-[0.98]">
+            <img [src]="image | apiIMG: 'gallery'" class="size-full object-cover" [alt]="product.name" />
+            <div
+              class="absolute inset-0 bg-primary-600/0 group-hover/thumb:bg-black/40 transition-all flex items-center justify-center">
+              <i-lucide
+                [name]="icons.eye"
+                [size]="20"
+                class="text-white opacity-0 group-hover/thumb:opacity-100 scale-50 group-hover/thumb:scale-100 transition-all"></i-lucide>
+            </div>
+          </button>
+          }
+        </div>
+        } @else {
+        <div
+          class="flex items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 lg:h-[550px]">
+          <div class="text-center space-y-4">
+            <i-lucide [name]="icons.package" [size]="64" class="text-slate-200 mx-auto"></i-lucide>
+            <p class="text-slate-400 font-serif italic">Pas encore de visuels disponibles.</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    } @else {
+    <div class="mx-auto max-w-md space-y-6 py-12 text-center sm:py-16">
+      <div class="mx-auto flex size-20 items-center justify-center rounded-full border border-gray-200 bg-gray-50">
+        <i-lucide [name]="icons.package" [size]="40" class="text-gray-300"></i-lucide>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Produit Introuvable</h2>
+      <a
+        routerLink="/entrepreneurs"
+        class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:border-primary-300 hover:bg-gray-50 hover:text-primary-700">
+        Retourner explorer
+      </a>
+    </div>
+    } }
+  </div>
+</section>
+
+<app-image-lightbox [(open)]="lightboxOpen" [images]="lightboxItems()" [(activeIndex)]="lightboxIndex" />

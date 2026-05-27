@@ -1,0 +1,1151 @@
+{
+  "events": {
+    "list": {
+      "title": "Voir nos événements",
+      "subtitle": "Tous les événements",
+      "choose_category": "Choisir une catégorie",
+      "no_event": "Pas d'événement!"
+    }
+  },
+  "event_detail": {
+    "detail": {
+      "dates": "Dates",
+      "start": "Début :",
+      "end": "Fin :",
+      "categories": "Catégories",
+      "address": "Adresse",
+      "description": "Description",
+      "objectives": "Objectifs",
+      "context": "Contexte",
+      "duration": "Durée",
+      "duration_hours": "Durée (heures)",
+      "selection_criteria": "Critères de sélection",
+      "event_manager": "Responsable de l'événement",
+      "participants": "Participants",
+      "no_participant": "Aucun participant",
+      "apply_now": "Postuler Maintenant",
+      "finished": "Événement terminé",
+      "not_found": "Aucun événement avec cet identifiant !",
+      "show_more": "Voir plus",
+      "show_less": "Voir moins",
+      "add_to_calendar": "Ajouter au calendrier",
+      "share": "Partager",
+      "cta_hint": "Réservez votre place ou ajoutez l'événement à votre calendrier.",
+      "empty": "Non renseigné"
+    }
+  },
+  "common": {
+    "welcome": "Bienvenue",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "search": "Rechercher",
+    "clear": "Effacer",
+    "close": "Fermer",
+    "previous": "Image précédente",
+    "next": "Image suivante",
+    "submit": "Soumettre",
+    "back": "Retour",
+    "goBack": "Revenir en arrière",
+    "cover_image": "Image de couverture",
+    "ambassador": "Ambassadeur",
+    "verified": "Vérifié",
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "ariaLabel": "Pagination",
+      "page": "Page",
+      "goToPage": "Aller à la page",
+      "summary": "{{start}}–{{end}} sur {{total}} (page {{page}} / {{totalPages}})"
+    }
+  },
+  "sub_programs": {
+    "projects_of": "Projets de",
+    "events_of": "Événements de",
+    "bad_path": "Mauvais chemin !",
+    "bad_path_desc": "La page que vous recherchez n'existe pas ou le sous-programme est introuvable. Vérifiez l'URL ou revenez à la liste des programmes.",
+    "back_to_programs": "Retour aux programmes",
+    "no_project": "Aucun projet trouvé",
+    "no_project_desc": "Il n'y a actuellement aucun projet pour ce sous-programme.",
+    "no_event": "Aucun événement trouvé",
+    "no_event_desc": "Il n'y a actuellement aucun événement pour ce sous-programme."
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "A propos",
+    "programs": "Programmes",
+    "projects": "Projets",
+    "events": "Événements",
+    "blog": "Blog",
+    "gallery": "Galerie",
+    "contact": "Contactez-nous",
+    "partners": "Partenaires",
+    "entrepreneurs": "Nos entrepreneurs",
+    "myCinolu": "My Cinolu",
+    "vision": "Vision",
+    "blogResources": "Blog",
+    "opportunities": "Opportunités"
+  },
+  "auth": {
+    "signIn": "Connexion",
+    "signUp": "Inscription",
+    "signOut": "Se déconnecter",
+    "myAccount": "Mon compte",
+    "backToHome": "Revenir à l'accueil",
+    "sidebar": {
+      "badge": "Plateforme sécurisée",
+      "title": "Rejoignez une communauté d'innovateurs",
+      "description": "Accédez à des programmes exclusifs, connectez-vous avec des entrepreneurs et donnez vie à vos projets.",
+      "socialProof": "Plus de 1000 utilisateurs",
+      "socialProofSub": "Nous rejoignent chaque jour",
+      "features": {
+        "programs": "Accès à tous les programmes et formations",
+        "network": "Réseau d'entrepreneurs et mentors",
+        "events": "Événements et opportunités exclusives"
+      }
+    },
+    "signup": {
+      "title": "S'inscrire",
+      "description": "Créez un compte avec votre nom, votre e-mail et votre mot de passe. Vous compléterez le reste de votre profil juste après l'inscription.",
+      "backToHome": "Revenir à l'accueil",
+      "alreadyHaveAccount": "Vous avez déjà un compte?",
+      "signInLink": "Se connecter",
+      "form": {
+        "name": "Nom complet",
+        "namePlaceholder": "Ex: Prenom Nom",
+        "email": "Adresse e-mail",
+        "emailPlaceholder": "votre@email.com",
+        "birthdate": "Date de naissance",
+        "birthDate": "Date de naissance",
+        "birthDatePlaceholder": "JJ/MM/AAAA",
+        "gender": "Genre",
+        "genderPlaceholder": "Sélectionnez votre genre",
+        "country": "Pays",
+        "countryPlaceholder": "Sélectionnez votre pays",
+        "phone": "Téléphone",
+        "phonePlaceholder": "Numéro de téléphone",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Minimum 6 caractères",
+        "passwordConfirm": "Confirmer le mot de passe",
+        "passwordConfirmPlaceholder": "Ressaisir le mot de passe",
+        "submit": "S'inscrire",
+        "submitting": "Inscription en cours..."
+      },
+      "errors": {
+        "nameRequired": "Le nom complet est requis",
+        "nameMinLength": "Le nom doit contenir au moins 5 caractères",
+        "emailRequired": "L'adresse e-mail est requise",
+        "emailInvalid": "L'adresse e-mail n'est pas valide",
+        "birthdateRequired": "La date de naissance est requise",
+        "birthDateRequired": "La date de naissance est requise",
+        "genderRequired": "Le genre est requis",
+        "countryRequired": "Le pays est requis",
+        "phoneRequired": "Le numéro de téléphone est requis",
+        "phoneInvalid": "Le numéro de téléphone n'est pas valide",
+        "passwordRequired": "Le mot de passe est requis",
+        "passwordMinLength": "Le mot de passe doit contenir au moins 6 caractères",
+        "passwordConfirmRequired": "La confirmation du mot de passe est requise",
+        "passwordMismatch": "Les mots de passe ne correspondent pas"
+      },
+      "socialProof": "Plus de 1000 utilisateurs"
+    },
+    "signin": {
+      "title": "Se connecter",
+      "description": "Connectez-vous et accédez à votre compte pour continuer à explorer notre plateforme.",
+      "noAccount": "Pas encore de compte?",
+      "signUpLink": "S'inscrire",
+      "forgotPassword": "Mot de passe oublié?",
+      "resetLink": "Réinitialiser",
+      "orContinueWith": "Ou continuer avec",
+      "form": {
+        "email": "Adresse e-mail",
+        "emailPlaceholder": "votre@email.com",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Votre mot de passe",
+        "submit": "Se connecter",
+        "submitting": "Connexion en cours..."
+      },
+      "errors": {
+        "emailRequired": "L'adresse e-mail est requise",
+        "emailInvalid": "L'adresse e-mail n'est pas valide",
+        "passwordRequired": "Le mot de passe est requis"
+      }
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "description": "Réinitialisez votre mot de passe et accédez à votre compte pour continuer à explorer notre plateforme.",
+      "instruction": "Saisissez votre adresse e-mail et un lien de réinitialisation vous sera envoyé.",
+      "haveAccount": "Vous avez déjà un compte?",
+      "signInLink": "Se connecter",
+      "rememberPassword": "Mot de passe retrouvé?",
+      "form": {
+        "email": "Adresse e-mail",
+        "emailPlaceholder": "votre@email.com",
+        "submit": "Réinitialiser",
+        "submitting": "Envoi en cours..."
+      },
+      "errors": {
+        "emailRequired": "L'adresse e-mail est requise",
+        "emailInvalid": "L'adresse e-mail n'est pas valide"
+      }
+    },
+    "resetPassword": {
+      "title": "Réinitialisation du mot de passe",
+      "description": "Créez un nouveau mot de passe pour accéder à votre compte et continuer à explorer notre plateforme.",
+      "instruction": "Veuillez saisir votre nouveau mot de passe pour réinitialiser votre compte.",
+      "noAccount": "Pas encore de compte?",
+      "signInLink": "Se connecter",
+      "form": {
+        "password": "Nouveau mot de passe",
+        "passwordPlaceholder": "Minimum 6 caractères",
+        "passwordConfirm": "Confirmer le mot de passe",
+        "passwordConfirmPlaceholder": "Ressaisir le mot de passe",
+        "submit": "Réinitialiser",
+        "submitting": "Réinitialisation en cours..."
+      },
+      "errors": {
+        "passwordRequired": "Le mot de passe est requis",
+        "passwordMinLength": "Le mot de passe doit contenir au moins 6 caractères",
+        "passwordConfirmRequired": "La confirmation du mot de passe est requise"
+      }
+    }
+  },
+  "contact": {
+    "title": "Restons",
+    "titleHighlight": "en contact",
+    "badge": "Contact",
+    "description": "Cinolu reste à votre disposition pour toute demande d'information, de collaboration ou de partenariat. N'hésitez pas à nous contacter.",
+    "form": {
+      "title": "Envoyez-nous un message",
+      "subtitle": "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.",
+      "name": "Nom complet",
+      "namePlaceholder": "Jean Dupont",
+      "email": "Votre email",
+      "emailPlaceholder": "jean.dupont@email.com",
+      "country": "Pays",
+      "countryPlaceholder": "Sélectionnez votre pays",
+      "phone": "Téléphone",
+      "phonePlaceholder": "979 998 877",
+      "message": "Votre message",
+      "messagePlaceholder": "Décrivez votre demande ou votre question...",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours..."
+    },
+    "info": {
+      "title": "Informations de contact",
+      "subtitle": "Vous pouvez également nous joindre directement via les coordonnées ci-dessous.",
+      "address": "Adresse",
+      "addressText": "Cotonou, Bénin",
+      "phone": "Téléphone",
+      "phoneText": "+229 97 99 98 77",
+      "email": "Email",
+      "emailText": "contact@cinolu.org",
+      "hours": "Horaires d'ouverture",
+      "hoursText": "Lundi - Vendredi: 9h00 - 18h00"
+    },
+    "social": {
+      "title": "Suivez-nous",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
+    "map": {
+      "title": "Venez nous rendre visite",
+      "description": "Notre centre d'innovation est situé à Lubumbashi. N'hésitez pas à passer nous voir pour discuter de vos projets.",
+      "label": "Localisation de Cinolu - Centre d'Innovation de Lubumbashi",
+      "location": "Lubumbashi, RDC"
+    },
+    "success": {
+      "title": "Message envoyé !",
+      "message": "Nous avons bien reçu votre message et nous vous répondrons dans les plus brefs délais."
+    },
+    "error": {
+      "title": "Erreur",
+      "message": "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer."
+    }
+  },
+  "onestop": {
+    "badge": "Espace membre Cinolu",
+    "title": "Gérez votre activité sur Cinolu",
+    "title_highlight": "depuis un seul tableau de bord",
+    "description": "Inscrivez-vous pour suivre vos programmes, candidatures, projets, produits, profil et parrainages — au même endroit.",
+    "modules": {
+      "aria": "Modules disponibles dans l'espace membre",
+      "programs": "Programmes",
+      "projects": "Projets",
+      "products": "Produits",
+      "profile": "Profil",
+      "referral": "Parrainage"
+    },
+    "benefits": {
+      "programs": "Candidater et suivre vos programmes en quelques clics",
+      "ventures": "Publier et mettre à jour vos projets et produits",
+      "profile": "Compléter votre profil et mesurer votre progression",
+      "activity": "Retrouver vos parrainages et vos dernières actions"
+    },
+    "cta_signup": "Créer mon compte",
+    "cta_signin": "Se connecter",
+    "cta_reassurance": "Créez votre espace en quelques minutes et complétez votre profil à votre rythme.",
+    "cta_explore": "Voir les programmes ouverts →",
+    "preview": {
+      "aria": "Aperçu du tableau de bord membre Cinolu",
+      "welcome": "Bonjour,",
+      "name": "Grace Mutombo",
+      "subtitle": "Voici votre tableau de bord.",
+      "role": "Membre Cinolu",
+      "stats_heading": "Statistiques clés",
+      "stats_subheading": "Vue d'ensemble de votre activité",
+      "nav": {
+        "overview": "Accueil",
+        "ventures": "Mes Projets",
+        "programs": "Programmes",
+        "referral": "Parrainage",
+        "profile": "Mon Profil"
+      },
+      "sidebar": {
+        "overview_section": "Vue d'ensemble",
+        "projects_section": "Mes Projets",
+        "programs_section": "Programmes",
+        "community_section": "Communauté",
+        "account_section": "Mon Compte",
+        "referral_card_title": "Parrainage Cinolu",
+        "referral_card_desc": "Invitez votre réseau et suivez vos parrainages.",
+        "referral_cta": "Partager mon lien"
+      },
+      "stats": {
+        "projects": "Mes Projets",
+        "products": "Produits Actifs",
+        "referrals": "Parrainages",
+        "profile": "Profil"
+      },
+      "profile_card": {
+        "title": "Complétion du Profil",
+        "subtitle": "Suivez votre progression",
+        "live": "En direct",
+        "complete": "Profil complet !"
+      },
+      "featured": {
+        "title": "À la une",
+        "subtitle": "Mise en avant dynamique",
+        "badge": "Événement",
+        "event": "Binti Share 2025",
+        "description": "Événements, programmes et rencontres pour toute la communauté Cinolu.",
+        "cta": "Exemple de mise en avant"
+      }
+    }
+  },
+  "storytelling": {
+    "badge": "Innovons ensemble !",
+    "title": "Batir le corridor d'innovation",
+    "title_highlight": "de l'Afrique Centrale au monde.",
+    "description": "Nous relions l'innovation locale aux transformations mondiales en transformant les défis en opportunités de marché.",
+    "cta_programs": "Rejoignez l'aventure",
+    "cta_projects": "Nos entrepreneurs",
+    "image_event_title": "Des événements qui inspirent",
+    "image_event_desc": "Forums, hackathons et rencontres pour connecter l'écosystème",
+    "image_projects": "120+ Projets lancés",
+    "image_hub": "Notre Hub",
+    "journey_title": "Avec les entrepreneurs",
+    "journey_description": "Un accompagnement complet et sur-mesure, de l'idée au succès entrepreneurial.",
+    "journey": {
+      "ideation": {
+        "title": "Former & Renforcer",
+        "description": "Des formations pratiques, du coaching personnalisé et du mentorat pour développer les compétences entrepreneuriales et techniques nécessaires à la réussite."
+      },
+      "prototype": {
+        "title": "Connecter & Animer",
+        "description": "Un réseau actif de partenaires, d'investisseurs et d'entrepreneurs. Des espaces de co-création où les idées prennent vie et les collaborations naissent."
+      },
+      "scale": {
+        "title": "Innover & Impacter",
+        "description": "Des projets structurants qui utilisent la technologie pour résoudre des défis locaux et créer un impact durable à grande échelle."
+      }
+    },
+    "quote": "Cinolu est une infrastructure d'impact : un hub qui coordonne les talents, les partenariats et les outils nécessaires pour faire émerger des entreprises compétitives et un écosystème d'innovation durable.",
+    "author": "Cinolu - Hub d'innovation",
+    "author_role": "Lubumbashi ⬢ RDC ⬢ Afrique",
+    "stats": {
+      "projects": "Entrepreneurs accompagnés",
+      "partners": "Partenaires actifs"
+    }
+  },
+  "why_join_us": {
+    "badge": "Impact & Innovation",
+    "title": "Pourquoi rejoindre",
+    "title_highlight": "Cinolu",
+    "description": "Depuis 2015, Cinolu est un hub d'innovation à Lubumbashi qui soutient jeunes, femmes et innovateurs à travers technologie, entrepreneuriat et collaboration.",
+    "stats": {
+      "beneficiaries": "Bénéficiaires",
+      "entrepreneurs": "Entrepreneurs accompagnés",
+      "women_trained": "Femmes formées & inspirées avec F360",
+      "programs": "Programmes et forums d'innovation régionale",
+      "partners": "Un réseau de partenaires stratégique"
+    }
+  },
+  "services": {
+    "badge": "Leviers d'action",
+    "title": "Notre approche",
+    "titleHighlight": "d'Open Innovation",
+    "description": "Cinolu agit comme un hub d'innovation qui connecte les talents, structure les collaborations et transforme les défis locaux en projets, opportunités et dynamiques d'écosystème.",
+    "items": {
+      "innovative_solutions": {
+        "title": "Détecter des solutions à fort potentiel",
+        "description": "Identifier des réponses innovantes à des défis concrets et les relier aux besoins du terrain."
+      },
+      "co_creation": {
+        "title": "Co-construire avec les talents et startups",
+        "description": "Faire émerger des initiatives avec des entrepreneurs, porteurs de projet et partenaires locaux."
+      },
+      "innovation_challenges": {
+        "title": "Lancer des défis et appels ciblés",
+        "description": "Mobiliser l'écosystème autour de thématiques stratégiques pour faire remonter des solutions utiles."
+      },
+      "project_management": {
+        "title": "Structurer des projets catalytiques",
+        "description": "Piloter des projets de transformation à fort impact, de la coordination aux résultats."
+      },
+      "ecosystem_mapping": {
+        "title": "Renforcer l'écosystème local",
+        "description": "Cartographier les acteurs, créer des connexions utiles et consolider les dynamiques de collaboration."
+      }
+    }
+  },
+  "hero": {
+    "slides": {
+      "slide_2": {
+        "badge_text": "Innovons ensemble !",
+        "title": "Accélérons les talents",
+        "title_highlight": "Connectons les opportunités",
+        "description": "Le Centre d'Innovation de Lubumbashi (Cinolu) est un espace vivant où les idées deviennent des solutions pour bâtir des villes intelligentes, inclusives et durables.",
+        "primary_cta": "Devenir membre",
+        "secondary_cta": "Faire un don"
+      },
+      "slide_3": {
+        "badge_text": "Lancez votre projet !",
+        "title": "Transformez vos idées",
+        "title_highlight": "En solutions innovantes",
+        "description": "Bénéficiez d'un accompagnement personnalisé, d'un accès à des ressources de qualité et d'un réseau d'entrepreneurs passionnés pour concrétiser vos projets.",
+        "primary_cta": "Nos programmes",
+        "secondary_cta": "Nos événements"
+      }
+    }
+  },
+  "about_us": {
+    "hero": {
+      "badge_text": "À propos de nous",
+      "title": "À propos de",
+      "title_highlight": "nous.",
+      "description": "Depuis 2015, nous catalysons l'innovation et l'entrepreneuriat à Lubumbashi et au-delà — pour des villes africaines plus intelligentes et inclusives.",
+      "chip_founded": "Année de création",
+      "chip_hub": "1er hub d'innovation",
+      "chip_platform": "Plateforme numérique",
+      "chip_entrepreneurs": "Entrepreneurs accompagnés",
+      "cta_discover": "Découvrir notre histoire"
+    },
+    "nav": {
+      "story": "Histoire",
+      "vision": "Vision & mission",
+      "history": "Parcours",
+      "impact": "Impact",
+      "team": "Équipe"
+    },
+    "about": {
+      "badge": "Notre histoire",
+      "title": "Qui",
+      "title_highlight": "sommes-nous ?",
+      "paragraph_1": "<strong class=\"font-bold text-gray-900\">Cinolu - Centre d'Innovation de Lubumbashi</strong> est un espace d'innovation, d'incubation et d'accompagnement né en <strong class=\"font-bold text-primary-600\">2015</strong>, dédié à catalyser le potentiel entrepreneurial et technologique en République Démocratique du Congo.",
+      "paragraph_2": "Nous agissons comme un <strong class=\"font-bold text-primary-600\">guichet unique (OneStop)</strong> pour connecter les talents aux opportunités à travers l'innovation, la technologie et l'entrepreneuriat pour un impact social.",
+      "paragraph_3": "La plateforme numérique Cinolu OneStop a été conçue pour centraliser les parcours d'accompagnement, automatiser les processus (adhésion, candidature, mentorat) et valoriser l'impact collectif.",
+      "quote": "Connecter les talents aux opportunités pour transformer nos villes africaines à travers l'innovation, la technologie et l'entrepreneuriat.",
+      "quote_cta": "Rejoignez la communauté et accédez aux programmes, mentors et opportunités sur Cinolu OneStop.",
+      "cta_join": "Rejoignez-nous",
+      "pillar_innovation": "Innovation",
+      "pillar_innovation_desc": "Technologies, civic tech et solutions à impact pour les territoires.",
+      "pillar_incubation": "Incubation",
+      "pillar_incubation_desc": "Cohortes, mentors et accompagnement des entrepreneurs en devenir.",
+      "pillar_impact": "Impact",
+      "pillar_impact_desc": "Mesure, structuration et valorisation de l'écosystème entrepreneurial.",
+      "years_caption": "Années d'engagement sur le terrain",
+      "manifesto_kicker": "Notre conviction"
+    },
+    "north_star": {
+      "badge": "Cap sur l'avenir",
+      "title": "Vision &",
+      "title_highlight": "mission",
+      "subtitle": "Deux piliers qui orientent chaque programme, chaque partenariat et chaque innovation portée par Cinolu."
+    },
+    "vision": {
+      "badge": "Vision",
+      "title": "Notre",
+      "title_highlight": "Vision",
+      "description": "Construire des villes africaines plus <strong class=\"font-bold text-gray-900\">intelligentes, inclusives et résilientes</strong>, en mobilisant l'entrepreneuriat, l'innovation technologique et la <strong class=\"font-bold text-primary-600\">collaboration multi-acteurs</strong>."
+    },
+    "mission": {
+      "badge": "Mission",
+      "title": "Notre",
+      "title_highlight": "Mission",
+      "description": "Accompagner les <strong class=\"font-bold text-gray-900\">innovateurs, les entrepreneurs</strong> et les structures d'appui à l'entrepreneuriat (ESO) dans le développement de <strong class=\"font-bold text-primary-600\">solutions durables et inclusives</strong>, en favorisant la <strong class=\"font-bold text-gray-900\">co-création, l'expérimentation</strong> et la collaboration multi-acteurs."
+    },
+    "history": {
+      "badge": "Notre Histoire",
+      "title": "Notre",
+      "title_highlight": "parcours",
+      "subtitle": "Découvrez les étapes clés qui ont façonné notre organisation au fil des ans.",
+      "timeline": {
+        "item_1": {
+          "status": "Lancement",
+          "date": "2015",
+          "description": "Lancement du Cinolu, 1er hub d'innovation à Lubumbashi"
+        },
+        "item_2": {
+          "status": "Programmes",
+          "date": "2017-2020",
+          "description": "Mise en œuvre de programmes genre & jeunesse (F360, civic tech...)"
+        },
+        "item_3": {
+          "status": "Incubateur",
+          "date": "2021",
+          "description": "Déploiement de l'incubateur Ushindi et de cohortes entrepreneuriales"
+        },
+        "item_4": {
+          "status": "Expansion",
+          "date": "2023-2024",
+          "description": "Déploiement régional (SOPA+, Afrilabs, Fikiri⬦) et création du Cinolu OneStop"
+        },
+        "item_5": {
+          "status": "Structuration",
+          "date": "2025",
+          "description": "Structuration numérique complète de l'accompagnement et de l'impact"
+        }
+      }
+    },
+    "our_impact": {
+      "badge": "Impact & Résultats",
+      "title": "Notre",
+      "title_highlight": "impact",
+      "subtitle": "Des chiffres qui témoignent de notre engagement et de notre impact sur le terrain",
+      "items": {
+        "item_1": {
+          "title": "Entrepreneurs accompagnés",
+          "description": "Accompagnement des entrepreneurs en devenir"
+        },
+        "item_2": {
+          "title": "Femmes bénéficiaires",
+          "description": "Accompagnement des entrepreneurs en devenir"
+        },
+        "item_3": {
+          "title": "Communautés régionales partenaires, Couverture nationale",
+          "description": "Accompagnement des entrepreneurs en devenir"
+        },
+        "item_4": {
+          "title": "Financements mobilisés",
+          "description": "Accompagnement des entrepreneurs en devenir"
+        },
+        "item_5": {
+          "title": "Solutions cartographiées via Fikiri",
+          "description": "Accompagnement des entrepreneurs en devenir"
+        },
+        "item_6": {
+          "title": "Mentors, coachs et experts mobilisés",
+          "description": "Accompagnement des entrepreneurs en devenir"
+        }
+      }
+    },
+    "our_team": {
+      "badge": "Équipe",
+      "title": "Les visages de",
+      "title_highlight": "Cinolu",
+      "subtitle": "Une équipe engagée au service de l'écosystème entrepreneurial congolais.",
+      "spotlight_label": "Profil sélectionné"
+    }
+  },
+  "project_detail": {
+    "detail": {
+      "resources": "Ressources associées",
+      "resources_label": "ressources",
+      "categories_label": "domaines d'activité",
+      "no_resource": "Aucune ressource pour cette phase",
+      "phases": "Phases du projet",
+      "no_phase": "Aucune phase disponible pour ce projet",
+      "no_participant": "Aucun participant",
+      "dates": "Dates",
+      "start": "Début :",
+      "end": "Fin :",
+      "categories": "Catégories",
+      "address": "Adresse",
+      "description": "Description",
+      "objectives": "Objectifs",
+      "context": "Contexte",
+      "duration": "Durée",
+      "duration_hours": "Durée (heures)",
+      "selection_criteria": "Critères de sélection",
+      "project_manager": "Chef de projet",
+      "participants": "Participants",
+      "apply_now": "Postuler Maintenant",
+      "finished": "Projet terminé",
+      "not_found": "Aucun projet avec cet identifiant !",
+      "empty": "Non renseigné",
+      "add_to_calendar": "Ajouter au calendrier",
+      "subtitle": "Détails et étapes clés du projet.",
+      "actions_status": "Actions et suivi du statut.",
+      "quick_actions": "Actions rapides",
+      "share_project": "Partager le projet",
+      "cta_title": "Rejoignez ce projet dès maintenant !",
+      "cta_subtitle": "Saisissez cette opportunité de participer à un projet enrichissant et développez vos compétences.",
+      "cta_hint": "Postulez dès maintenant et accédez au programme",
+      "phases_subtitle": "Découvrez les étapes clés et les ressources associées à chaque phase.",
+      "show_resources": "Afficher les ressources",
+      "hide_resources": "Masquer les ressources",
+      "phase_resources": "Ressources de la phase",
+      "form_title": "Formulaire de la phase",
+      "form_active": "Formulaire actif",
+      "form_inactive": "Formulaire inactif",
+      "open_link": "Ouvrir le lien",
+      "download": "Télécharger",
+      "view": "Voir",
+      "share_project_aria": "Partager le projet",
+      "choose_option": "Choisir une option",
+      "participations_title": "Candidatures au programme",
+      "vote_count": "{{count}} vote",
+      "vote_count_plural": "{{count}} votes",
+      "vote_registered": "Vote enregistré",
+      "vote_action": "Voter",
+      "vote_remove": "Retirer",
+      "participations_loading": "Chargement des candidatures⬦",
+      "participations_empty": "Aucune candidature pour le moment.",
+      "sign_in_to_vote": "Se connecter pour voter",
+      "validation": {
+        "required": "Ce champ est requis.",
+        "email": "Veuillez entrer une adresse email valide.",
+        "phone": "Veuillez entrer un numéro de téléphone valide."
+      }
+    },
+    "error": {
+      "title": "Projet introuvable",
+      "subtitle": "Le projet que vous recherchez n'existe pas ou a été supprimé.",
+      "description": "Il se peut que le lien soit invalide, que le projet ait été archivé, ou que vous n'ayez pas les permissions nécessaires pour y accéder. Vérifiez l'URL ou explorez nos autres projets disponibles.",
+      "cta_primary": "Explorer les projets",
+      "cta_secondary": "Retour à l'accueil",
+      "back": "Retour aux projets",
+      "suggestions_title": "Vous pourriez être intéressé par :",
+      "suggestion_programs": "Nos programmes",
+      "suggestion_events": "Nos événements",
+      "suggestion_contact": "Nous contacter"
+    }
+  },
+  "programs": {
+    "badge": "Accompagnement",
+    "title": "Nos ",
+    "title_highlight": "Programmes",
+    "description": "Chez Cinolu, nous accompagnons chaque idée avec des programmes adaptés à votre profil, vos ambitions et votre niveau de développement.",
+    "learn_more": "En savoir plus",
+    "projects_title": "Projets de {{name}}",
+    "logo_alt": "Logo de {{name}}",
+    "no_subprogram": "Aucun sous-programme",
+    "bad_path": "Mauvais chemin !"
+  },
+  "sectors": {
+    "badge": "Secteurs",
+    "title": "Nos pôles ",
+    "title_highlight": "sectoriels",
+    "description": "Des domaines d'intervention structurés pour rendre notre offre plus lisible et plus impactante."
+  },
+  "recent_projects": {
+    "badge": "Programmes récents",
+    "title": "Programmes ",
+    "title_highlight": "récents",
+    "description": "Découvrez les programmes que nous avons récemment lancés pour soutenir les entrepreneurs.",
+    "view_all": "Tous les programmes",
+    "explore": "Explorer ce programme"
+  },
+  "recent_events": {
+    "badge": "Événements",
+    "title": "Événements ",
+    "title_highlight": "récents",
+    "description": "Découvrez les événements à venir et passés qui rassemblent notre communauté d'innovateurs et d'entrepreneurs.",
+    "view_all": "Liste des événements",
+    "explore": "Voir l'événement"
+  },
+  "recent_opportunities": {
+    "badge": "Appels & opportunités",
+    "title": "Opportunités ",
+    "title_highlight": "récentes",
+    "description": "Explorez les appels, concours, financements et autres opportunités récemment relayés par Cinolu."
+  },
+  "networks": {
+    "badge": "Réseaux Partenaires",
+    "title": "Réseaux dont",
+    "title_highlight": "Cinolu est membre",
+    "description": "Nous sommes fiers de faire partie de réseaux internationaux qui partagent notre vision de l'innovation",
+    "member": "Membre",
+    "visit_website": "Visiter le site",
+    "visit": "Visiter le site",
+    "stats": {
+      "networks_count": "{{count}} Réseaux",
+      "networks_label": "Réseaux",
+      "global_reach": "Portée mondiale",
+      "global": "Global",
+      "global_label": "Portée mondiale",
+      "active": "Actif",
+      "collaboration": "Collaboration active",
+      "collaboration_label": "Collaboration"
+    },
+    "items": {
+      "segal": {
+        "description": "Philanthropie locale en Afrique"
+      },
+      "afrilabs": {
+        "description": "Réseau africain de hubs d'innovation",
+        "add_to_calendar": "Ajouter au calendrier"
+      },
+      "catalyst": {
+        "description": "Mouvement d'innovation sociale systémique"
+      },
+      "impacthub": {
+        "description": "Espaces d'entrepreneuriat à impact"
+      },
+      "aeip": {
+        "description": "La Plateforme d'Innovation Afrique-Europe"
+      }
+    }
+  },
+  "partners": {
+    "badge": "Partenaires",
+    "title": "Nos",
+    "title_highlight": "Partenaires",
+    "description": "Un réseau de confiance qui nous accompagne dans notre mission d'innovation",
+    "view_all": "Découvrir tous nos partenaires",
+    "together_title": "Ensemble,",
+    "together_highlight": "on va plus loin !",
+    "join_ecosystem": "Rejoignez notre écosystème d'innovation et de croissance",
+    "become_partner": "Devenir Partenaire",
+    "benefits": {
+      "network": {
+        "title": "Réseau Qualifié",
+        "description": "Accédez à un écosystème d'entrepreneurs innovants"
+      },
+      "growth": {
+        "title": "Croissance Mutuelle",
+        "description": "Développez votre activité ensemble"
+      },
+      "impact": {
+        "title": "Impact Collectif",
+        "description": "Participez à des projets d'envergure"
+      }
+    }
+  },
+  "blog": {
+    "badge": "Actualités",
+    "title": "Nos",
+    "title_highlight": "Articles",
+    "description": "Le blog de Cinolu, un espace d'idées, de récits et de ressources au service des innovateurs d'Afrique.",
+    "choose_tag": "Choisir un tag",
+    "selected_count": "{{count}} sélectionné(s)",
+    "no_articles": "Pas d'articles disponibles",
+    "recent_articles": "Articles récents",
+    "gallery": "Galerie",
+    "article_badge": "Article",
+    "like": "J'aime",
+    "liked": "Aimé",
+    "read_article": "Lire l'article",
+    "comments": {
+      "title": "Commentaires",
+      "placeholder": "Partagez votre opinion...",
+      "login_required": "Connectez-vous pour laisser un commentaire.",
+      "publish": "Publier le commentaire",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "load_more": "Afficher plus de commentaires",
+      "edit_modal_title": "Modifier le commentaire",
+      "edit_placeholder": "Modifiez votre commentaire...",
+      "update": "Mettre à jour"
+    },
+    "not_found": {
+      "title": "Article introuvable",
+      "message": "Cet article n'existe pas ou a été supprimé.",
+      "discover": "Découvrir nos articles"
+    }
+  },
+  "gallery": {
+    "badge": "Galerie",
+    "title": "Nos moments",
+    "title_highlight": "capturés",
+    "description": "Plongez dans l'univers visuel de Cinolu et découvrez les moments clés qui ont marqué notre parcours collectif.",
+    "our_gallery": "Notre galerie",
+    "images_count": "{{count}} photo",
+    "images_count_plural": "{{count}} photos",
+    "all": "Toutes",
+    "filter_by": "Filtrer par catégorie",
+    "load_more": "Voir plus de photos",
+    "all_images_displayed": "Vous avez tout vu !",
+    "view_image": "Voir {{alt}}",
+    "viewing": "Visualisation",
+    "close": "Fermer",
+    "previous_image": "Photo précédente",
+    "next_image": "Photo suivante",
+    "image_of": "{{current}} sur {{total}}"
+  },
+  "entrepreneurs": {
+    "badge": "Nos Entrepreneurs",
+    "title": "Découvrez",
+    "title_highlight": "nos talents.",
+    "description": "Une communauté d'entrepreneurs visionnaires qui innovent, créent de la valeur et inspirent l'avenir de l'Afrique.",
+    "no_entrepreneurs_title": "Aucun entrepreneur pour le moment",
+    "no_entrepreneurs_message": "Notre communauté d'entrepreneurs visionnaires est en cours de construction. Revenez bientôt pour découvrir les talents qui façonnent l'avenir de l'Afrique.",
+    "coming_soon": "De nouveaux talents arrivent bientôt !",
+    "entrepreneur_badge": "Entrepreneur",
+    "no_biography": "Aucune biographie disponible.",
+    "view_profile": "Voir le profil",
+    "development_stage": "Stade de développement",
+    "venture_description": "Description",
+    "problem_solved": "Problème résolu",
+    "target_market": "Marché cible",
+    "website": "Site Web",
+    "products": "Produits",
+    "no_image": "Aucune image",
+    "view_product": "Voir le produit",
+    "no_products": "Aucun produit trouvé",
+    "no_venture": "Aucune entreprise trouvée.",
+    "price": "Prix",
+    "no_image_available": "Aucune image disponible",
+    "product_not_found": "Produit introuvable",
+    "product_not_found_message": "Désolé, nous n'avons pas pu trouver le produit que vous recherchez.",
+    "profile_badge": "Profil Entrepreneur",
+    "name_unavailable": "Nom non disponible",
+    "unknown_city": "Ville inconnue",
+    "unknown_country": "Pays inconnu",
+    "activity_sector": "Secteur d'activité",
+    "not_defined": "Non défini",
+    "project_phase": "Phase du projet",
+    "about": "À propos",
+    "venture_of": "Entreprise de",
+    "discover": "Découvrir",
+    "no_project_published": "Aucun projet publié pour le moment",
+    "no_project_message": "Revenez plus tard pour découvrir les projets innovants de cet entrepreneur",
+    "entrepreneur_not_found": "Entrepreneur introuvable",
+    "entrepreneur_not_found_message": "Désolé, nous n'avons pas pu trouver l'entrepreneur que vous recherchez."
+  },
+  "footer": {
+    "description": "Ensemble, transformons les idées en réalités innovantes qui façonnent l'avenir de notre communauté.",
+    "sections": {
+      "explore": "Parcourir",
+      "my_cinolu": "My Cinolu",
+      "socials": "Socials"
+    },
+    "rights": "Tous droits réservés.",
+    "privacy_policy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "quickLinks": "Liens rapides",
+    "followUs": "Suivez-nous",
+    "newsletter": "Newsletter",
+    "newsletterText": "Inscrivez-vous pour recevoir nos dernières actualités",
+    "emailPlaceholder": "Votre email",
+    "subscribe": "S'abonner",
+    "subscribeSuccess": "Merci ! Vous êtes maintenant abonné à notre newsletter.",
+    "copyright": "© {{year}} Cinolu. Tous droits réservés.",
+    "allRightsReserved": "Tous droits réservés"
+  },
+  "projects": {
+    "list": {
+      "title": "Voir nos programmes",
+      "subtitle": "Tous les programmes",
+      "choose_category": "Choisir une catégorie",
+      "no_project": "Pas de programme!",
+      "filter_by_status": "Période :",
+      "filter_by_type": "Type :",
+      "filter_status_all": "Tous",
+      "filter_status_past": "Passés",
+      "filter_status_current": "En cours",
+      "filter_status_future": "A venir",
+      "filter_all": "Tous",
+      "filter_published": "Publiés",
+      "filter_drafts": "Brouillons",
+      "filter_highlighted": "En vedette"
+    }
+  },
+  "mentor": {
+    "apply": {
+      "title": "Devenir Mentor",
+      "subtitle": "Partagez votre expertise et guidez les entrepreneurs de demain",
+      "step": "Étape",
+      "of": "sur",
+      "completed": "complété",
+      "experience_step": {
+        "title": "Votre Expérience",
+        "subtitle": "Indiquez vos années d'expérience professionnelle",
+        "years_label": "Années d'expérience",
+        "years_placeholder": "Ex: 5",
+        "years_help": "Indiquez le nombre total d'années d'expérience professionnelle pertinente",
+        "why_title": "Pourquoi cette information ?",
+        "why_text": "Cette information nous aide à mieux comprendre votre parcours et à vous associer avec des entrepreneurs qui bénéficieront le plus de votre expertise."
+      },
+      "expertise_step": {
+        "title": "Vos Domaines d'Expertise",
+        "subtitle": "Sélectionnez au moins un domaine dans lequel vous excellez",
+        "no_expertise": "Aucune expertise disponible",
+        "error_required": "Veuillez sélectionner au moins une expertise"
+      },
+      "experience_step_detail": {
+        "title": "Votre Parcours Professionnel",
+        "subtitle": "Ajoutez vos expériences professionnelles pertinentes",
+        "add_button": "Ajouter",
+        "company_label": "Entreprise",
+        "company_placeholder": "Ex: Google",
+        "job_title_label": "Poste",
+        "job_title_placeholder": "Ex: Développeur Senior",
+        "start_date_label": "Date de début",
+        "end_date_label": "Date de fin",
+        "current_position": "J'occupe actuellement ce poste"
+      },
+      "navigation": {
+        "back_to_profile": "Retour au profil",
+        "previous": "Précédent",
+        "next": "Suivant",
+        "submit": "Soumettre ma candidature",
+        "submitting": "Soumission en cours..."
+      },
+      "steps": {
+        "experience": "Expérience",
+        "expertises": "Expertises",
+        "journey": "Parcours"
+      }
+    },
+    "profile_cta": {
+      "title": "Devenez Mentor",
+      "description": "Partagez votre expertise et guidez les entrepreneurs de demain. Rejoignez notre communauté de mentors et faites la différence.",
+      "apply_button": "Postuler maintenant",
+      "benefits": {
+        "impact": {
+          "title": "Impact",
+          "description": "Guidez des entrepreneurs"
+        },
+        "recognition": {
+          "title": "Reconnaissance",
+          "description": "Valorisez votre expertise"
+        },
+        "network": {
+          "title": "Réseau",
+          "description": "Élargissez vos connexions"
+        }
+      }
+    },
+    "status": {
+      "title": "Statut Mentor",
+      "subtitle": "Votre parcours en tant que mentor",
+      "approved": {
+        "label": "Approuvé",
+        "title": "Félicitations !",
+        "message": "Votre profil de mentor a été approuvé. Vous pouvez maintenant accéder à votre dashboard mentor et commencer à accompagner des entrepreneurs.",
+        "button": "Accéder au Dashboard Mentor"
+      },
+      "pending": {
+        "label": "En attente",
+        "title": "Candidature en cours d'examen",
+        "message": "Votre candidature pour devenir mentor est en cours d'examen. Notre équipe vous contactera sous peu avec une réponse."
+      },
+      "rejected": {
+        "label": "Refusé",
+        "title": "Candidature refusée",
+        "message": "Malheureusement, votre candidature n'a pas été retenue pour le moment. Vous pourrez soumettre une nouvelle candidature après avoir acquis plus d'expérience."
+      }
+    },
+    "application_pending": {
+      "title": "Candidature en attente",
+      "message": "Votre candidature pour devenir mentor a bien été reçue et est actuellement en cours d'examen par notre équipe.",
+      "next_steps": "Prochaines étapes",
+      "steps": {
+        "review": {
+          "title": "Examen de la candidature",
+          "description": "Notre équipe examine votre profil, vos expériences et vos domaines d'expertise."
+        },
+        "evaluation": {
+          "title": "Évaluation (3-5 jours)",
+          "description": "Nous vérifierons que votre profil correspond à nos critères de mentorat."
+        },
+        "notification": {
+          "title": "Notification par email",
+          "description": "Vous recevrez un email avec la décision finale et les prochaines étapes."
+        }
+      },
+      "meanwhile": {
+        "title": "En attendant...",
+        "message": "Pendant que nous examinons votre candidature, vous pouvez continuer à utiliser la plateforme normalement et explorer les opportunités disponibles.",
+        "tip": "Nous vous recommandons de compléter votre profil et d'ajouter votre biographie pour augmenter vos chances d'approbation."
+      },
+      "actions": {
+        "profile": "Retour au profil",
+        "dashboard": "Aller au tableau de bord"
+      }
+    },
+    "application_rejected": {
+      "title": "Candidature refusée",
+      "message": "Nous vous remercions pour votre intérêt à devenir mentor. Malheureusement, votre candidature n'a pas été retenue pour le moment.",
+      "reasons_title": "Raisons possibles",
+      "reasons": {
+        "experience": {
+          "title": "Expérience insuffisante",
+          "description": "Nous recherchons des mentors avec une expérience solide dans leur domaine."
+        },
+        "expertise": {
+          "title": "Domaines d'expertise",
+          "description": "Les domaines d'expertise sélectionnés ne correspondent pas à nos besoins actuels."
+        },
+        "profile": {
+          "title": "Profil incomplet",
+          "description": "Certaines informations importantes manquent dans votre profil ou votre candidature."
+        }
+      },
+      "next_steps": {
+        "title": "Que faire maintenant ?",
+        "steps": {
+          "develop": "Continuez à développer votre expertise et votre expérience professionnelle",
+          "complete": "Complétez votre profil avec plus de détails sur votre parcours",
+          "reapply": "Vous pourrez soumettre une nouvelle candidature dans 3 mois"
+        }
+      },
+      "encouragement": {
+        "title": "Ne vous découragez pas !",
+        "message": "Cette décision n'est pas définitive. Nous encourageons tous les professionnels passionnés à continuer à développer leurs compétences et à postuler à nouveau lorsque leur profil sera plus aligné avec nos critères. Votre désir de partager votre expertise est précieux et nous vous remercions de votre engagement envers notre communauté."
+      },
+      "actions": {
+        "improve_profile": "Améliorer mon profil",
+        "dashboard": "Retour au tableau de bord"
+      }
+    }
+  },
+  "ambassadors": {
+    "badge": "Ambassadeurs",
+    "landing": {
+      "title": "Le Top 5 des Ambassadeurs",
+      "subtitle": "Les {{count}} entrepreneurs les plus actifs qui propulsent notre communauté en parrainant de nouveaux talents.",
+      "eliteTitle": "Ambassadeurs ",
+      "eliteTitleHighlight": "Cinolu",
+      "availableSlot": "Votre place vous attend"
+    },
+    "page": {
+      "title": "Tous les Ambassadeurs",
+      "description": "Nos ambassadeurs bâtissent Cinolu en parrainant entrepreneurs et innovateurs. Découvrez ceux qui font grandir l'écosystème.",
+      "totalCount": "ambassadeurs",
+      "noAmbassadors": "Aucun ambassadeur pour le moment",
+      "checkBackLater": "Revenez bientôt pour découvrir nos ambassadeurs."
+    },
+    "detail": {
+      "backToList": "Retour aux ambassadeurs",
+      "activeStatus": "Ambassadeur Actif",
+      "impactPoints": "Points d'Impact",
+      "globalRank": "Classement Global",
+      "badgesEarned": "Badges Obtenus",
+      "badgesSection": "Badges & Récompenses",
+      "accomplishments": "Accomplissements",
+      "unlockBadges": "Débloquez de nouveaux badges en continuant à contribuer",
+      "recentActivity": "Activité Récente",
+      "lastActions": "Dernières Actions",
+      "notFound": "Ambassadeur introuvable",
+      "notFoundMessage": "Cet ambassadeur n'existe pas ou a été supprimé.",
+      "morePhotos": "photos",
+      "viewFullscreen": "Voir en plein écran",
+      "location": "Localisation",
+      "contact": "Contact",
+      "visionBio": "Vision & Biographie",
+      "projectsProducts": "Projets & Produits",
+      "ventureGallery": "Galerie de l'entreprise",
+      "noCompanyYet": "Aucune entreprise pour le moment",
+      "noCompanyMessage": "Cet ambassadeur n'a pas encore d'entreprise associée. Les futurs projets et produits apparaîtront ici dès leur lancement.",
+      "discoverEntrepreneurs": "Découvrir d'autres entrepreneurs",
+      "viewAllAmbassadors": "Voir tous les ambassadeurs",
+      "problemSolved": "Problème résolu",
+      "targetMarket": "Marché cible",
+      "productCatalog": "Catalogue Produits",
+      "globalImpact": "Impact Global",
+      "referralCode": "Code Recommandation",
+      "stage": "Stage",
+      "badges": {
+        "firstAmbassador": "Premier Ambassadeur",
+        "activeMentor": "Mentor Actif",
+        "starContributor": "Contributeur Star",
+        "communityLeader": "Leader Communauté",
+        "topSponsor": "Top Parrain",
+        "eliteAmbassador": "Ambassadeur Elite"
+      }
+    },
+    "referrals": "parrainages",
+    "progress": "Progression",
+    "viewAll": "Découvrir tous les ambassadeurs",
+    "noData": "Aucune donnée disponible"
+  },
+  "compare": {
+    "badge": "Deux perspectives",
+    "title": "Choisissez votre",
+    "titleHighlight": "trajectoire",
+    "description": "Un écosystème. Deux visions complémentaires. Un seul objectif : transformer l'innovation africaine.",
+    "entrepreneur": {
+      "badge": "01",
+      "title": "Entrepreneurs",
+      "subtitle": "Propulser l'ambition",
+      "quote": "Cinolu est le catalyseur de ma croissance.",
+      "benefits": {
+        "network": "Accès à un réseau stratégique",
+        "mentorship": "Mentorat personnalisé",
+        "programs": "Programmes d'accélération",
+        "visibility": "Visibilité investisseurs",
+        "funding": "Financements catalytiques"
+      },
+      "cta": "Nos Entrepreneurs"
+    },
+    "investor": {
+      "badge": "02",
+      "title": "Investisseurs",
+      "subtitle": "Sécuriser l'impact",
+      "quote": "Investir dans l'excellence africaine.",
+      "benefits": {
+        "dealflow": "Dealflow qualifié",
+        "startups": "Startups filtrées",
+        "risk": "Risque réduit via incubation",
+        "impact": "Impact mesurable",
+        "coinvestment": "Opportunités co-investissement"
+      },
+      "cta": "Nos Partenaires"
+    }
+  },
+  "opportunities": {
+    "language": {
+      "fr": "Français",
+      "en": "Anglais"
+    },
+    "list": {
+      "badge": "Appels & opportunités",
+      "title": "Découvrez les opportunités ouvertes",
+      "description": "Explorez les appels, concours, financements et autres opportunités relayés par Cinolu. Filtrez-les par langue et par échéance pour trouver celles qui correspondent à votre profil.",
+      "total": "Total d'opportunités",
+      "open_now": "Ouvertes actuellement",
+      "language": "Langue",
+      "all_languages": "Toutes les langues",
+      "from": "À partir du",
+      "to": "Jusqu'au",
+      "deadline": "Date limite",
+      "reset": "Réinitialiser",
+      "empty_title": "Aucune opportunité trouvée",
+      "empty_description": "Aucune opportunité ne correspond à vos filtres pour le moment. Essayez une autre période ou revenez plus tard.",
+      "view_details": "Voir les détails",
+      "apply_link": "Lien de candidature",
+      "open": "Ouverte",
+      "expired": "Expirée"
+    },
+    "detail": {
+      "informations": "Informations clés",
+      "deadline": "Date limite",
+      "language": "Langue",
+      "application_link": "Lien de candidature",
+      "cta_title": "Prêt à candidater ?",
+      "cta_description": "Consultez attentivement les détails de l'opportunité puis finalisez votre candidature via le lien officiel.",
+      "apply_now": "Accéder à la candidature",
+      "not_found_title": "Opportunité introuvable",
+      "not_found_description": "Cette opportunité n'existe pas, a été supprimée ou n'est plus disponible."
+    }
+  }
+}

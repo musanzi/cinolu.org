@@ -1,0 +1,90 @@
+<section class="about-section about-section--team" id="team" appAnimationsOnScroll>
+  <div class="about-wrap about-wrap--py">
+    <p class="about-label">{{ 'about_us.our_team.badge' | translate }}</p>
+    <h2 class="about-h2">
+      {{ 'about_us.our_team.title' | translate }}
+      <span>{{ 'about_us.our_team.title_highlight' | translate }}</span>
+    </h2>
+    <p class="about-lead">{{ 'about_us.our_team.subtitle' | translate }}</p>
+
+    <div class="about-team-feature">
+      <div class="about-team-feature__photo">
+        <img
+          [src]="selectedMember.image"
+          [alt]="selectedMember.name"
+          [title]="selectedMember.name"
+          loading="lazy" />
+      </div>
+      <div>
+        <p class="about-team-feature__label">{{ 'about_us.our_team.spotlight_label' | translate }}</p>
+        <h3 class="about-team-feature__name">{{ selectedMember.name }}</h3>
+        <p class="about-team-feature__role">{{ selectedMember.role }}</p>
+
+        @if (selectedMember.social) {
+        <div class="about-team-socials">
+          @if (selectedMember.social.linkedin) {
+          <a
+            [href]="selectedMember.social.linkedin"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="LinkedIn">
+            <img src="/icons/linkedin.svg" alt="LinkedIn" loading="lazy" />
+          </a>
+          }
+          @if (selectedMember.social.twitter) {
+          <a
+            [href]="selectedMember.social.twitter"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Twitter">
+            <img src="/icons/twitter-x.svg" alt="Twitter" loading="lazy" />
+          </a>
+          }
+          @if (selectedMember.social.instagram) {
+          <a
+            [href]="selectedMember.social.instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Instagram">
+            <img src="/icons/instagram.svg" alt="Instagram" loading="lazy" />
+          </a>
+          }
+          @if (selectedMember.social.facebook) {
+          <a
+            [href]="selectedMember.social.facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Facebook">
+            <img src="/icons/facebook.svg" alt="Facebook" loading="lazy" />
+          </a>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="about-team-roster" role="list">
+      @for (item of our_team; track item.id) {
+      <button
+        type="button"
+        role="listitem"
+        (click)="selectMember(item)"
+        class="about-team-card"
+        [class.is-selected]="selectedMember.id === item.id"
+        [attr.aria-pressed]="selectedMember.id === item.id"
+        [attr.aria-label]="item.name + ', ' + item.role">
+        <div class="about-team-card__img">
+          <img [src]="item.image" [alt]="item.name" loading="lazy" />
+        </div>
+        <div class="about-team-card__meta">
+          <p class="about-team-card__name">{{ item.name }}</p>
+          <p class="about-team-card__role">{{ item.role }}</p>
+        </div>
+        @if (selectedMember.id === item.id) {
+        <span class="about-team-card__check" aria-hidden="true">✓</span>
+        }
+      </button>
+      }
+    </div>
+  </div>
+</section>

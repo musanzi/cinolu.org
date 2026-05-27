@@ -1,0 +1,80 @@
+<div class="flex h-full min-h-24rem flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+  <div class="border-b border-gray-100 px-4 py-4">
+    <div class="flex items-center justify-between gap-3">
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900">Historique</h2>
+        <p class="mt-1 text-xs text-gray-500">Messages enregistrés et notifications déjà envoyées.</p>
+      </div>
+      <span
+        class="inline-flex min-w-6 items-center justify-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
+        {{ state().total }}
+      </span>
+    </div>
+  </div>
+
+  <div class="min-h-0 flex-1 overflow-y-auto px-3 py-4">
+    @if (isLoading()) {
+      <div class="flex h-full min-h-48 items-center justify-center text-sm text-gray-500">
+        <i-lucide [name]="icons.LoaderCircle" class="mr-2 size-4 animate-spin" />
+        Chargement des notifications...
+      </div>
+    } @else if (state().notifications.length === 0) {
+      <div
+        class="flex min-h-48 flex-col items-center justify-center rounded-xl border border-dashed border-gray-200 bg-gray-50 px-4 py-8 text-center">
+        <i-lucide [name]="icons.Inbox" class="mb-2 size-8 text-gray-300" />
+        <p class="font-medium text-gray-700">Aucune notification</p>
+        <p class="mt-1 text-xs text-gray-500">Créez un message puis enregistrez-le ou envoyez-le.</p>
+      </div>
+    } @else {
+      <ul class="space-y-3">
+        @for (notification of state().notifications; track notification.id) {
+          <li>
+            <button
+              type="button"
+              class="w-full rounded-lg border px-4 py-3.5 text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              [class.border-primary-300]="isActive(notification)"
+              [class.bg-primary-50]="isActive(notification)"
+              [class.border-gray-200]="!isActive(notification)"
+              [class.bg-white]="!isActive(notification)"
+              [class.hover:border-gray-300]="!isActive(notification)"
+              [class.hover:bg-gray-50]="!isActive(notification)"
+              (click)="onSelectNotification(notification)">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0 flex-1">
+                  <h3 class="truncate text-sm font-semibold text-gray-900">{{ notification.title }}</h3>
+                  <p class="mt-1.5 line-clamp-2 text-xs leading-5 text-gray-600">
+                    {{ bodyPreview(notification.body) }}
+                  </p>
+                </div>
+                <span
+                  class="mt-0.5 shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold"
+                  [class.bg-amber-100]="notification.status === 'draft'"
+                  [class.text-amber-700]="notification.status === 'draft'"
+                  [class.bg-emerald-100]="notification.status === 'sent'"
+                  [class.text-emerald-700]="notification.status === 'sent'">
+                  {{ notification.status === 'sent' ? 'Envoyée' : 'Brouillon' }}
+                </span>
+              </div>
+
+              <div class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+                <span>{{ recipientsLabel(notification) }}</span>
+                <span class="size-1 rounded-full bg-gray-300"></span>
+                <span>{{ notification.created_at | date: 'short' }}</span>
+              </div>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  @if (!isLoading() && state().notifications.length > 0) {
+    <div class="border-t border-gray-100 px-3 py-3">
+      <app-ui-pagination
+        [currentPage]="state().currentPage"
+        [totalItems]="state().total"
+        [itemsPerPage]="state().itemsPerPage"
+        (pageChange)="onPageChange($event)" />
+    </div>
+  }
+</div>

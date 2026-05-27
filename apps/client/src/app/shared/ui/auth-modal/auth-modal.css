@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  animation: authModalScaleIn 0.22s ease-out;
+}
+
+@keyframes authModalScaleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

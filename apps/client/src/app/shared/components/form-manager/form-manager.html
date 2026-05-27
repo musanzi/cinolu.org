@@ -1,0 +1,94 @@
+<div [formGroup]="form" class="relative" [attr.aria-busy]="loading ? 'true' : 'false'">
+  @if (showProgress) {
+  <div
+    [class]="
+      stickyProgress
+        ? 'sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm py-4 px-6 -mx-6 mb-6'
+        : 'mb-6'
+    ">
+    <div class="flex items-center justify-between gap-3 mb-2">
+      <p class="text-xs font-semibold" [style.color]="progressTextColor()">{{ progressPercent() }}%</p>
+      <p class="text-xs text-slate-600">{{ currentMessage() }}</p>
+    </div>
+
+    <div class="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+      <div
+        class="h-full rounded-full transition-all duration-500 ease-out"
+        [style.background]="progressGradient()"
+        [style.width.%]="progressPercent()"></div>
+    </div>
+  </div>
+  } @if (isStepper() && steps && steps.length > 0) {
+  <div class="mb-8">
+    <div class="flex items-center justify-between relative">
+      @for (step of steps; track step.label) {
+      <div class="flex flex-col items-center flex-1 relative z-10">
+        <button
+          type="button"
+          (click)="goToStep($index)"
+          [disabled]="$index > currentStep() && !isCurrentStepValid()"
+          class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 mb-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+          [class.bg-primary-600]="$index === currentStep()"
+          [class.text-white]="$index === currentStep()"
+          [class.shadow-lg]="$index === currentStep()"
+          [class.bg-green-500]="$index < currentStep()"
+          [class.text-white]="$index < currentStep()"
+          [class.bg-gray-200]="$index > currentStep()"
+          [class.text-slate-600]="$index > currentStep()"
+          [class.cursor-pointer]="$index <= currentStep()"
+          [class.cursor-not-allowed]="$index > currentStep()"
+          [attr.aria-current]="$index === currentStep() ? 'step' : null">
+          @if ($index < currentStep()) {
+          <i-lucide class="text-lg" [name]="icons.check" />
+          } @else {
+          <span>{{ $index + 1 }}</span>
+          }
+        </button>
+
+        <p
+          class="text-xs font-medium text-center transition-colors duration-300 max-w-32"
+          [class.text-primary-600]="$index === currentStep()"
+          [class.text-green-600]="$index < currentStep()"
+          [class.text-slate-600]="$index > currentStep()">
+          {{ step.label }}
+        </p>
+      </div>
+
+      @if ($index < steps.length - 1) {
+      <div
+        class="absolute top-5 h-0.5 bg-gray-200 transition-colors duration-300"
+        [class.bg-green-500]="$index < currentStep()"
+        [style.left.%]="($index / (steps.length - 1)) * 100 + 5"
+        [style.width.%]="100 / (steps.length - 1) - 10"></div>
+      } }
+    </div>
+  </div>
+  }
+
+  <fieldset [disabled]="loading" class="space-y-6">
+    <ng-content />
+  </fieldset>
+
+  @if (isStepper() && steps && steps.length > 1) {
+  <div class="flex items-center justify-between gap-4 mt-8 pt-6 border-t border-gray-200">
+    <ui-button variant="secondary" size="sm" type="button" (click)="prevStep()" [disabled]="!canGoPrev() || loading">
+      <i-lucide class="text-lg" [name]="icons.arrowLeft" />
+      <span>Précédent</span>
+    </ui-button>
+
+    @if (!isLastStep()) {
+    <ui-button variant="secondary" size="sm" type="button" (click)="nextStep()" [disabled]="!canGoNext() || loading">
+      <span>Suivant</span>
+      <i-lucide class="text-lg" [name]="icons.arrowRight" />
+    </ui-button>
+    } @else {
+    <ng-content select="[formActions]" />
+    }
+  </div>
+  } @else {
+  <div class="mt-8">
+    <ng-content select="[formActions]" />
+  </div>
+  }
+  <button type="button" class="hidden" (click)="onSubmit($event)">Submit</button>
+</div>

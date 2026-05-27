@@ -1,0 +1,30 @@
+@if (open()) {
+<div class="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+  <div
+    class="absolute inset-0 bg-gray-950/60 backdrop-blur-sm"
+    tabindex="0"
+    aria-label="Fermer la boite de dialogue"
+    (click)="onBackdropClick()"
+    (keydown.enter)="onBackdropClick()"
+    (keydown.space)="onBackdropKeydown($event)"></div>
+  <div class="relative w-full rounded-2xl bg-white shadow-theme-xl" [class]="maxWidthClass()">
+    @if (title() || closable()) {
+    <div class="flex items-center justify-between gap-4 border-b border-gray-100 px-6 py-4">
+      <h2 class="text-lg font-semibold text-gray-900">{{ title() }}</h2>
+      @if (closable()) {
+      <button
+        type="button"
+        (click)="close()"
+        class="inline-flex size-9 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900">
+        <i-lucide [name]="closeIcon" class="size-4" />
+      </button>
+      }
+    </div>
+    }
+
+    <div class="max-h-[80vh] overflow-y-auto">
+      <ng-content />
+    </div>
+  </div>
+</div>
+}

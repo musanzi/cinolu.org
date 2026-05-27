@@ -1,0 +1,49 @@
+<header
+  class="fixed top-0 right-0 left-0 z-50 isolate flex w-full flex-col py-1.5 text-sm font-semibold transition-colors duration-300 lg:block lg:py-0"
+  [ngClass]="{
+    'text-gray-900': isSolid(),
+    'text-white': !isSolid(),
+  }">
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 transition-opacity duration-300"
+    [ngClass]="{
+      'opacity-100': isSolid(),
+      'opacity-0': !isSolid()
+    }">
+    <div class="absolute inset-0 border-b border-gray-200/80 bg-white/95 backdrop-blur-xl"></div>
+  </div>
+  <div
+    class="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-slate-950/45 via-slate-950/10 to-transparent transition-opacity duration-300"
+    [ngClass]="{
+      'opacity-0': isSolid(),
+      'opacity-100': !isSolid()
+    }"></div>
+  <nav
+    class="mx-auto flex h-14 w-full max-w-screen-2xl items-center justify-between gap-4 px-4 sm:px-8 lg:h-auto lg:min-h-0 lg:gap-6 lg:px-16 lg:py-2.5 xl:px-24 2xl:px-32">
+    <div class="flex items-center gap-3">
+      <a routerLink="/" aria-label="logo" class="inline-block">
+        <img
+          priority
+          [ngSrc]="isSolid() ? 'images/logo/logo-g.png' : 'images/logo/logo-w.png'"
+          width="64"
+          height="68"
+          alt="logo"
+          class="h-9 w-auto cursor-pointer object-contain transition-transform duration-200 hover:scale-[1.02] max-sm:h-8 lg:h-10" />
+      </a>
+    </div>
+    <div class="flex min-w-0 flex-1 items-center justify-end lg:justify-between">
+      <app-mobile-nav
+        [links]="links()"
+        [programs]="programsStore.programs()"
+        [onestopUrl]="onestopUrl"
+        [solid]="isSolid()"
+        [authStore]="authStore" />
+      <app-desktop-nav
+        [links]="links()"
+        [programs]="programsStore.programs()"
+        [onestopUrl]="onestopUrl"
+        [solid]="isSolid()"
+        [authStore]="authStore" />
+    </div>
+  </nav>
+</header>

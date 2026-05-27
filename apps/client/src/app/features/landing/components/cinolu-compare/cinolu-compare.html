@@ -1,0 +1,76 @@
+<app-public-section variant="muted">
+  <app-public-container>
+    <div class="fade-left-init mb-12 lg:mb-16" appAnimationsOnScroll>
+      <app-landing-section-header
+        badgeKey="compare.badge"
+        titleKey="compare.title"
+        titleHighlightKey="compare.titleHighlight"
+        descriptionKey="compare.description" />
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 fade-right-init lg:grid-cols-2 lg:gap-8 xl:gap-10" appAnimationsOnScroll>
+      @for (card of cards; track trackById($index, card)) {
+      <div
+        class="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 transition-colors duration-300 hover:border-primary-300 lg:p-8"
+        (mouseenter)="setHover(card.id)"
+        (mouseleave)="setHover(null)">
+        <div class="relative z-10 mb-6 flex items-start justify-between">
+          <div class="shrink-0">
+            <div
+              class="flex h-14 w-14 items-center justify-center rounded-xl bg-brand-100 transition-colors group-hover:bg-brand-50">
+              <i-lucide
+                [name]="card.icon"
+                class="h-7 w-7 text-primary-600 stroke-2"
+                aria-hidden="true" />
+            </div>
+          </div>
+
+          <div class="rounded-full border border-brand-200 bg-brand-50 px-3 py-1">
+            <span class="text-xs font-semibold text-brand-700">{{ card.badgeKey | translate }}</span>
+          </div>
+        </div>
+
+        <div class="relative z-10 mb-6 space-y-2">
+          <h4 class="text-2xl font-bold leading-tight text-gray-900 lg:text-3xl">{{ card.titleKey | translate }}</h4>
+          <p class="text-base font-medium text-gray-600">{{ card.subtitleKey | translate }}</p>
+        </div>
+
+        <div class="relative z-10 mb-6 flex h-32 items-center justify-center overflow-hidden rounded-xl border border-gray-200">
+          <img
+            [src]="card.imagePath"
+            [alt]="card.titleKey | translate"
+            class="h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-100" />
+          <div class="absolute inset-0 bg-gray-900/50" aria-hidden="true"></div>
+        </div>
+
+        <div class="relative z-10 mb-6 border-l-2 border-brand-200 pl-4">
+          <p class="text-sm italic leading-relaxed text-gray-600">"{{ card.quoteKey | translate }}"</p>
+        </div>
+
+        <div class="relative z-10 mb-6 flex-1 space-y-3">
+          @for (benefitKey of card.benefitsKeys; track benefitKey) {
+          <div class="flex items-center gap-3">
+            <div class="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-brand-100">
+              <i-lucide [name]="icons.check" class="h-3 w-3 text-brand-700 stroke-[3]" />
+            </div>
+            <span class="text-sm font-medium text-gray-700">{{ benefitKey | translate }}</span>
+          </div>
+          }
+        </div>
+
+        @if (card.ctaStyle === 'primary') {
+        <app-public-button variant="primary" [routerLink]="card.ctaRoute" [fullWidth]="true" className="relative z-10">
+          <span>{{ card.ctaKey | translate }}</span>
+          <i-lucide [name]="icons.arrowRight" class="h-4 w-4" />
+        </app-public-button>
+        } @else {
+        <app-public-button variant="secondary" [routerLink]="card.ctaRoute" [fullWidth]="true" className="relative z-10">
+          <span>{{ card.ctaKey | translate }}</span>
+          <i-lucide [name]="icons.arrowRight" class="h-4 w-4" />
+        </app-public-button>
+        }
+      </div>
+      }
+    </div>
+  </app-public-container>
+</app-public-section>

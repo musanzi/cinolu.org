@@ -1,0 +1,242 @@
+<div class="min-h-screen bg-gray-50 text-gray-900">
+  @if (projectStore.project(); as project) { @let totalPhases = orderedPhases().length; @let completedCount =
+  completedPhaseIds().size;
+
+  <div>
+    <header class="bg-white border-b border-gray-200">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+        <nav class="flex items-center gap-2 text-xs font-medium text-gray-500 mb-4">
+          <a routerLink="/dashboard/user/programs/accepted" class="hover:text-gray-700 transition-colors"
+            >Mes parcours</a
+          >
+          <i-lucide class="text-[14px]" [name]="icons.chevronRight" />
+          <span class="text-gray-900 truncate">{{ project.name }}</span>
+        </nav>
+
+        <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+          <div class="space-y-2">
+            <div
+              class="inline-flex items-center gap-2 border border-gray-200 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">
+              <i-lucide class="text-[14px] text-gray-500" [name]="icons.rocket" />
+              Roadmap
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">{{ project.name }}</h1>
+            <p class="text-gray-500 text-sm sm:text-base max-w-2xl line-clamp-2">{{ project.description }}</p>
+          </div>
+
+          <div class="flex gap-3 flex-wrap justify-start md:justify-end">
+            <div class="bg-white px-4 py-3 border border-gray-200 text-center min-w-24">
+              <span class="block text-xl font-bold leading-none">{{ totalPhases }}</span>
+              <span class="text-[10px] uppercase font-bold text-gray-500">Phases</span>
+            </div>
+            <div class="bg-white px-4 py-3 border border-gray-200 text-center min-w-24">
+              <span class="block text-xl font-bold leading-none text-gray-900">{{ completedCount }}</span>
+              <span class="text-[10px] uppercase font-bold text-gray-500">Fait</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+          <div class="border border-gray-200 bg-white px-4 py-3">
+            <div class="flex items-center justify-between text-xs text-gray-500">
+              <span class="font-semibold">Progression globale</span>
+              <span class="font-bold text-gray-700"
+                >{{ (totalPhases ? (completedCount / totalPhases) * 100 : 0) | number:'1.0-0' }}%</span
+              >
+            </div>
+            <div class="mt-2 h-2 w-full bg-gray-100 overflow-hidden">
+              <div
+                class="h-full bg-gray-700 transition-all duration-700"
+                [style.width.%]="totalPhases ? (completedCount / totalPhases) * 100 : 0"></div>
+            </div>
+          </div>
+
+          <div class="border border-dashed border-gray-200 bg-white px-4 py-3 text-xs text-gray-500">
+            <div class="flex items-center gap-2">
+              <i-lucide class="text-[16px] text-gray-400" [name]="icons.description" />
+              <span>Livrables en PDF uniquement, taille max {{ uploadMaxLabel }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto py-10 relative">
+      @if (projectStore.isLoading()) {
+      <div class="flex items-center justify-center py-24 text-gray-400">
+        <div class="w-9 h-9 border-2 border-gray-200 border-t-gray-600 rounded-full animate-spin mr-3"></div>
+        <span class="text-sm font-medium">Synchronisation...</span>
+      </div>
+      } @else {
+
+      <div class="space-y-6">
+        @if (currentParticipation()) {
+        <section class="bg-white border border-gray-200 p-6 sm:p-7">
+          <div class="flex items-start gap-4 mb-6">
+            <div
+              class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+              <i-lucide class="text-white text-xl" [name]="icons.description" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-1">Ressources du programme</h2>
+              <p class="text-gray-600 text-sm">Guides et documents disponibles apres candidature</p>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <app-resource-filters (filterChange)="onResourcesFilterChange($event)" />
+          </div>
+
+          @if (resourcesStore.isLoading() && resourcesStore.isEmpty()) {
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for (i of [1, 2, 3]; track i) {
+            <div class="border border-gray-200 bg-white p-6 animate-pulse">
+              <div class="flex gap-4 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-gray-200 shrink-0"></div>
+                <div class="flex-1 space-y-2">
+                  <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                  <div class="h-3 bg-gray-100 rounded w-full"></div>
+                </div>
+              </div>
+              <div class="h-2 bg-gray-100 rounded w-1/2"></div>
+            </div>
+            }
+          </div>
+          } @else if (!resourcesStore.isEmpty()) {
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for (resource of resourcesStore.resources(); track resource.id) {
+            <app-resource-card
+              [resource]="resource"
+              (download)="onDownloadResource($event)"
+              (view)="onViewResource($event)" />
+            }
+          </div>
+
+          @if (resourcesStore.hasMoreResources()) {
+          <div class="flex justify-center mt-6">
+            <button
+              type="button"
+              (click)="loadMoreResources()"
+              [disabled]="resourcesStore.isLoading()"
+              class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors disabled:opacity-50">
+              {{ resourcesStore.isLoading() ? 'Chargement...' : 'Charger plus' }}
+            </button>
+          </div>
+          } } @else {
+          <div class="border border-dashed border-gray-200 bg-gray-50 p-8 text-center">
+            <div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center mx-auto mb-3">
+              <i-lucide [name]="icons.description" class="text-2xl text-gray-400" />
+            </div>
+            <h3 class="text-base font-semibold text-gray-900 mb-2">Aucune ressource disponible</h3>
+            <p class="text-sm text-gray-600">Les ressources seront ajoutees par les mentors.</p>
+          </div>
+          }
+        </section>
+        } @for (phase of orderedPhases(); track phase.id; let i = $index) { @let status = getPhaseStatus(phase); @let
+        isExpanded = isPhaseExpanded(phase.id);
+
+        <div>
+          <div class="bg-white border border-gray-200">
+            <button
+              (click)="togglePhase(phase.id)"
+              class="w-full p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 text-left">
+              <div
+                class="w-12 h-12 border border-gray-200 flex items-center justify-center shrink-0"
+                [ngClass]="{
+                     'bg-emerald-50 text-emerald-600': status === 'completed',
+                     'bg-amber-50 text-amber-700': status === 'active',
+                     'bg-amber-50 text-amber-600': status === 'future',
+                     'bg-gray-50 text-gray-400': status === 'past'
+                   }">
+                <i-lucide class="text-2xl" [name]="getStatusIcon(status)" />
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                  <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Phase {{ i + 1 }}</span>
+                  <span
+                    class="px-2 py-0.5 text-[10px] font-bold rounded-full"
+                    [ngClass]="{
+                         'bg-emerald-100 text-emerald-700': status === 'completed',
+                         'bg-amber-100 text-amber-700': status === 'active',
+                         'bg-gray-50 text-gray-500': status === 'future',
+                         'bg-gray-100 text-gray-500': status === 'past'
+                       }">
+                    {{ status === 'completed' ? 'TERMINE' : (status === 'active' ? 'EN COURS' : (status === 'past' ?
+                    'PASSE' : 'A VENIR')) }}
+                  </span>
+                </div>
+                <h3 class="font-bold text-gray-900 truncate sm:text-lg leading-tight">{{ phase.name }}</h3>
+                <div class="mt-2 flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                  <span class="inline-flex items-center gap-1">
+                    <i-lucide class="text-[14px]" [name]="icons.calendar" />
+                    {{ phase.started_at | date:'dd MMM' }} - {{ phase.ended_at | date:'dd MMM yyyy' }}
+                  </span>
+                  @if (status === 'active') {
+                  <span class="inline-flex items-center gap-1 text-amber-700 font-semibold">
+                    <i-lucide class="text-[14px]" [name]="icons.timelapse" />
+                    Phase active
+                  </span>
+                  }
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="hidden sm:block text-xs text-gray-400 font-medium italic">
+                  {{ phase.ended_at | date:'dd/MM/yy' }}
+                </span>
+                <i-lucide
+                  class="text-gray-300 transition-transform"
+                  [ngClass]="{'rotate-180 text-gray-700': isExpanded}"
+                  [name]="icons.chevronDown" />
+              </div>
+            </button>
+
+            @if (isExpanded) {
+            <div class="px-5 sm:px-6 pb-6 pt-0 space-y-6">
+              <div class="p-4 bg-gray-50 border border-gray-100 text-sm leading-relaxed text-gray-600">
+                <p>{{ phase.description }}</p>
+              </div>
+
+              @if (hasDeliverable(phase)) {
+              <div class="border-t border-gray-100 pt-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  <div class="flex-1">
+                    <h5 class="text-sm font-bold text-gray-900">{{ phase.deliverables[0].title }}</h5>
+                    <p class="text-xs text-gray-500 line-clamp-2">{{ phase.deliverables[0].description }}</p>
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <label class="cursor-pointer group">
+                      <input type="file" (change)="onFileSelected(phase.id, $event)" class="hidden" />
+                      <div
+                        class="px-4 py-2.5 bg-white border border-gray-300 text-xs font-bold text-gray-700 hover:border-gray-500 transition-all flex items-center justify-center gap-2">
+                        <i-lucide class="text-sm" [name]="icons.attach" />
+                        <span class="truncate max-w-40">
+                          {{ selectedFiles()[phase.id].name || 'Choisir un fichier' }}
+                        </span>
+                      </div>
+                    </label>
+
+                    <button
+                      (click)="submitDeliverable(phase)"
+                      [disabled]="!canSubmitPhase(phase) || !selectedFiles()[phase.id]"
+                      class="px-4 py-2.5 bg-gray-800 text-white text-xs font-bold hover:bg-gray-900 disabled:bg-gray-200 disabled:text-gray-400 transition-colors flex items-center justify-center gap-2">
+                      <i-lucide class="text-sm" [name]="icons.publish" />
+                      Envoyer
+                    </button>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </main>
+  </div>
+  }
+</div>

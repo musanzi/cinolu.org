@@ -1,0 +1,14 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [class]="buttonClasses()"
+  [style.padding]="sizePadding()"
+  [style.fontSize]="sizeFontSize()"
+  [style.minHeight]="sizeMinHeight()"
+  [style.lineHeight]="sizeLineHeight()"
+  (click)="handleClick($event)">
+  @if (loading()) {
+    <i-lucide [name]="icons.LoaderCircle" [size]="spinnerSize()" class="animate-spin" />
+  }
+  <ng-content />
+</button>

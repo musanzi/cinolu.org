@@ -1,0 +1,14 @@
+<app-public-page-hero
+  variant="image"
+  background="/images/gallery/8.jpg"
+  [badgeIcon]="icons.image"
+  badgeTextKey="gallery.badge"
+  titleKey="gallery.title"
+  highlightKey="gallery.title_highlight"
+  descriptionKey="gallery.description" />
+
+@if (loading()) {
+<app-gallery-skeleton [count]="8" />
+} @else {
+<app-gallery-card />
+}

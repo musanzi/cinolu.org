@@ -1,0 +1,10 @@
+<span
+  [class]="
+    'inline-flex items-center rounded-full font-medium border text-nowrap ' +
+    variantClasses[variant()].container +
+    ' ' +
+    sizeClasses[size()].container
+  ">
+  <span [class]="'rounded-full ' + variantClasses[variant()].dot + ' ' + sizeClasses[size()].dot"></span>
+  {{ label() }}
+</span>

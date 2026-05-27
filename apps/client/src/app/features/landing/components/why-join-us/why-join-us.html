@@ -1,0 +1,75 @@
+<app-public-section variant="muted">
+  <app-public-container>
+    <div class="fade-left-init" appAnimationsOnScroll>
+      <app-landing-section-header
+        badgeKey="why_join_us.badge"
+        titleKey="why_join_us.title"
+        titleHighlightKey="why_join_us.title_highlight"
+        descriptionKey="why_join_us.description" />
+    </div>
+
+    <div class="fade-right-init" appAnimationsOnScroll>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 xl:gap-10 mb-8">
+        @for (s of stats; track trackByIndex($index)) {
+        <div
+          class="relative flex flex-col p-6 lg:p-8 bg-white/95 backdrop-blur-sm rounded-2xl border border-gray-200/60 hover:border-primary-300/80   transition-all duration-500 group h-full overflow-hidden">
+          <div
+            class="absolute inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+          <div class="flex items-start justify-between mb-6">
+            <div class="relative z-10 shrink-0">
+              <div
+                class="w-14 h-14 bg-brand-100 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-sm group-hover:shadow-md">
+                <i-lucide
+                  [name]="s.icon"
+                  class="w-7 h-7 text-primary-600 stroke-[2.5] group-hover:text-primary-700 transition-all duration-300"
+                  aria-hidden="true"
+                  focusable="false" />
+              </div>
+
+              <div
+                class="absolute inset-0 w-14 h-14 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+            </div>
+
+            <div class="relative z-10 text-right flex-1 ml-4">
+              <div class="relative inline-block">
+                <p
+                  appCountUp
+                  [duration]="2000"
+                  [end]="s.value"
+                  class="text-3xl font-bold leading-none text-gray-800 sm:text-4xl lg:text-5xl"></p>
+
+                <div
+                  class="absolute inset-0  -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out opacity-0 group-hover:opacity-100"></div>
+              </div>
+
+              <div class="flex justify-end mt-2">
+                <div
+                  class="w-8 h-0.5 bg-brand-500 rounded-full group-hover:w-12 transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative z-10">
+            <div class="flex items-center mb-3">
+              <div
+                class="w-2 h-2 bg-primary-500 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"></div>
+              <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
+            <p
+              class="text-sm leading-6 text-slate-600 sm:text-[15px] font-medium group-hover:text-gray-800 transition-colors duration-300 hyphens-none">
+              {{ getStatLabelKey(s.label) | translate }}
+            </p>
+          </div>
+
+          <div
+            class="absolute top-4 right-4 w-16 h-16  rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div
+            class="absolute bottom-4 left-4 w-8 h-8  rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        </div>
+        }
+      </div>
+    </div>
+  </app-public-container>
+</app-public-section>

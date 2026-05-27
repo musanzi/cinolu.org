@@ -1,0 +1,146 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   GLOBAL INPUT SYSTEM — Single source of truth
+   Canonical reference: /dashboard/profile/security
+   All inputs (native, local UI, dashboard) use this system.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Base input — matches profile-security page */
+.input-global,
+input[type='text'].form-input,
+input[type='email'].form-input,
+input[type='password'].form-input,
+input[type='number'].form-input,
+input[type='tel'].form-input,
+input[type='url'].form-input,
+input[type='search'].form-input,
+input[type='date'].form-input,
+.form-input,
+.dashboard-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgb(15 23 42);
+  background-color: white;
+  border: 1px solid rgb(203 213 225);
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-global::placeholder,
+.form-input::placeholder,
+.dashboard-input::placeholder {
+  color: rgb(148 163 184);
+}
+
+.input-global:hover:not(:disabled):not(.input-global--error),
+.form-input:hover:not(:disabled),
+.dashboard-input:hover:not(:disabled) {
+  border-color: rgb(148 163 184);
+}
+
+.input-global:focus,
+.form-input:focus,
+.dashboard-input:focus {
+  border-color: rgb(80 140 60);
+  box-shadow: 0 0 0 4px rgb(80 140 60 / 0.2);
+}
+
+.input-global--error,
+.input-global.ng-invalid.ng-touched,
+.form-input.ng-invalid.ng-touched,
+.dashboard-input.input-global--error {
+  border-color: rgb(248 113 113);
+}
+
+.input-global--error:focus,
+.input-global.ng-invalid.ng-touched:focus,
+.form-input.ng-invalid.ng-touched:focus {
+  border-color: rgb(239 68 68);
+  box-shadow: 0 0 0 4px rgb(239 68 68 / 0.2);
+}
+
+.input-global:disabled,
+.form-input:disabled,
+.dashboard-input:disabled {
+  background-color: rgb(248 250 252);
+  color: rgb(100 116 139);
+  cursor: not-allowed;
+  border-color: rgb(226 232 240);
+}
+
+/* Textarea */
+.form-textarea,
+.dashboard-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgb(15 23 42);
+  background-color: white;
+  border: 1px solid rgb(203 213 225);
+  border-radius: 0.5rem;
+  outline: none;
+  resize: none;
+  min-height: 120px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-textarea:focus,
+.dashboard-textarea:focus {
+  border-color: rgb(80 140 60);
+  box-shadow: 0 0 0 4px rgb(80 140 60 / 0.2);
+}
+
+.form-textarea.ng-invalid.ng-touched,
+.dashboard-textarea.ng-invalid.ng-touched {
+  border-color: rgb(248 113 113);
+}
+
+.form-textarea:disabled,
+.dashboard-textarea:disabled {
+  background-color: rgb(248 250 252);
+  color: rgb(100 116 139);
+  cursor: not-allowed;
+}
+
+/* Select — native select with same look */
+.input-global-select,
+.form-select,
+.dashboard-select {
+  width: 100%;
+  padding: 0.75rem 2.75rem 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgb(15 23 42);
+  background-color: white;
+  border: 1px solid rgb(203 213 225);
+  border-radius: 0.5rem;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2374756b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25rem 1.25rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-global-select:focus,
+.form-select:focus,
+.dashboard-select:focus {
+  border-color: rgb(80 140 60);
+  box-shadow: 0 0 0 4px rgb(80 140 60 / 0.2);
+}
+
+.form-select.ng-invalid.ng-touched {
+  border-color: rgb(248 113 113);
+}
+
+.form-select:disabled,
+.dashboard-select:disabled {
+  background-color: rgb(248 250 252);
+  color: rgb(100 116 139);
+  cursor: not-allowed;
+}

@@ -1,0 +1,192 @@
+<aside
+  class="fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out dark:border-gray-800 dark:bg-gray-900"
+  [ngClass]="{
+    'w-[290px]': (isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async),
+    'w-[90px]': !((isExpanded$ | async) || (isMobileOpen$ | async) || (isHovered$ | async)),
+    'translate-x-0': isMobileOpen$ | async,
+    '-translate-x-full': (isMobileOpen$ | async) === false,
+    'xl:translate-x-0': true
+  }"
+  (mouseenter)="onSidebarMouseEnter()"
+  (mouseleave)="sidebarService.setHovered(false)"
+  role="navigation">
+  <div
+    class="flex py-8"
+    [ngClass]="{
+      'xl:justify-center': !((isExpanded$ | async) || (isHovered$ | async)),
+      'justify-start': (isExpanded$ | async) || (isHovered$ | async)
+    }">
+    <a routerLink="/" class="flex items-center gap-2.5 group">
+      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+      <div
+        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-600">
+        <i-lucide [name]="icons.verified" class="h-5 w-5 text-white" />
+      </div>
+      <span class="text-xl font-black uppercase tracking-tight text-gray-900 group-hover:text-brand-500"
+        >CINOLU</span
+      >
+      } @else {
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600">
+        <i-lucide [name]="icons.verified" class="h-6 w-6 text-white" />
+      </div>
+      }
+    </a>
+  </div>
+
+  <div class="flex flex-1 flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+    <nav class="mb-6">
+      <div class="flex flex-col gap-4">
+        @for (section of menuConfig; track section.title ?? $index) {
+        <div>
+          @if (section.title) {
+          <h2
+            class="mb-4 flex text-xs uppercase leading-[20px] text-gray-400"
+            [ngClass]="{
+              'xl:justify-center': !((isExpanded$ | async) || (isHovered$ | async)),
+              'justify-start': (isExpanded$ | async) || (isHovered$ | async)
+            }">
+            @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+            {{ section.title }}
+            } @else {
+            <i-lucide [name]="icons.sectionDots" class="size-6" />
+            }
+          </h2>
+          }
+
+          <ul class="flex flex-col gap-1">
+            @for (item of section.items; track item.id) {
+            <li>
+              @if (item.children && item.children.length > 0) {
+              <button
+                type="button"
+                (click)="onMenuClick(item, $event)"
+                (keydown)="onKeyDown($event, item)"
+                [disabled]="item.disabled"
+                class="menu-item group cursor-pointer"
+                [class.menu-item-active]="isActive(item)"
+                [class.menu-item-inactive]="!isActive(item)"
+                [ngClass]="{
+                  'xl:justify-center': !((isExpanded$ | async) || (isHovered$ | async)),
+                  'xl:justify-start': (isExpanded$ | async) || (isHovered$ | async)
+                }">
+                <span
+                  class="menu-item-icon-size shrink-0"
+                  [class.menu-item-icon-active]="isActive(item)"
+                  [class.menu-item-icon-inactive]="!isActive(item)">
+                  <i-lucide [name]="item.icon" />
+                </span>
+                @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                <span class="menu-item-text">{{ item.label }}</span>
+                @if (item.badge) {
+                <span
+                  [ngClass]="getBadgeColorClass(item.badge.color)"
+                  class="ml-auto shrink-0 rounded-full px-2 py-0.5 text-xs font-bold"
+                  >{{ item.badge.count }}</span
+                >
+                }
+                <i-lucide
+                  [name]="icons.chevronDown"
+                  class="ml-auto h-5 w-5 shrink-0 transition-transform duration-200"
+                  [ngClass]="{ 'rotate-180 text-brand-500': isMenuExpanded(item.id) }" />
+                }
+              </button>
+
+              <div
+                class="overflow-hidden transition-all duration-300"
+                [class.hidden]="!((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async))"
+                [ngClass]="{
+                  'max-h-0 opacity-0': !isMenuExpanded(item.id),
+                  'max-h-125 opacity-100': isMenuExpanded(item.id)
+                }">
+                <ul class="mt-2 ml-9 space-y-1">
+                  @for (child of item.children; track child.id) {
+                  <li>
+                    <a
+                      [routerLink]="child.path"
+                      (click)="onChildClick(child)"
+                      class="menu-dropdown-item"
+                      [class.menu-dropdown-item-active]="isChildActive(child)"
+                      [class.menu-dropdown-item-inactive]="!isChildActive(child)"
+                      [class.pointer-events-none]="child.disabled"
+                      [class.opacity-50]="child.disabled">
+                      <i-lucide [name]="child.icon" class="h-4 w-4 shrink-0" />
+                      <span class="truncate">{{ child.label }}</span>
+                      @if (child.badge) {
+                      <span
+                        [ngClass]="getBadgeColorClass(child.badge.color)"
+                        class="ml-auto shrink-0 rounded-full px-2 py-0.5 text-xs font-bold"
+                        >{{ child.badge.count }}</span
+                      >
+                      } @if (child.disabled) {
+                      <span class="ml-auto shrink-0 text-xs font-medium text-gray-400">Bientôt</span>
+                      }
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+              } @else {
+              <a
+                [routerLink]="item.path"
+                (click)="onMenuClick(item)"
+                routerLinkActive="menu-item-active"
+                class="menu-item group"
+                [class.menu-item-inactive]="!isActive(item)"
+                [class.pointer-events-none]="item.disabled"
+                [class.opacity-50]="item.disabled"
+                [ngClass]="{
+                  'xl:justify-center': !((isExpanded$ | async) || (isHovered$ | async)),
+                  'xl:justify-start': (isExpanded$ | async) || (isHovered$ | async)
+                }">
+                <span
+                  class="menu-item-icon-size shrink-0"
+                  [class.menu-item-icon-active]="isActive(item)"
+                  [class.menu-item-icon-inactive]="!isActive(item)">
+                  <i-lucide [name]="item.icon" />
+                </span>
+                @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                <span class="menu-item-text">{{ item.label }}</span>
+                @if (item.badge) {
+                <span
+                  [ngClass]="getBadgeColorClass(item.badge.color)"
+                  class="ml-auto shrink-0 rounded-full px-2 py-0.5 text-xs font-bold"
+                  >{{ item.badge.count }}</span
+                >
+                } @if (item.disabled) {
+                <span class="ml-auto shrink-0 text-xs font-medium text-gray-400">Bientôt</span>
+                }
+                }
+              </a>
+              }
+            </li>
+            }
+          </ul>
+        </div>
+        }
+      </div>
+    </nav>
+
+    @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+    <app-dashboard-sidebar-widget />
+    }
+
+    <div class="mt-auto border-t border-gray-200 pb-6 pt-4 dark:border-gray-800">
+      <button
+        type="button"
+        (click)="signOut()"
+        class="menu-item group w-full text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-500/10"
+        [ngClass]="{
+          'xl:justify-center': !((isExpanded$ | async) || (isHovered$ | async)),
+          'xl:justify-start': (isExpanded$ | async) || (isHovered$ | async)
+        }">
+        <span class="menu-item-icon-size shrink-0 text-red-500">
+          <i-lucide [name]="icons.logout" />
+        </span>
+        @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+        <span class="menu-item-text font-semibold">Déconnexion</span>
+        }
+      </button>
+    </div>
+  </div>
+</aside>

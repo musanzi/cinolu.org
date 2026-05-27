@@ -1,0 +1,787 @@
+/* Dashboard tokens — scoped to shell so public site is unaffected */
+.dashboard-shell {
+  --space-card-padding: 1.25rem;
+  --space-card-padding-lg: 1.5rem;
+  --space-grid-gap: 1rem;
+  --space-grid-gap-lg: 1.5rem;
+  --radius-card: 1rem;
+  --radius-badge: 9999px;
+  --radius-button: 0.5rem;
+  --radius-icon-well: 0.75rem;
+  --radius-pill: 9999px;
+  --color-primary-solid: var(--color-brand-600);
+  --color-primary-subtle: var(--color-brand-50);
+  --icon-sm: 1.125rem;
+  --icon-base: 1.25rem;
+  --icon-lg: 1.5rem;
+  --icon-xl: 2rem;
+  --progress-track: var(--color-gray-200);
+  --progress-fill: var(--color-brand-500);
+}
+
+/* Horloge avec largeur fixe pour éviter tout mouvement */
+.dashboard-clock {
+  display: inline-block;
+  min-width: 5.5rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.dashboard-date-label {
+  display: inline-block;
+  min-width: 8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+  DASHBOARD LAYOUT & NAVIGATION
+  ═══════════════════════════════════════════════════════════════════════ */
+
+/* Safe-area pour encoche / barre d’accueil (mobile) */
+.safe-area-dashboard {
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+.dashboard-header-safe-area {
+  padding-left: max(1rem, env(safe-area-inset-left, 0));
+  padding-right: max(1rem, env(safe-area-inset-right, 0));
+}
+
+/* Legacy wrapper — padding lives on dashboard-shell-layout outlet */
+.dashboard-shell .container-dashboard {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0));
+}
+
+/* Scrollbar personnalisée pour le dashboard */
+.dashboard-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(203 213 225) transparent;
+}
+
+.dashboard-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dashboard-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dashboard-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(203 213 225);
+  border-radius: 3px;
+}
+
+.dashboard-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(148 163 184);
+}
+
+/* Zone de scroll principale (mobile : défilement fluide iOS) */
+.dashboard-main-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+.dashboard-fade-in-up {
+  animation: anim-fade-in 0.3s ease-out forwards;
+}
+
+/* Focus visible — dashboard shell only (avoid public-site conflicts) */
+.dashboard-shell *:focus-visible {
+  @apply outline-none ring-2 ring-brand-500 ring-offset-2 rounded;
+}
+
+.animate-shimmer {
+  animation: anim-shimmer 1.5s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+  TYPOGRAPHIE
+  ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-heading-2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-gray-900);
+}
+
+.dashboard-heading-3 {
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--color-gray-900);
+}
+
+.dashboard-heading-4 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-gray-900);
+}
+
+.dashboard-heading-5 {
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-gray-900);
+}
+
+.dashboard-text-body {
+  font-size: 1rem;
+  line-height: 1.625;
+  color: var(--color-gray-600);
+}
+
+.dashboard-text-tiny {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--color-gray-400);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+    CARDS
+   ═══════════════════════════════════════════════════════════════════════ */
+/* Cards — aligned with TailAdmin tailadmin-card */
+/* Bridge legacy dashboard-card → TailAdmin card (design-system-rules §6) */
+.dashboard-shell .dashboard-card:not(.dashboard-card-premium):not(.dashboard-card-soft),
+.dashboard-shell .dashboard-card-elevated:not(.dashboard-card-premium) {
+  border-radius: 1rem;
+  border: 1px solid var(--color-gray-200, #e4e7ec);
+  background-color: white;
+  box-shadow: none;
+}
+
+.dark .dashboard-shell .dashboard-card:not(.dashboard-card-premium):not(.dashboard-card-soft),
+.dark .dashboard-shell .dashboard-card-elevated:not(.dashboard-card-premium) {
+  border-color: var(--color-gray-800, #1d2939);
+  background-color: rgb(255 255 255 / 0.03);
+}
+
+.dashboard-shell .dashboard-card,
+.dashboard-shell .dashboard-card-elevated {
+  @apply rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03];
+  @apply p-5 md:p-6;
+  box-shadow: none;
+  transition: border-color 200ms ease;
+}
+
+.dashboard-shell .dashboard-card-hover {
+  @apply tailadmin-card-hover;
+  box-shadow: none;
+}
+
+.dashboard-shell .dashboard-card-hover:hover {
+  box-shadow: none;
+}
+
+.dashboard-shell .dashboard-card-compact {
+  @apply p-4 md:p-5;
+}
+
+.dashboard-shell .dashboard-card-soft {
+  @apply rounded-2xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  border-radius: var(--radius-button);
+  background: var(--color-primary-solid);
+  color: white;
+  box-shadow: none;
+  transition: background-color 200ms ease;
+}
+
+.dashboard-btn-primary:hover {
+  background: var(--color-brand-700);
+  box-shadow: none;
+}
+
+.dashboard-btn-primary:active {
+  transform: scale(0.95);
+}
+
+.dashboard-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-900);
+  border: 1px solid var(--color-gray-200);
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-btn-secondary:hover {
+  background-color: var(--color-gray-200);
+  border-color: var(--color-gray-300);
+}
+
+.dashboard-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background: rgb(220 38 38);
+  color: white;
+  box-shadow: none;
+  transition: background-color 200ms ease;
+}
+
+.dashboard-btn-danger:hover {
+  background: rgb(185 28 28);
+  box-shadow: none;
+}
+
+.dashboard-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  color: var(--color-gray-900);
+  border: 1.5px solid var(--color-gray-300);
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-btn-outline:hover {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-400);
+}
+
+.dashboard-btn-outline:active {
+  background-color: var(--color-gray-100);
+  transform: scale(0.97);
+}
+
+.dashboard-btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+  BADGES
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-badge-primary {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgb(240 253 244);
+  color: rgb(21 128 61);
+  border: 1px solid rgb(187 247 208);
+}
+
+.dashboard-badge-success {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--color-success-50);
+  color: var(--color-success-600);
+  border: 1px solid var(--color-success-100);
+}
+
+.dashboard-badge-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-600);
+  border: 1px solid var(--color-gray-200);
+}
+
+.dashboard-badge-danger {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgb(254 242 242);
+  color: rgb(185 28 28);
+  border: 1px solid rgb(254 202 202);
+}
+
+.dashboard-badge-info {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-600);
+  border: 1px solid var(--color-gray-200);
+}
+
+.dashboard-badge-purple {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgb(250 245 255);
+  color: rgb(107 33 168);
+  border: 1px solid rgb(216 180 254);
+}
+
+.dashboard-badge-neutral {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
+  border: 1px solid var(--color-gray-200);
+}
+
+.dashboard-badge-critical {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-badge);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgb(236 253 245);
+  color: rgb(5 150 105);
+  border: 1px solid rgb(167 243 208);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+  FORMS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs: see form-input.css (global input system — source: profile/security) */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CONTAINER & LAYOUT
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 640px) {
+  .dashboard-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.dashboard-section {
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .dashboard-section {
+    margin-bottom: 3rem;
+  }
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: var(--space-grid-gap);
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid {
+    gap: var(--space-grid-gap-lg);
+  }
+}
+
+/* Grille 12 colonnes pour les pages qui utilisent col-span-12 (overview, mentor dashboard) */
+.dashboard-grid.dashboard-grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.dashboard-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--space-grid-gap);
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid-2 {
+    gap: var(--space-grid-gap-lg);
+  }
+}
+
+.dashboard-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--space-grid-gap);
+}
+
+@media (min-width: 768px) {
+  .dashboard-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-grid-gap-lg);
+  }
+}
+
+/* Accent text — couleur unie (pas de dégradé) */
+.dashboard-text-gradient-primary {
+  color: var(--color-brand-700);
+}
+
+.dashboard-text-gradient-danger {
+  color: var(--color-error-600, #d92d20);
+}
+
+.dashboard-text-gradient-warning {
+  color: var(--color-warning-600, #dc6803);
+}
+
+.dashboard-line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STATUS INDICATORS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-status-online {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: rgb(16 185 129);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STAT CARDS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-shell .dashboard-stat-card {
+  @apply tailadmin-stat-card;
+  cursor: default;
+}
+
+.dashboard-shell .dashboard-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.dashboard-stat-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-icon-well);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-stat-card:hover .dashboard-stat-icon {
+  transform: scale(1.1);
+}
+
+.dashboard-stat-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-gray-800);
+  letter-spacing: -0.025em;
+}
+
+.dashboard-stat-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-500);
+}
+
+.dashboard-progress-circle circle:first-of-type {
+  stroke: var(--progress-track);
+}
+
+.dashboard-progress-circle-fill {
+  stroke: var(--progress-fill);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CUSTOM TABS - MODERN DESIGN
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.ventures-tab-btn {
+  color: var(--color-gray-500);
+  background: transparent;
+  position: relative;
+}
+
+.ventures-tab-btn:hover {
+  background: var(--color-gray-50);
+  color: var(--color-gray-900);
+}
+
+.ventures-tab-btn.ventures-tab-active {
+  background: white;
+  color: rgb(93 156 70);
+  border: 2px solid rgb(93 156 70);
+  box-shadow: 0 2px 8px -2px rgb(93 156 70 / 0.2);
+}
+
+/* Icon sizes utilities */
+.icon-sm {
+  font-size: var(--icon-sm);
+}
+.icon-base {
+  font-size: var(--icon-base);
+}
+.icon-lg {
+  font-size: var(--icon-lg);
+}
+.icon-xl {
+  font-size: var(--icon-xl);
+}
+
+.dashboard-line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dashboard-text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-gray-600);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PAGE HERO SECTIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-page-hero {
+  position: relative;
+  border-radius: var(--radius-card);
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ACTIONS ROW
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 640px) {
+  .dashboard-actions-row {
+    gap: 1rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CARD VARIANTS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-card-bleed {
+  padding: 0;
+  overflow: hidden;
+}
+
+.dashboard-card-bleed > * {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SHIMMER LOADING
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.dashboard-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-gray-100);
+}
+
+.dashboard-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 0.45);
+  width: 40%;
+  animation: anim-shimmer 1.5s linear infinite;
+}
+
+/* Cards & surfaces: border-first, no shadow (free-angular component-card) */
+.dashboard-shell .tailadmin-card,
+.dashboard-shell .tailadmin-stat-card,
+.dashboard-shell .tailadmin-card-hover,
+.dashboard-shell .dashboard-card,
+.dashboard-shell .dashboard-card-elevated,
+.dashboard-shell .dashboard-card-hover,
+.dashboard-shell .dashboard-card-premium,
+.dashboard-shell .ds-card,
+.dashboard-shell ui-section-card > section {
+  box-shadow: none !important;
+}
+
+/* Overlays only (design-system §5–§9) */
+.dashboard-shell .user-menu-dropdown {
+  box-shadow: var(--shadow-theme-lg) !important;
+}
+
+.dashboard-shell .tailadmin-stat-card:hover,
+.dashboard-shell .tailadmin-card-hover:hover,
+.dashboard-shell .dashboard-card-hover:hover,
+.dashboard-shell .dashboard-card-premium:hover {
+  box-shadow: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ENHANCED INTERACTIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Smooth scale animation for interactive elements */
+.hover-scale {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Enhanced card with shadow layers */
+.dashboard-shell .dashboard-card-premium {
+  @apply rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03];
+  box-shadow: none;
+  transition: border-color 200ms ease;
+}
+
+.dashboard-shell .dashboard-card-premium:hover {
+  @apply border-gray-300 dark:border-gray-700;
+  box-shadow: none;
+}
+
+/* Gradient text with better contrast */
+.dashboard-text-gradient-enhanced {
+  color: var(--color-brand-700);
+  font-weight: 800;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOBILE – Équilibrage du design (petits écrans)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 639px) {
+  /* Aligner le padding header avec le container */
+  .dashboard-header-safe-area {
+    padding-left: max(1rem, env(safe-area-inset-left, 0));
+    padding-right: max(1rem, env(safe-area-inset-right, 0));
+  }
+
+  /* Titres de section moins serrés */
+  .dashboard-grid .col-span-12.mb-6 + .col-span-12 {
+    margin-top: 0;
+  }
+
+  /* Carte "À la une" / highlight : hauteur raisonnable sur mobile */
+  .dashboard-main-scroll .dashboard-card-hover.relative.overflow-hidden {
+    min-height: 240px;
+    max-height: 50vh;
+  }
+
+  /* Cercle de progression overview : un peu plus petit sur tout petit écran */
+  .dashboard-main-scroll .dashboard-progress-circle {
+    max-width: 14rem;
+    max-height: 14rem;
+  }
+
+  .dashboard-stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 383px) {
+  .dashboard-header-safe-area {
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0));
+  }
+
+  .dashboard-shell .dashboard-card,
+  .dashboard-shell .dashboard-card-hover,
+  .dashboard-shell .dashboard-card-elevated {
+    @apply p-4;
+  }
+
+  .dashboard-stat-value {
+    font-size: 1.375rem;
+  }
+}
+

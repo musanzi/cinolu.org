@@ -1,0 +1,24 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   🎨 SIDEBAR ITEM ACTIVE STATE - Ultra-moderne
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.sidebar-item-active {
+  @apply bg-brand-50 text-brand-700 border border-brand-200;
+  position: relative;
+}
+
+.sidebar-item-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: var(--color-brand-600, #508c3c);
+  border-radius: 0 4px 4px 0;
+}
+
+.sidebar-item-active span {
+  @apply font-bold;
+}

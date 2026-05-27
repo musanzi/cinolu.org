@@ -1,0 +1,405 @@
+<div class="pb-20">
+  <div class="mb-6 md:mb-8">
+    <button
+      type="button"
+      (click)="cancel()"
+      class="mb-4 inline-flex items-center gap-2 text-sm font-medium text-gray-600 transition-colors hover:text-brand-600 dark:text-gray-400 dark:hover:text-brand-400">
+      <i-lucide class="size-4" [name]="icons.back" />
+      <span>{{ 'common.back' | translate }}</span>
+    </button>
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary-100 flex items-center justify-center shrink-0">
+        <i-lucide class="text-primary-600 text-xl md:text-2xl" [name]="isEditMode() ? icons.edit : icons.addBusiness" />
+      </div>
+      <h1 class="text-xl md:text-3xl font-bold text-gray-900 leading-tight">
+        {{ isEditMode() ? 'Modifier le projet' : 'Créer un projet' }}
+      </h1>
+    </div>
+    <p class="text-sm md:text-base text-gray-600 leading-relaxed pl-12 md:pl-16">
+      {{ isEditMode() ? 'Mettez à jour les informations de votre projet' : 'Ajoutez votre projet entrepreneurial' }}
+    </p>
+  </div>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="rounded-2xl border border-gray-200 bg-white p-5 md:p-8 dark:border-gray-800 dark:bg-white/[0.03]">
+    <app-form-manager [form]="form" [loading]="venturesStore.isLoading()" [showProgress]="false">
+      <div class="mb-8">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="h-6 w-1 bg-primary-500 rounded-full"></div>
+          <h2 class="text-base md:text-lg font-bold text-gray-900">Informations de base</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div class="space-y-2 group">
+            <label
+              for="name"
+              class="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1.5 group-focus-within:text-primary-600 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              Nom du projet
+            </label>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all"
+              placeholder="Ex: Ma Startup" />
+            @if (form.get('name')?.invalid && form.get('name')?.touched) {
+            <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <i-lucide class="text-sm" [name]="icons.error" />
+              Le nom est requis
+            </p>
+            }
+          </div>
+
+          <div class="space-y-2">
+            <label for="email" class="block text-xs md:text-sm font-semibold text-gray-700">Adresse e-mail</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all"
+              placeholder="contact@entreprise.com" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="phone_number" class="block text-xs md:text-sm font-semibold text-gray-700">Téléphone</label>
+            <input
+              id="phone_number"
+              type="tel"
+              formControlName="phone_number"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all"
+              placeholder="+243 XX XXX XXXX" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="website" class="block text-xs md:text-sm font-semibold text-gray-700">Site web</label>
+            <input
+              id="website"
+              type="url"
+              formControlName="website"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all"
+              placeholder="https://exemple.com" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="linkedin_url" class="block text-xs md:text-sm font-semibold text-gray-700">LinkedIn</label>
+            <input
+              id="linkedin_url"
+              type="url"
+              formControlName="linkedin_url"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all"
+              placeholder="linkedin.com/company/..." />
+          </div>
+
+          <div class="space-y-2">
+            <label for="sector" class="block text-xs md:text-sm font-semibold text-gray-700">Secteur</label>
+            <select
+              id="sector"
+              formControlName="sector"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all bg-white">
+              <option value="">Sélectionner</option>
+              @for (sector of sectors; track sector) {
+              <option [value]="sector">{{ sector }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label for="stage" class="block text-xs md:text-sm font-semibold text-gray-700">Étape</label>
+            <select
+              id="stage"
+              formControlName="stage"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all bg-white">
+              <option value="">Sélectionner</option>
+              @for (stage of stages; track stage) {
+              <option [value]="stage">{{ stage }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label for="location" class="block text-xs md:text-sm font-semibold text-gray-700">Localisation</label>
+            <input
+              id="location"
+              type="text"
+              formControlName="location"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all"
+              placeholder="RDC - Lubumbashi" />
+          </div>
+
+          <div class="space-y-2">
+            <label for="founded_at" class="block text-xs md:text-sm font-semibold text-gray-700"
+              >Date de création</label
+            >
+            <input
+              id="founded_at"
+              type="date"
+              formControlName="founded_at"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all" />
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="h-6 w-1 bg-primary-500 rounded-full"></div>
+          <h2 class="text-base md:text-lg font-bold text-gray-900">Images</h2>
+        </div>
+
+        @if (!isEditMode()) {
+        <div class="bg-primary-50/50 border border-primary-200 rounded-lg p-3 md:p-4 mb-4">
+          <div class="flex items-start gap-3">
+            <i-lucide class="text-primary-600" [name]="icons.info" />
+            <div>
+              <p class="text-sm text-primary-900 font-semibold">Information</p>
+              <p class="text-sm text-primary-700">
+                Vous pourrez ajouter des images (couverture et galerie) après avoir créé le projet.
+              </p>
+            </div>
+          </div>
+        </div>
+        } @if (isEditMode()) {
+        <div class="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
+          <div class="rounded-xl border border-gray-200 p-4 md:p-5 dark:border-gray-800">
+            <div class="mb-3 flex items-center justify-between">
+              <div class="text-sm font-medium text-gray-800 dark:text-white/90">Image de couverture</div>
+              @if (venture()?.cover && !showCoverUpload()) {
+              <button
+                type="button"
+                (click)="showCoverUpload.set(true)"
+                class="text-primary-600 hover:text-primary-700 transition-colors text-xs md:text-sm font-medium">
+                Modifier
+              </button>
+              }
+            </div>
+
+            @if (venture()?.cover && !showCoverUpload()) {
+            <div class="relative group">
+              <img
+                [src]="venture() | apiIMG: 'ventureCover'"
+                alt="Couverture du projet"
+                class="h-40 w-full rounded-lg object-cover md:h-56 lg:h-64"
+                loading="lazy" />
+              <div
+                class="absolute inset-0 hover:bg-black/60 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-400 flex items-center justify-center gap-3">
+                <button
+                  type="button"
+                  (click)="showCoverUpload.set(true)"
+                  class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white text-gray-900 rounded-lg hover:bg-gray-100 font-medium text-sm">
+                  Modifier
+                </button>
+              </div>
+            </div>
+            } @else {
+            <app-confirmed-image-upload
+              previewShape="landscape"
+              chooseTitle="Choisir une couverture"
+              confirmLabel="Confirmer la couverture"
+              previewAlt="Aperçu de la couverture"
+              [name]="'cover'"
+              [url]="getCoverUploadUrl()"
+              (loaded)="handleCoverLoaded()" />
+            <p class="mt-2 text-center text-theme-xs text-gray-500 dark:text-gray-400">
+              JPG, PNG ou WEBP · aperçu avant envoi
+            </p>
+            }
+          </div>
+
+          <div class="rounded-xl border border-gray-200 p-4 md:p-5 dark:border-gray-800">
+            <div class="mb-3 flex items-center justify-between">
+              <div class="text-sm font-medium text-gray-800 dark:text-white/90">Logo du projet</div>
+              @if (venture()?.logo && !showLogoUpload()) {
+              <button
+                type="button"
+                (click)="showLogoUpload.set(true)"
+                class="text-primary-600 hover:text-primary-700 transition-colors text-xs md:text-sm font-medium">
+                Modifier
+              </button>
+              }
+            </div>
+
+            @if (venture()?.logo && !showLogoUpload()) {
+            <div class="relative group">
+              <img
+                [src]="venture() | apiIMG: 'venture'"
+                [alt]="(venture()?.name ?? 'Projet') + ' — logo'"
+                class="h-40 w-full rounded-lg bg-white object-contain md:h-56 lg:h-64"
+                loading="lazy" />
+              <div
+                class="absolute inset-0 hover:bg-black/60 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-400 flex items-center justify-center gap-3">
+                <button
+                  type="button"
+                  (click)="showLogoUpload.set(true)"
+                  class="opacity-0 group-hover:opacity-100 transition-opacity px-4 py-2 bg-white text-gray-900 rounded-lg hover:bg-gray-100 font-medium text-sm">
+                  Modifier
+                </button>
+              </div>
+            </div>
+            } @else {
+            <app-confirmed-image-upload
+              previewShape="square"
+              chooseTitle="Choisir un logo"
+              confirmLabel="Confirmer le logo"
+              previewAlt="Aperçu du logo"
+              [name]="'logo'"
+              [url]="getLogoUploadUrl()"
+              (loaded)="handleLogoLoaded()" />
+            <p class="mt-2 text-center text-theme-xs text-gray-500 dark:text-gray-400">
+              JPG, PNG ou WEBP · aperçu avant envoi
+            </p>
+            }
+          </div>
+        </div>
+
+        <div class="mt-4 rounded-xl border border-gray-200 p-4 md:p-5 dark:border-gray-800 md:mt-6">
+          <div class="mb-3">
+            <div class="text-sm font-medium text-gray-800 dark:text-white/90">
+              Galerie
+              @if (galleryImages().length > 0) {
+              <span class="text-theme-xs font-normal text-gray-500 dark:text-gray-400">
+                ({{ galleryImages().length }})
+              </span>
+              }
+            </div>
+            <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">
+              JPG, PNG ou WEBP — 2 Mo max par image · aperçu avant envoi
+            </p>
+          </div>
+
+          @if (galleryImages().length > 0) {
+          <div class="mb-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
+            @for (image of galleryImages(); track image.id || $index) {
+            <div class="group relative aspect-square overflow-hidden rounded-lg border border-gray-200">
+              <button
+                type="button"
+                class="image-preview-btn h-full w-full rounded-lg"
+                (click)="openGalleryLightbox($index)"
+                [attr.aria-label]="'gallery.viewFullscreen' | translate">
+                <img
+                  [src]="image | apiIMG: 'gallery'"
+                  [alt]="'Image galerie ' + ($index + 1)"
+                  class="image-preview-btn__img"
+                  loading="lazy" />
+                <span class="image-preview-btn__overlay" aria-hidden="true">
+                  <span class="image-preview-btn__eye">
+                    <i-lucide [name]="icons.eye" [size]="24"></i-lucide>
+                  </span>
+                </span>
+              </button>
+              <button
+                type="button"
+                (click)="removeGalleryImage(image.id)"
+                class="absolute top-1.5 right-1.5 z-10 md:top-2 md:right-2 w-7 h-7 md:w-9 md:h-9 flex items-center justify-center bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-300">
+                <i-lucide class="text-sm md:text-base leading-none pointer-events-none" [name]="icons.close" />
+              </button>
+            </div>
+            }
+          </div>
+          } @if (venture()) {
+          <app-gallery-image-upload
+            [name]="'image'"
+            [url]="getGalleryUploadUrl()"
+            (loaded)="handleGalleryLoaded()" />
+          }
+        </div>
+        }
+      </div>
+
+      <div class="mb-8">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="h-6 w-1 bg-primary-500 rounded-full"></div>
+          <h2 class="text-base md:text-lg font-bold text-gray-900">Détails du projet</h2>
+        </div>
+        <div class="space-y-4 md:space-y-6">
+          <div class="space-y-2 group">
+            <label
+              for="description"
+              class="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1.5 group-focus-within:text-primary-600 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              Description du projet
+            </label>
+            <textarea
+              id="description"
+              formControlName="description"
+              rows="4"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all resize-none"
+              placeholder="Décrivez votre projet..."></textarea>
+            @if (form.get('description')?.invalid && form.get('description')?.touched) {
+            <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <i-lucide class="text-sm" [name]="icons.error" />
+              La description est requise
+            </p>
+            }
+          </div>
+
+          <div class="space-y-2 group">
+            <label
+              for="problem_solved"
+              class="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1.5 group-focus-within:text-primary-600 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              Problème résolu
+            </label>
+            <textarea
+              id="problem_solved"
+              formControlName="problem_solved"
+              rows="4"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all resize-none"
+              placeholder="Quel problème résolvez-vous ?"></textarea>
+            @if (form.get('problem_solved')?.invalid && form.get('problem_solved')?.touched) {
+            <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <i-lucide class="text-sm" [name]="icons.error" />
+              Ce champ est requis
+            </p>
+            }
+          </div>
+
+          <div class="space-y-2 group">
+            <label
+              for="target_market"
+              class="text-xs md:text-sm font-semibold text-gray-700 flex items-center gap-1.5 group-focus-within:text-primary-600 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              Marché cible
+            </label>
+            <textarea
+              id="target_market"
+              formControlName="target_market"
+              rows="4"
+              class="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border border-gray-300 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-all resize-none"
+              placeholder="Qui sont vos clients cibles ?"></textarea>
+            @if (form.get('target_market')?.invalid && form.get('target_market')?.touched) {
+            <p class="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <i-lucide class="text-sm" [name]="icons.error" />
+              Ce champ est requis
+            </p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col-reverse sm:flex-row gap-3 justify-end pt-6 border-t border-gray-100">
+        <button
+          formActions
+          type="button"
+          (click)="cancel()"
+          class="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all active:scale-[0.98]">
+          Annuler
+        </button>
+        <button
+          formActions
+          type="submit"
+          [disabled]="form.invalid || venturesStore.isLoading()"
+          class="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2 justify-center">
+          @if (venturesStore.isLoading()) {
+          <div class="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <span>{{ isEditMode() ? 'Mise à jour...' : 'Création...' }}</span>
+          } @else {
+          <span>{{ isEditMode() ? 'Mettre à jour' : 'Créer' }}</span>
+          }
+        </button>
+      </div>
+    </app-form-manager>
+  </form>
+
+  <app-image-lightbox [(open)]="lightboxOpen" [images]="lightboxItems()" [(activeIndex)]="lightboxIndex" />
+</div>

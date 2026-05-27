@@ -1,0 +1,70 @@
+/* Shared hover: eye icon to open fullscreen preview (venture-details pattern) */
+
+.image-preview-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.image-preview-btn:focus-visible {
+  outline: 2px solid var(--color-brand-500, #465fff);
+  outline-offset: 2px;
+}
+
+.image-preview-btn__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.image-preview-btn:hover .image-preview-btn__img,
+.image-preview-btn:focus-visible .image-preview-btn__img {
+  transform: scale(1.05);
+}
+
+.image-preview-btn__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 0);
+  transition: background-color 0.3s ease;
+  pointer-events: none;
+}
+
+.image-preview-btn:hover .image-preview-btn__overlay,
+.image-preview-btn:focus-visible .image-preview-btn__overlay {
+  background: rgb(0 0 0 / 0.4);
+}
+
+.image-preview-btn__eye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.9);
+  color: #111827;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-preview-btn:hover .image-preview-btn__eye,
+.image-preview-btn:focus-visible .image-preview-btn__eye {
+  opacity: 1;
+}
+
+.image-preview-btn--sm .image-preview-btn__eye {
+  width: 2.25rem;
+  height: 2.25rem;
+}

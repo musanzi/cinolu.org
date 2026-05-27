@@ -1,0 +1,38 @@
+<div class="relative">
+  <button
+    type="button"
+    (click)="toggleDropdown($event)"
+    class="lang-switcher-button inline-flex h-10 items-center gap-1.5 rounded-xl px-2 transition-colors focus:outline-none sm:px-2.5"
+    [ngClass]="
+      inverted()
+        ? 'text-white hover:bg-white/10 active:bg-white/15'
+        : 'text-gray-900 hover:bg-black/5 active:bg-black/10'
+    ">
+    <img [src]="currentLangInfo().flag" [alt]="currentLangInfo().name" class="h-5 w-5 rounded" />
+    <span class="hidden text-sm font-medium sm:inline">{{ currentLangInfo().code.toUpperCase() }}</span>
+    <i-lucide
+      [name]="icons.chevronDown"
+      class="w-4 h-4 opacity-70 transition-transform duration-200"
+      [class.rotate-180]="isOpen" />
+  </button>
+
+  @if (isOpen) {
+  <div
+    class="lang-switcher-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50 anim-fade-in">
+    @for (lang of languageService.availableLanguages; track lang.code) {
+    <button
+      (click)="selectLanguage(lang.code)"
+      class="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors duration-150"
+      [class.bg-primary-50]="lang.code === languageService.currentLanguage()">
+      <img [src]="lang.flag" [alt]="lang.name" class="w-6 h-6 rounded" />
+      <span class="text-sm font-medium text-gray-700 flex-1 text-left">{{ lang.name }}</span>
+      @if (lang.code === languageService.currentLanguage()) {
+      <i-lucide [name]="icons.check" class="w-5 h-5 text-primary-500" />
+      }
+    </button>
+    }
+
+    <div class="px-4 py-2 text-xs text-gray-500 border-t border-gray-200 mt-1">{{ 'common.welcome' | translate }}</div>
+  </div>
+  }
+</div>

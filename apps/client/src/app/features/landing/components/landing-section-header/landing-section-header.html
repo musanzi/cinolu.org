@@ -1,0 +1,11 @@
+<app-public-section-header
+  [badgeKey]="badgeKey()"
+  [titleKey]="titleKey()"
+  [titleHighlightKey]="titleHighlightKey()"
+  [descriptionKey]="descriptionKey()"
+  [descriptionParams]="descriptionParams()"
+  [descriptionClass]="descriptionClass()"
+  layout="split"
+  align="left">
+  <ng-content select="[headerEnd]" />
+</app-public-section-header>

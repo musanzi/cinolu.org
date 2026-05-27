@@ -1,0 +1,34 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-5 transition-shadow duration-200 hover:shadow-md">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+        <i-lucide [name]="icons.hourglass" class="size-5 stroke-[1.5]"></i-lucide>
+      </div>
+      <h4 class="font-bold text-base text-gray-900">{{ 'project_detail.detail.duration' | translate }}</h4>
+    </div>
+    <p class="text-gray-700">
+      {{ project().duration_hours || ('project_detail.detail.empty' | translate) }}
+      {{ 'project_detail.detail.duration_hours' | translate }}
+    </p>
+  </div>
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-5 transition-shadow duration-200 hover:shadow-md">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-9 h-9 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center">
+        <i-lucide [name]="icons.users" class="size-5 stroke-[1.5]"></i-lucide>
+      </div>
+      <h4 class="font-bold text-base text-gray-900">{{ 'project_detail.detail.participants' | translate }}</h4>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      @if (project().participants && project().participants.length > 0) {
+        @for (participant of project().participants; track participant.id) {
+          <span
+            class="px-3 py-1.5 rounded-full bg-pink-50 border border-pink-200 text-gray-700 text-sm font-medium transition-colors duration-200 hover:bg-pink-100">
+            {{ participant.name }}
+          </span>
+        }
+      } @else {
+        <span class="text-gray-500 text-sm italic">{{ 'project_detail.detail.no_participant' | translate }}</span>
+      }
+    </div>
+  </div>
+</div>

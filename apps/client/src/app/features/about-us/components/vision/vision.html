@@ -1,0 +1,42 @@
+<section class="about-section about-section--north" id="vision">
+  <div class="about-wrap about-wrap--py">
+    <p class="about-label">{{ 'about_us.north_star.badge' | translate }}</p>
+    <h2 class="about-h2">
+      {{ 'about_us.north_star.title' | translate }}
+      <span>{{ 'about_us.north_star.title_highlight' | translate }}</span>
+    </h2>
+    <p class="about-lead">{{ 'about_us.north_star.subtitle' | translate }}</p>
+
+    <div class="about-north-stack">
+      <article class="about-north-block about-north-block--vision">
+        <p class="about-north-block__index" aria-hidden="true">01</p>
+        <div>
+          <p class="about-north-block__tag">
+            <i-lucide [name]="icons.vision" class="size-4" aria-hidden="true"></i-lucide>
+            {{ 'about_us.vision.badge' | translate }}
+          </p>
+          <h3 class="about-north-block__title">
+            {{ 'about_us.vision.title' | translate }}
+            <span>{{ 'about_us.vision.title_highlight' | translate }}</span>
+          </h3>
+          <p class="about-north-block__body" [innerHTML]="'about_us.vision.description' | translate"></p>
+        </div>
+      </article>
+
+      <article class="about-north-block about-north-block--mission">
+        <p class="about-north-block__index" aria-hidden="true">02</p>
+        <div>
+          <p class="about-north-block__tag">
+            <i-lucide [name]="icons.mission" class="size-4" aria-hidden="true"></i-lucide>
+            {{ 'about_us.mission.badge' | translate }}
+          </p>
+          <h3 class="about-north-block__title">
+            {{ 'about_us.mission.title' | translate }}
+            <span>{{ 'about_us.mission.title_highlight' | translate }}</span>
+          </h3>
+          <p class="about-north-block__body" [innerHTML]="'about_us.mission.description' | translate"></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

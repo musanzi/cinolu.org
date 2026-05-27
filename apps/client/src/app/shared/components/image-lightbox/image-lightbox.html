@@ -1,0 +1,61 @@
+@if (open() && images().length > 0) {
+<div
+  class="image-lightbox anim-fade-in"
+  role="dialog"
+  aria-modal="true"
+  tabindex="-1"
+  (click)="close()"
+  (keydown.escape)="close()">
+  <button
+    type="button"
+    class="image-lightbox__close group"
+    (click)="close(); $event.stopPropagation()"
+    [attr.aria-label]="'common.close' | translate">
+    <i-lucide [name]="icons.close" class="image-lightbox__close-icon" [size]="24" aria-hidden="true"></i-lucide>
+  </button>
+
+  @if (showCounter() && images().length > 1) {
+  <div class="image-lightbox__counter" aria-live="polite">
+    <span class="image-lightbox__counter-text">
+      {{ activeIndex() + 1 }} / {{ images().length }}
+    </span>
+  </div>
+  }
+
+  @if (images().length > 1) {
+  <button
+    type="button"
+    class="image-lightbox__nav image-lightbox__nav--prev group"
+    (click)="prev($event)"
+    [attr.aria-label]="'common.previous' | translate">
+    <i-lucide
+      [name]="icons.prev"
+      class="image-lightbox__nav-icon group-hover:-translate-x-0.5"
+      [size]="24"
+      aria-hidden="true"></i-lucide>
+  </button>
+  <button
+    type="button"
+    class="image-lightbox__nav image-lightbox__nav--next group"
+    (click)="next($event)"
+    [attr.aria-label]="'common.next' | translate">
+    <i-lucide
+      [name]="icons.next"
+      class="image-lightbox__nav-icon group-hover:translate-x-0.5"
+      [size]="24"
+      aria-hidden="true"></i-lucide>
+  </button>
+  }
+
+  <div
+    class="image-lightbox__stage"
+    tabindex="0"
+    (click)="$event.stopPropagation()"
+    (keydown.escape)="close()">
+    <img
+      [src]="current()?.src"
+      [alt]="current()?.alt || ''"
+      class="image-lightbox__image" />
+  </div>
+</div>
+}

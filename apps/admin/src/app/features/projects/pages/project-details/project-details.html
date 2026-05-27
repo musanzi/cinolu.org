@@ -1,0 +1,64 @@
+<section class="pt-32 dashboard-main-content flex flex-col gap-4">
+  @let project = projectStore.project();
+  @if (project) {
+    <div
+      class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 mb-6">
+      <div class="flex-1">
+        <h2 class="text-xl font-bold text-gray-900">{{ project.name }}</h2>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <app-ui-button
+          (clicked)="onShowcase()"
+          size="small"
+          [variant]="project.is_highlighted ? 'success' : 'primary'"
+          [outlined]="!project.is_highlighted">
+          <i-lucide [name]="icons.Star" class="size-4" />
+          {{ project.is_highlighted ? 'Retirer de la vedette' : 'Mettre en vedette' }}
+        </app-ui-button>
+        <app-ui-button
+          (clicked)="onPublish()"
+          size="small"
+          [variant]="project.is_published ? 'success' : 'primary'"
+          [outlined]="!project.is_published">
+          <i-lucide [name]="icons.Eye" class="size-4" />
+          {{ project.is_published ? 'Dépublier' : 'Publier' }}
+        </app-ui-button>
+      </div>
+    </div>
+  }
+  <app-ui-tabs [tabs]="tabs" [activeTab]="activeTab()" (tabChange)="onTabChange($event)" />
+  @if (projectStore.isLoading()) {
+    <app-project-details-skeleton />
+  }
+  @if (activeTab() === 'details' && project) {
+    <app-project-sheet [project]="project" />
+  }
+  @if (activeTab() === 'gallery' && project) {
+    <app-project-gallery
+      [project]="project"
+      [gallery]="galleryStore.gallery()"
+      [isLoading]="projectStore.isLoading()"
+      (coverUploaded)="onCoverUploaded()"
+      (galleryUploaded)="onGalleryUploaded()"
+      (deleteImage)="onDeleteImage($event)" />
+  }
+  @if (activeTab() === 'phases' && project) {
+    <app-phases [projectId]="project.id" />
+  }
+  @if (activeTab() === 'participations' && project) {
+    <app-project-participations [project]="project" />
+  }
+  @if (activeTab() === 'resources' && project) {
+    <app-project-resources [projectId]="project.id" [phases]="project.phases" />
+  }
+  @if (activeTab() === 'notifications' && project) {
+    <app-project-notifications [project]="project" />
+  }
+  @if (activeTab() === 'edit' && project) {
+    <app-project-update
+      [project]="project"
+      [programs]="programsStore.subprograms()"
+      [staff]="usersStore.staff()"
+      [categories]="categoriesStore.allCategories()" />
+  }
+</section>

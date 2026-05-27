@@ -1,0 +1,47 @@
+<div class="public-band-muted bg-grid overflow-hidden">
+  <section
+    class="fade-left-init py-12 lg:py-20"
+    id="events"
+    appAnimationsOnScroll>
+    <app-public-container>
+      <app-landing-section-header
+        badgeKey="recent_events.badge"
+        titleKey="recent_events.title"
+        titleHighlightKey="recent_events.title_highlight"
+        descriptionKey="recent_events.description">
+        <div headerEnd class="hidden shrink-0 items-center gap-2 text-sm font-semibold text-slate-400 lg:flex">
+          <i-lucide [name]="icons.arrowRight" class="size-4" />
+          <span>Selection recente</span>
+        </div>
+      </app-landing-section-header>
+
+      @if (store.isLoading()) {
+      <div class="mt-8 grid grid-cols-1 gap-x-5 gap-y-10 pb-10 md:grid-cols-2 xl:grid-cols-3">
+        @for (skeleton of [1, 2, 3]; track skeleton) {
+        <app-event-card-skeleton />
+        }
+      </div>
+      }
+      <div class="mt-8 space-y-6 lg:space-y-12">
+        <app-cards-carousel
+          [items]="store.events()"
+          [trackBy]="trackByEventId"
+          [itemTemplate]="eventSlide">
+        </app-cards-carousel>
+
+        <ng-template #eventSlide let-event>
+          <app-event-card class="block h-full" [event]="event" [buttonTextKey]="'recent_events.explore'" />
+        </ng-template>
+
+        <div class="flex w-full items-center justify-center">
+          <app-public-button variant="secondary" routerLink="/events" className="group">
+            <span>{{ 'recent_events.view_all' | translate }}</span>
+            <i-lucide
+              class="size-5 transition-transform duration-300 group-hover:translate-x-1"
+              [name]="icons.arrowRight" />
+          </app-public-button>
+        </div>
+      </div>
+    </app-public-container>
+  </section>
+</div>

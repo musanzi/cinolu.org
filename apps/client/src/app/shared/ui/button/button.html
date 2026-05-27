@@ -1,0 +1,11 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  class="inline-flex items-center justify-center gap-2 rounded-lg border font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60"
+  [class.w-full]="fullWidth()"
+  [ngClass]="[variantClasses[variant()], sizeClasses[size()]]">
+  @if (loading()) {
+  <i-lucide [name]="loaderIcon" class="size-4 animate-spin" />
+  }
+  <ng-content />
+</button>

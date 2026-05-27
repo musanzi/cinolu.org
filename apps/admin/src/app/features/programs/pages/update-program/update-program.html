@@ -1,0 +1,94 @@
+<div class="border border-gray-200 rounded-lg p-4 md:bg-white md:p-6">
+  @let program = store.program();
+  @if (program) {
+    <div
+      class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 mb-6">
+      <div class="flex-1">
+        <h2 class="text-xl font-bold text-gray-900">{{ program.name }}</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <app-ui-button
+          (clicked)="onShowcase()"
+          size="small"
+          [variant]="program.is_highlighted ? 'success' : 'primary'"
+          [outlined]="!program.is_highlighted">
+          <i-lucide [name]="icons.Star" class="size-4" />
+          {{ program.is_highlighted ? 'Retirer de la vedette' : 'Mettre en vedette' }}
+        </app-ui-button>
+        <app-ui-button
+          (clicked)="onPublish()"
+          size="small"
+          [variant]="program.is_published ? 'success' : 'primary'"
+          [outlined]="!program.is_published">
+          <i-lucide [name]="icons.Eye" class="size-4" />
+          {{ program.is_published ? 'Dépublier' : 'Publier' }}
+        </app-ui-button>
+      </div>
+    </div>
+  }
+  <div class="pt-6">
+    <app-ui-tabs [tabs]="tabs" [activeTab]="activeTab()" (tabChange)="onTabChange($event)" />
+  </div>
+  @if (activeTab() === 'edit') {
+    <div class="pt-6 flex flex-col gap-6">
+      <p class="text-sm font-semibold text-gray-700">Logo du programme</p>
+      <div class="w-full md:w-md">
+        @if (store.isLoading()) {
+          <div class="h-32 bg-gray-200 animate-pulse rounded-xl"></div>
+        } @else {
+          <div
+            class="p-4 border-2 border-dashed border-gray-300 rounded-xl hover:border-primary-400 transition-colors duration-200">
+            <app-ui-file-upload [name]="'logo'" [url]="'programs/' + program?.id + '/logo'" />
+          </div>
+        }
+      </div>
+      <div class="border-t border-gray-100"></div>
+      <form class="space-y-6" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <app-ui-select
+            [id]="'category_id'"
+            label="Catégorie"
+            [optionLabel]="'name'"
+            [optionValue]="'id'"
+            [options]="categoriesStore.allCategories()"
+            formControlName="category"
+            placeholder="Sélectionner une catégorie" />
+          <app-ui-select
+            [id]="'sector_id'"
+            label="Secteur"
+            [optionLabel]="'name'"
+            [optionValue]="'id'"
+            [options]="sectorsStore.sectors()"
+            [allowCreate]="true"
+            [createDisabled]="sectorsStore.isLoading()"
+            createPlaceholder="Ajouter un secteur"
+            createButtonLabel="Ajouter"
+            formControlName="sector"
+            placeholder="Sélectionner un secteur"
+            (createOption)="onCreateSector($event)" />
+          <app-ui-input [id]="'name'" label="Nom du programme" formControlName="name" placeholder="Nom du programme" />
+          <app-ui-textarea
+            class="md:col-span-2"
+            [rows]="7"
+            [id]="'description'"
+            label="Description"
+            formControlName="description"
+            placeholder="Description détaillée du programme..." />
+        </div>
+        <div class="flex justify-end pt-4 border-t border-gray-100">
+          <app-ui-button
+            [size]="'small'"
+            type="submit"
+            [disabled]="updateForm.invalid || store.isLoading()"
+            [loading]="store.isLoading()"
+            variant="primary">
+            Mettre à jour
+          </app-ui-button>
+        </div>
+      </form>
+    </div>
+  }
+  @if (activeTab() === 'subprograms' && program) {
+    <app-list-subprograms [programId]="program.id" [programs]="store.allPrograms()" />
+  }
+</div>

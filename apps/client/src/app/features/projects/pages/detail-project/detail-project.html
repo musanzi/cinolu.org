@@ -1,0 +1,80 @@
+<section class="bg-grid">
+  <div class="px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto bg-white pt-24 pb-20">
+    @if (store.project(); as project) {
+    <div class="space-y-16">
+      <app-project-detail-header
+        [project]="project"
+        [projectStatus]="projectStatus()"
+        [isProjectOpen]="isProjectOpen()"
+        (apply)="applyToProject()" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+        <aside class="md:sticky md:top-28 2xl:top-36 self-start z-10">
+          <app-project-detail-gallery [project]="project" />
+        </aside>
+        <div class="flex flex-col gap-10">
+          <app-project-detail-collapsible
+            titleKey="project_detail.detail.description"
+            [content]="project.description"
+            [expanded]="expandedDescription()"
+            sectionId="project-description"
+            theme="primary"
+            (toggleChange)="toggleDescription()" />
+          <app-project-detail-collapsible
+            titleKey="project_detail.detail.selection_criteria"
+            [content]="project.selection_criteria"
+            [expanded]="expandedCriteria()"
+            sectionId="criteria-description"
+            theme="primary-check"
+            (toggleChange)="toggleCriteria()" />
+          <app-project-detail-collapsible
+            titleKey="project_detail.detail.objectives"
+            [content]="project.objectives"
+            [expanded]="expandedObjectives()"
+            sectionId="project-objectives"
+            theme="amber"
+            (toggleChange)="toggleObjectives()" />
+          <app-project-detail-collapsible
+            titleKey="project_detail.detail.context"
+            [content]="project.context"
+            [expanded]="expandedContext()"
+            sectionId="project-context"
+            theme="blue"
+            (toggleChange)="toggleContext()" />
+
+          <app-project-detail-phases [phases]="orderedPhases()" />
+          <app-project-detail-meta [project]="project" />
+          <app-project-detail-dates [project]="project" />
+          <app-project-detail-categories [project]="project" />
+          <app-project-detail-quick-actions
+            [project]="project"
+            [projectStatus]="projectStatus()"
+            [statusBadgeClasses]="statusBadgeClasses()"
+            [isProjectOpen]="isProjectOpen()"
+            (addToCalendar)="addToCalendar()"
+            (share)="shareProject()"
+            (apply)="applyToProject()" />
+        </div>
+      </div>
+    </div>
+    } @else if (store.isLoading()) {
+    <app-project-skeleton />
+    } @else {
+    <app-project-detail-error />
+    }
+
+    <div class="overflow-hidden mt-10">
+      @if (participationsStore.totalCount() > 0) {
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center">
+          <i-lucide [name]="icons.thumbsUp" class="size-5 stroke-[1.5]"></i-lucide>
+        </div>
+        <h2 class="text-lg font-bold text-gray-900">{{ 'project_detail.detail.participations_title' | translate }}</h2>
+      </div>
+      }
+      <app-participation-cards [project]="store.project()" (authRequired)="showAuthModal.set(true)" />
+    </div>
+  </div>
+
+  <app-auth-required-modal [isOpen]="showAuthModal()" [returnUrl]="returnUrl()" (closed)="closeAuthModal()" />
+</section>

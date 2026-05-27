@@ -1,0 +1,88 @@
+<div class="confirmed-upload">
+  @if (previewUrl()) {
+  <div
+    class="confirmed-upload__preview"
+    [class.confirmed-upload__preview--circle]="previewShape() === 'circle'"
+    [class.confirmed-upload__preview--landscape]="previewShape() === 'landscape'"
+    [class.confirmed-upload__preview--square]="previewShape() === 'square'">
+    <button
+      type="button"
+      class="image-preview-btn confirmed-upload__preview-trigger"
+      [class.rounded-full]="previewShape() === 'circle'"
+      [class.rounded-lg]="previewShape() !== 'circle'"
+      (click)="openPreview()"
+      [attr.aria-label]="'gallery.viewFullscreen' | translate">
+      <img
+        [src]="previewUrl()!"
+        [alt]="previewAlt()"
+        class="image-preview-btn__img confirmed-upload__preview-img"
+        [class.confirmed-upload__preview-img--circle]="previewShape() === 'circle'"
+        [class.confirmed-upload__preview-img--landscape]="previewShape() === 'landscape'"
+        [class.confirmed-upload__preview-img--square]="previewShape() === 'square'" />
+      <span class="image-preview-btn__overlay" aria-hidden="true">
+        <span class="image-preview-btn__eye">
+          <i-lucide [name]="icons.eye" class="size-5"></i-lucide>
+        </span>
+      </span>
+    </button>
+    <button
+      type="button"
+      class="confirmed-upload__remove"
+      [disabled]="uploading()"
+      (click)="clearPending()"
+      aria-label="Retirer l'image sélectionnée">
+      <i-lucide [name]="icons.trash" class="size-4" aria-hidden="true"></i-lucide>
+    </button>
+    <p class="confirmed-upload__filename">{{ pendingFile()?.name }}</p>
+  </div>
+
+  <div class="confirmed-upload__actions">
+    <button
+      type="button"
+      class="confirmed-upload__btn confirmed-upload__btn--primary"
+      [disabled]="uploading()"
+      (click)="upload()">
+      @if (uploading()) {
+      <span class="confirmed-upload__spinner" aria-hidden="true"></span>
+      <span>Téléversement…</span>
+      } @else {
+      <i-lucide [name]="icons.upload" class="size-4" aria-hidden="true"></i-lucide>
+      <span>{{ confirmLabel() }}</span>
+      }
+    </button>
+    <button
+      type="button"
+      class="confirmed-upload__btn confirmed-upload__btn--ghost"
+      [disabled]="uploading()"
+      (click)="clearPending()">
+      Annuler
+    </button>
+  </div>
+  } @else {
+  <label class="confirmed-upload__dropzone" [class.is-dragover]="dragOver()">
+    <input
+      type="file"
+      class="sr-only"
+      accept="image/jpeg,image/png,image/webp"
+      [disabled]="uploading()"
+      (change)="onFileInput($event)" />
+    <div
+      class="confirmed-upload__dropzone-inner"
+      (drop)="onDrop($event)"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()">
+      <i-lucide [name]="icons.imagePlus" class="confirmed-upload__icon" aria-hidden="true"></i-lucide>
+      <p class="confirmed-upload__title">{{ chooseTitle() }}</p>
+      <p class="confirmed-upload__hint">
+        Glisser-déposer ou <span class="confirmed-upload__link">parcourir</span> — max. {{ maxSizeMb() }} Mo
+      </p>
+    </div>
+  </label>
+  }
+
+  @if (error()) {
+  <p class="confirmed-upload__error" role="alert">{{ error() }}</p>
+  }
+
+  <app-image-lightbox [(open)]="lightboxOpen" [images]="lightboxItems()" [showCounter]="false" />
+</div>

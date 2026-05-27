@@ -1,0 +1,78 @@
+<section class="about-section about-section--story" id="story">
+  <div class="about-wrap about-wrap--py">
+    <p class="about-label">{{ 'about_us.about.badge' | translate }}</p>
+    <h2 class="about-h2">
+      {{ 'about_us.about.title' | translate }}
+      <span>{{ 'about_us.about.title_highlight' | translate }}</span>
+    </h2>
+
+    <div class="about-story-layout">
+      <div class="about-story-years" aria-hidden="true">
+        <p class="about-story-years__num">10+</p>
+        <p class="about-story-years__caption">{{ 'about_us.about.years_caption' | translate }}</p>
+      </div>
+
+      <div class="about-story-visual">
+        <div class="about-story-visual__frame">
+          <img src="/images/about.jpg" alt="Cinolu — Centre d'Innovation de Lubumbashi" loading="lazy" />
+        </div>
+        <div class="about-story-visual__badge">
+          <strong>OneStop</strong>
+          <span>{{ 'about_us.hero.chip_platform' | translate }}</span>
+        </div>
+      </div>
+
+      <div class="about-prose">
+        <p [innerHTML]="'about_us.about.paragraph_1' | translate"></p>
+        <p [innerHTML]="'about_us.about.paragraph_2' | translate"></p>
+        <p [innerHTML]="'about_us.about.paragraph_3' | translate"></p>
+      </div>
+    </div>
+
+    <div class="about-pillars-row" role="list">
+      <article class="about-pillar-pro" role="listitem">
+        <p class="about-pillar-pro__index">01</p>
+        <div class="about-pillar-pro__icon" aria-hidden="true">
+          <i-lucide [name]="icons.lightbulb" class="size-5"></i-lucide>
+        </div>
+        <h3 class="about-pillar-pro__title">{{ 'about_us.about.pillar_innovation' | translate }}</h3>
+        <p class="about-pillar-pro__text">{{ 'about_us.about.pillar_innovation_desc' | translate }}</p>
+      </article>
+      <article class="about-pillar-pro" role="listitem">
+        <p class="about-pillar-pro__index">02</p>
+        <div class="about-pillar-pro__icon" aria-hidden="true">
+          <i-lucide [name]="icons.layers" class="size-5"></i-lucide>
+        </div>
+        <h3 class="about-pillar-pro__title">{{ 'about_us.about.pillar_incubation' | translate }}</h3>
+        <p class="about-pillar-pro__text">{{ 'about_us.about.pillar_incubation_desc' | translate }}</p>
+      </article>
+      <article class="about-pillar-pro" role="listitem">
+        <p class="about-pillar-pro__index">03</p>
+        <div class="about-pillar-pro__icon" aria-hidden="true">
+          <i-lucide [name]="icons.heartHandshake" class="size-5"></i-lucide>
+        </div>
+        <h3 class="about-pillar-pro__title">{{ 'about_us.about.pillar_impact' | translate }}</h3>
+        <p class="about-pillar-pro__text">{{ 'about_us.about.pillar_impact_desc' | translate }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="about-manifesto" aria-label="Manifeste Cinolu">
+  <div class="about-manifesto__pattern" aria-hidden="true"></div>
+  <div class="about-wrap">
+    <div class="about-manifesto__layout">
+      <div class="about-manifesto__aside">
+        <p class="about-manifesto__kicker">{{ 'about_us.about.manifesto_kicker' | translate }}</p>
+      </div>
+      <div>
+        <blockquote class="about-manifesto__quote">{{ 'about_us.about.quote' | translate }}</blockquote>
+        <p class="about-manifesto__cta-text">{{ 'about_us.about.quote_cta' | translate }}</p>
+        <a routerLink="/sign-up" class="about-manifesto__cta">
+          <span>{{ 'about_us.about.cta_join' | translate }}</span>
+          <i-lucide [name]="icons.userPlus" class="size-4" aria-hidden="true"></i-lucide>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

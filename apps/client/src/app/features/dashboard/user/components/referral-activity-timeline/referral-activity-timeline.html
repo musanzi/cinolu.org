@@ -1,0 +1,33 @@
+<div class="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h3 class="text-lg font-bold text-gray-900">Activité récente</h3>
+    <i-lucide name="activity" class="w-5 h-5 text-gray-400" />
+  </div>
+
+  @if (activities().length > 0) {
+  <div class="space-y-4">
+    @for (activity of activities(); track activity.id) {
+    <div class="flex items-start gap-4 group">
+      <div [class]="'shrink-0 w-10 h-10 rounded-full flex items-center justify-center ' + activity.iconColor">
+        <i-lucide [name]="activity.icon" class="w-5 h-5" />
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-medium text-gray-900 group-hover:text-primary-600 transition-colors">
+          {{ activity.message }}
+        </p>
+        <p class="text-xs text-gray-500 mt-1">{{ activity.date | date: 'dd MMM yyyy à HH:mm' }}</p>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="text-center py-8">
+    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+      <i-lucide name="inbox" class="w-8 h-8 text-gray-400" />
+    </div>
+    <p class="text-sm text-gray-500">Aucune activité pour le moment</p>
+    <p class="text-xs text-gray-400 mt-1">Partage ton lien pour voir tes premiers parrainages</p>
+  </div>
+  }
+</div>

@@ -1,0 +1,182 @@
+<div class="pb-20">
+  @if (dashboardStore.isLoading()) {
+  <div class="flex flex-col justify-center items-center py-24">
+    <div class="relative">
+      <div class="w-16 h-16 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+      <div class="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-brand-400 rounded-full animate-ping"></div>
+    </div>
+    <p class="mt-6 text-gray-600 font-medium animate-pulse">Chargement de votre dashboard...</p>
+  </div>
+  } @else {
+  <div class="grid grid-cols-12 gap-4 md:gap-6">
+    <div class="col-span-12">
+      <div class="tailadmin-card relative overflow-hidden">
+        <div
+          class="absolute top-0 right-0 w-96 h-96 bg-brand-600 rounded-full blur-3xl z-0"></div>
+
+        <div class="relative z-10 flex items-start gap-5">
+          <div
+            class="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+            <i-lucide class="text-white text-3xl md:text-4xl" [name]="icons.school" />
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <h1 class="text-2xl font-bold text-gray-900 mb-1">
+              Dashboard Mentor, <span class="text-brand-600">{{ authStore.user()?.name }}</span>
+            </h1>
+            <p class="text-gray-600 text-sm md:text-base">Voici un aperçu complet de votre espace de mentorat</p>
+
+            @if (profileStore.isApproved()) {
+            <div class="flex items-center gap-2 text-gray-700 text-sm flex-wrap mt-2">
+              <span class="dashboard-badge-success">
+                <i-lucide class="text-sm" [name]="icons.statusApproved" />
+                Mentor Approuvé
+              </span>
+            </div>
+            } @else if (profileStore.isPending()) {
+            <div class="flex items-center gap-2 text-gray-700 text-sm flex-wrap mt-2">
+              <span class="dashboard-badge-warning">
+                <i-lucide class="text-sm" [name]="icons.clock" />
+                En attente d'approbation
+              </span>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12 mb-2">
+      <h2 class="text-xl font-bold text-gray-900 mb-1">Statistiques du mentor</h2>
+      <p class="text-sm text-gray-600">Vue d'ensemble de votre activité</p>
+    </div>
+
+    @if (dashboardStore.stats(); as stats) {
+    <div class="col-span-12">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
+            <i-lucide class="h-6 w-6 text-gray-700" [name]="icons.sessions" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500">Sessions totales</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800">0</h4>
+          </div>
+        </div>
+
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
+            <i-lucide class="h-6 w-6 text-gray-700" [name]="icons.mentees" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500">Entrepreneurs suivis</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800">0</h4>
+          </div>
+        </div>
+
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
+            <i-lucide class="h-6 w-6 text-gray-700" [name]="icons.mail" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500">Demandes en attente</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800">{{ stats.pendingRequests }}</h4>
+          </div>
+        </div>
+
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
+            <i-lucide class="h-6 w-6 text-gray-700" [name]="icons.rating" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500">Note moyenne</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800">0<span class="text-lg">/5</span></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <div class="col-span-12">
+      <div class="tailadmin-card">
+        <h2 class="text-lg font-bold text-gray-900 mb-4">Actions rapides</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a
+            routerLink="/dashboard/mentor/profile"
+            class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-brand-300 hover:bg-brand-50/50 transition-all group">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-500 text-white shrink-0">
+              <i-lucide class="text-xl" [name]="icons.profile" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 group-hover:text-brand-700 transition-colors">Mon profil</p>
+              <p class="text-xs text-gray-600">Gérer mes informations</p>
+            </div>
+            <i-lucide class="text-gray-400 group-hover:text-brand-600 transition-colors shrink-0" [name]="icons.arrowRight" />
+          </a>
+
+          <a
+            class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500 text-white shrink-0">
+              <i-lucide class="text-xl" [name]="icons.mail" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 group-hover:text-amber-700 transition-colors">Demandes</p>
+              <p class="text-xs text-gray-600">Gérer les demandes</p>
+            </div>
+            @if (dashboardStore.stats()?.pendingRequests; as count) {
+              @if (count > 0) {
+            <span class="px-2 py-1 text-xs font-bold bg-red-500 text-white rounded-full min-w-6 text-center shrink-0">{{ count }}</span>
+              }
+            }
+            <i-lucide class="text-gray-400 group-hover:text-amber-600 transition-colors shrink-0" [name]="icons.arrowRight" />
+          </a>
+
+          <a
+            class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition-all group">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500 text-white shrink-0">
+              <i-lucide class="text-xl" [name]="icons.sessions" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">Sessions</p>
+              <p class="text-xs text-gray-600">Mes rendez-vous</p>
+            </div>
+            <i-lucide class="text-gray-400 group-hover:text-blue-600 transition-colors shrink-0" [name]="icons.arrowRight" />
+          </a>
+
+          <a
+            class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50 transition-all group">
+            <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500 text-white shrink-0">
+              <i-lucide class="text-xl" [name]="icons.mentees" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 group-hover:text-emerald-700 transition-colors">Entrepreneurs</p>
+              <p class="text-xs text-gray-600">Mes accompagnés</p>
+            </div>
+            <i-lucide class="text-gray-400 group-hover:text-emerald-600 transition-colors shrink-0" [name]="icons.arrowRight" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12">
+      <div class="tailadmin-card">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-lg font-bold text-gray-900">Activité récente</h2>
+          <span class="dashboard-badge-neutral">
+            <i-lucide class="text-xs" [name]="icons.history" />
+            <span>Dernières actions</span>
+          </span>
+        </div>
+
+        <div class="flex flex-col items-center justify-center py-12 px-4">
+          <div class="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
+            <i-lucide class="text-gray-400 text-4xl" [name]="icons.inbox" />
+          </div>
+          <h3 class="text-base font-semibold text-gray-900 mb-2">Aucune activité récente</h3>
+          <p class="text-sm text-gray-600 text-center max-w-md">Vos dernières actions s'afficheront ici</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

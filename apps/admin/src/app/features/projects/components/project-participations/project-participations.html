@@ -1,0 +1,5 @@
+@if (!selectedParticipationId()) {
+  <app-project-participations-list [project]="project()" (selectParticipation)="onSelectParticipation($event)" />
+} @else {
+  <app-project-participation-details [participationId]="selectedParticipationId()!" (back)="closeDetails()" />
+}

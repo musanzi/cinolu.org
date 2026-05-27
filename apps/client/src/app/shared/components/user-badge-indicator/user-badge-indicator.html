@@ -1,0 +1,14 @@
+@if (badge()) {
+<div
+  [class]="
+          'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 ' +
+          getBackgroundClass()
+        "
+  [title]="badge()!.description">
+  <i-lucide [name]="badge()!.icon" [class]="'w-3.5 h-3.5 ' + badge()!.color" />
+
+  @if (showLabel()) {
+  <span [ngClass]="badge()!.color"> {{ badge()!.name }} </span>
+  }
+</div>
+}

@@ -1,0 +1,149 @@
+@let isLoading = store.isLoading();
+@let isImportingCsv = store.isImportingCsv();
+@let userCount = store.users()[1];
+@let users = store.users()[0];
+<div class="dashboard-main-content">
+  <input
+    #csvFileInput
+    [id]="'users-csv-input'"
+    type="file"
+    accept=".csv"
+    class="sr-only"
+    (change)="onCsvFileSelected($event)"
+    [disabled]="isImportingCsv" />
+  <div class="flex flex-col md:flex-row gap-4 md:justify-between md:items-center mb-4">
+    <app-ui-badge [label]="userCount.toString() + ' Utilisateurs'" />
+    <div class="flex flex-wrap items-center gap-2">
+      <app-ui-button
+        variant="primary"
+        [outlined]="true"
+        size="small"
+        [loading]="isImportingCsv"
+        [disabled]="isImportingCsv"
+        (clicked)="triggerCsvFileSelect()">
+        @if (!isImportingCsv) {
+          <i-lucide [name]="icons.Upload" class="size-4" />
+        }
+        Importer CSV
+      </app-ui-button>
+      @let isDownloading = store.isDownloading();
+      <app-ui-button
+        variant="primary"
+        [outlined]="true"
+        size="small"
+        [loading]="isDownloading"
+        [disabled]="userCount === 0 || isDownloading"
+        (clicked)="onDownloadUsers()">
+        @if (!isDownloading) {
+          <i-lucide [name]="icons.Download" class="size-4" />
+        }
+        Télécharger CSV
+      </app-ui-button>
+      <app-ui-button variant="danger" [outlined]="true" size="small" [disabled]="userCount === 0" (clicked)="clear()">
+        <i-lucide [name]="icons.Trash" class="size-4" />
+        Supprimer invalides
+      </app-ui-button>
+      <a [routerLink]="'/users/add'" class="ui-button ui-button-small ui-button-primary"> Nouvel utilisateur </a>
+    </div>
+  </div>
+  <form [formGroup]="searchForm" class="search-input-wrapper">
+    <div class="search-input-group">
+      <div class="search-input-icon">
+        <i-lucide [name]="icons.Search" class="search-input-icon-svg" />
+      </div>
+      <label for="user-search-input" class="sr-only">Rechercher un utilisateur</label>
+      <input
+        type="text"
+        id="user-search-input"
+        name="q"
+        formControlName="q"
+        placeholder="Rechercher un utilisateur..."
+        class="search-input"
+        autocomplete="off" />
+    </div>
+  </form>
+  <div class="mt-6">
+    @if (isLoading && userCount === 0) {
+      <app-ui-table-skeleton [rows]="10" [columns]="4" />
+    }
+    @if (userCount > 0) {
+      <div class="ui-table-wrapper">
+        <table class="ui-table">
+          <thead class="ui-table-head">
+            <tr class="ui-table-head-row">
+              <th class="ui-table-header">Utilisateur</th>
+              <th class="ui-table-header">Email</th>
+              <th class="ui-table-header">Rejoint le</th>
+              <th class="ui-table-header">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="ui-table-body">
+            @for (user of users; track user.id) {
+              <tr class="ui-table-row">
+                <td class="ui-table-cell">
+                  <div class="flex items-center gap-3">
+                    <div class="relative">
+                      <app-ui-avatar [image]="user | apiIMG: 'user'" [label]="user.name" />
+                    </div>
+                    <p class="font-semibold text-gray-900 w-32 md:w-48 line-clamp-1 md:line-clamp-2 capitalize">
+                      {{ user.name }}
+                    </p>
+                  </div>
+                </td>
+                <td class="ui-table-cell text-sm text-gray-600 whitespace-nowrap">
+                  {{ user.email }}
+                </td>
+                <td class="ui-table-cell text-sm text-gray-600 whitespace-nowrap">
+                  {{ user.created_at | date }}
+                </td>
+                <td class="ui-table-cell">
+                  <div class="flex items-center gap-1.5">
+                    <a
+                      [routerLink]="['/users/update', user.email]"
+                      class="ui-button ui-button-small ui-button-primary ui-button-outlined ui-button-text">
+                      <i-lucide [name]="icons.Pencil" class="size-4" />
+                      Modifier
+                    </a>
+                    <app-ui-button (clicked)="onDelete(user.id)" size="small" variant="danger">
+                      <i-lucide [name]="icons.Trash" class="size-4" />
+                      Supprimer
+                    </app-ui-button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+    <div class="flex flex-col justify-end items-end">
+      <app-ui-pagination
+        [currentPage]="currentPage()"
+        [totalItems]="userCount"
+        [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)" />
+    </div>
+  </div>
+  @if (userCount === 0 && !isLoading) {
+    <div class="flex flex-col items-start justify-center">
+      <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary-50 border border-primary-100">
+        <i-lucide [name]="icons.Search" class="w-10 h-10 stroke-[1.5] text-primary-500" />
+      </div>
+      <h3 class="text-2xl font-bold text-gray-900 mb-2">Aucun utilisateur trouvé</h3>
+      <p class="text-gray-500 max-w-lg mb-8 text-base leading-relaxed">
+        Nous n'avons trouvé aucun utilisateur correspondant à vos critères.<br />
+      </p>
+      <app-ui-button
+        (clicked)="onResetFilters()"
+        variant="secondary"
+        [outlined]="true"
+        styleClass="text-base font-medium px-6 py-2.5 rounded-md shadow">
+        <span class="flex items-center gap-2">
+          <i-lucide [name]="icons.Funnel" class="w-5 h-5 text-primary-500" />
+          <span>Réinitialiser les filtres</span>
+        </span>
+      </app-ui-button>
+    </div>
+  }
+  <app-ui-confirm-dialog />
+</div>

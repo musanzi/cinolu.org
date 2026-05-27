@@ -1,0 +1,353 @@
+<div class="pb-20">
+  @if (mentorApply.pendingMessage(); as message) {
+  <div
+    class="mb-6 flex items-center gap-3 rounded-xl border border-brand-200 bg-brand-50 p-4 text-brand-800"
+    role="status">
+    <i-lucide class="text-2xl text-brand-600" [name]="icons.schedule" />
+    <p class="font-semibold">{{ message }}</p>
+  </div>
+  }
+
+  <div class="dashboard-section mb-8">
+    <div class="flex items-center gap-4 mb-6">
+      <div
+        class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-600">
+        <i-lucide class="text-3xl text-white" [name]="icons.school" />
+      </div>
+      <div>
+        <h1 class="dashboard-heading-2">Devenir <span class="text-brand-700">Mentor</span></h1>
+        <p class="dashboard-text-small">Partagez votre expertise et guidez les entrepreneurs de demain</p>
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+      <div class="flex items-center justify-between mb-3">
+        <span class="dashboard-text-small font-semibold text-gray-700">
+          Étape {{ currentStep() }} sur {{ maxSteps }}
+        </span>
+        <span class="dashboard-text-small font-semibold text-brand-700">
+          {{ getProgressPercentage() }}% complété
+        </span>
+      </div>
+      <div class="h-2.5 w-full overflow-hidden rounded-full bg-gray-200">
+        <div
+          class="h-2.5 rounded-full bg-brand-600 transition-all duration-500"
+          [style.width.%]="getProgressPercentage()"></div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between">
+        <div
+          class="flex items-center gap-2"
+          [class.text-brand-700]="currentStep() >= 1"
+          [class.text-gray-400]="currentStep() < 1">
+          <div
+            class="flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all"
+            [class.bg-brand-600]="currentStep() >= 1"
+            [class.border-brand-600]="currentStep() >= 1"
+            [class.border-gray-300]="currentStep() < 1">
+            <i-lucide class="text-sm" [class.text-white]="currentStep() >= 1" [name]="icons.person" />
+          </div>
+          <span class="dashboard-text-tiny hidden font-medium sm:inline">Expérience</span>
+        </div>
+
+        <div
+          class="mx-2 h-0.5 flex-1"
+          [class.bg-brand-600]="currentStep() > 1"
+          [class.bg-gray-300]="currentStep() <= 1"></div>
+
+        <div
+          class="flex items-center gap-2"
+          [class.text-brand-700]="currentStep() >= 2"
+          [class.text-gray-400]="currentStep() < 2">
+          <div
+            class="flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all"
+            [class.bg-brand-600]="currentStep() >= 2"
+            [class.border-brand-600]="currentStep() >= 2"
+            [class.border-gray-300]="currentStep() < 2">
+            <i-lucide class="text-sm" [class.text-white]="currentStep() >= 2" [name]="icons.star" />
+          </div>
+          <span class="dashboard-text-tiny hidden font-medium sm:inline">Expertises</span>
+        </div>
+
+        <div
+          class="mx-2 h-0.5 flex-1"
+          [class.bg-brand-600]="currentStep() > 2"
+          [class.bg-gray-300]="currentStep() <= 2"></div>
+
+        <div
+          class="flex items-center gap-2"
+          [class.text-brand-700]="currentStep() >= 3"
+          [class.text-gray-400]="currentStep() < 3">
+          <div
+            class="flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all"
+            [class.bg-brand-600]="currentStep() >= 3"
+            [class.border-brand-600]="currentStep() >= 3"
+            [class.border-gray-300]="currentStep() < 3">
+            <i-lucide class="text-sm" [class.text-white]="currentStep() >= 3" [name]="icons.work" />
+          </div>
+          <span class="dashboard-text-tiny hidden font-medium sm:inline">Parcours</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
+    <app-form-manager
+      [form]="applicationForm"
+      [loading]="mentorProfileStore.isLoading()"
+      [showProgress]="false">
+      @if (currentStep() === 1) {
+      <div class="dashboard-card-elevated anim-fade-in p-8">
+        <div class="mb-6 flex items-center gap-3 border-b border-gray-100 pb-6">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-600">
+            <i-lucide class="text-2xl text-white" [name]="icons.person" />
+          </div>
+          <div>
+            <h2 class="dashboard-heading-4">Votre Expérience</h2>
+            <p class="dashboard-text-small">Indiquez vos années d'expérience professionnelle</p>
+          </div>
+        </div>
+
+        <div class="mx-auto w-full space-y-6">
+          <div>
+            <label for="years_experience" class="dashboard-label">
+              <i-lucide class="text-base text-gray-500" [name]="icons.calendar" />
+              <span>Années d'expérience <span class="text-red-500">*</span></span>
+            </label>
+            <input
+              id="years_experience"
+              type="number"
+              formControlName="years_experience"
+              min="0"
+              class="dashboard-input"
+              placeholder="Ex: 5" />
+            <p class="dashboard-text-tiny mt-2 text-gray-500">
+              Indiquez le nombre total d'années d'expérience professionnelle pertinente
+            </p>
+          </div>
+
+          <div class="dashboard-card border border-brand-100 bg-brand-50 p-5">
+            <div class="flex items-start gap-3">
+              <i-lucide class="text-xl text-brand-600" [name]="icons.info" />
+              <div>
+                <h4 class="mb-1 text-sm font-semibold text-brand-900">Pourquoi cette information ?</h4>
+                <p class="text-xs leading-relaxed text-brand-700">
+                  Cette information nous aide à mieux comprendre votre parcours et à vous associer avec des
+                  entrepreneurs qui bénéficieront le plus de votre expertise.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @if (currentStep() === 2) {
+      <div class="dashboard-card-elevated anim-fade-in p-8">
+        <div class="mb-6 flex items-center gap-3 border-b border-gray-100 pb-6">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-600">
+            <i-lucide class="text-2xl text-white" [name]="icons.star" />
+          </div>
+          <div>
+            <h2 class="dashboard-heading-4">Vos Domaines d'Expertise</h2>
+            <p class="dashboard-text-small">Sélectionnez au moins un domaine dans lequel vous excellez</p>
+          </div>
+        </div>
+
+        @if (mentorProfileStore.isLoading()) {
+        <div class="flex justify-center py-12">
+          <div class="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-brand-600"></div>
+        </div>
+        } @else {
+        <div class="w-full space-y-4">
+          <label for="expertisesSelect" class="dashboard-label flex items-center gap-2">
+            <i-lucide class="text-base text-gray-500" [name]="icons.manageSearch" />
+            <span>Domaines d'expertise</span>
+          </label>
+          <select
+            id="expertisesSelect"
+            formControlName="expertises"
+            multiple
+            [disabled]="mentorApply.isFormReadonly()"
+            class="dashboard-select min-h-40">
+            @for (expertise of availableExpertises(); track expertise.id) {
+            <option [value]="expertise.id">{{ expertise.name }}</option>
+            }
+          </select>
+
+          <p class="dashboard-text-tiny text-gray-500">
+            Utilisez la recherche pour trouver rapidement vos domaines parmi une longue liste.
+          </p>
+        </div>
+
+        @if (availableExpertises().length === 0) {
+        <div class="py-12 text-center">
+          <i-lucide class="mb-3 text-6xl text-gray-300" [name]="icons.info" />
+          <p class="dashboard-text-base text-gray-500">Aucune expertise disponible</p>
+        </div>
+        } } @if (applicationForm.get('expertises')?.hasError('required') && applicationForm.get('expertises')?.touched)
+        {
+        <p class="mt-4 flex items-center gap-2 text-sm text-red-500">
+          <i-lucide class="text-lg" [name]="icons.error" />
+          <span>Veuillez sélectionner au moins une expertise</span>
+        </p>
+        }
+      </div>
+      } @if (currentStep() === 3) {
+      <div class="dashboard-card-elevated anim-fade-in p-8">
+        <div class="mb-6 flex items-center justify-between border-b border-gray-100 pb-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-600">
+              <i-lucide class="text-2xl text-white" [name]="icons.work" />
+            </div>
+            <div>
+              <h2 class="dashboard-heading-4">Votre Parcours Professionnel</h2>
+              <p class="dashboard-text-small">Ajoutez vos expériences professionnelles pertinentes</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            (click)="addExperience()"
+            [disabled]="mentorApply.isFormReadonly()"
+            class="dashboard-btn-secondary text-sm">
+            <i-lucide class="text-lg" [name]="icons.add" />
+            <span class="hidden sm:inline">Ajouter</span>
+          </button>
+        </div>
+
+        <div class="space-y-6" formArrayName="experiences">
+          @for (experience of experiences.controls; track $index; let i = $index) {
+          <div [formGroupName]="i" class="dashboard-card relative border border-gray-200 p-6">
+            @if (experiences.length > 1 && !mentorApply.isFormReadonly()) {
+            <button
+              type="button"
+              (click)="removeExperience(i)"
+              class="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-600 transition-colors hover:bg-red-100">
+              <i-lucide class="text-lg" [name]="icons.close" />
+            </button>
+            }
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div>
+                  <label [for]="'company_' + i" class="dashboard-label">
+                    <i-lucide class="text-base text-gray-500" [name]="icons.business" />
+                    <span>Projet <span class="text-red-500">*</span></span>
+                  </label>
+                  <input
+                    [id]="'company_' + i"
+                    type="text"
+                    formControlName="company_name"
+                    class="dashboard-input"
+                    placeholder="Ex: Google" />
+                </div>
+
+                <div>
+                  <label [for]="'job_' + i" class="dashboard-label">
+                    <i-lucide class="text-base text-gray-500" [name]="icons.work" />
+                    <span>Poste <span class="text-red-500">*</span></span>
+                  </label>
+                  <input
+                    [id]="'job_' + i"
+                    type="text"
+                    formControlName="job_title"
+                    class="dashboard-input"
+                    placeholder="Ex: Développeur Senior" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div>
+                  <label [for]="'start_' + i" class="dashboard-label">
+                    <i-lucide class="text-base text-gray-500" [name]="icons.event" />
+                    <span>Date de début <span class="text-red-500">*</span></span>
+                  </label>
+                  <input
+                    [id]="'start_' + i"
+                    type="text"
+                    inputmode="numeric"
+                    formControlName="start_date"
+                    class="dashboard-input"
+                    placeholder="MM/YYYY"
+                    title="Format MM/YYYY" />
+                </div>
+
+                <div>
+                  <label [for]="'end_' + i" class="dashboard-label">
+                    <i-lucide class="text-base text-gray-500" [name]="icons.event" />
+                    <span>Date de fin</span>
+                  </label>
+                  <input
+                    [id]="'end_' + i"
+                    type="text"
+                    inputmode="numeric"
+                    formControlName="end_date"
+                    class="dashboard-input"
+                    placeholder="MM/YYYY"
+                    title="Format MM/YYYY" />
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input
+                  [id]="'current_' + i"
+                  type="checkbox"
+                  formControlName="is_current"
+                  class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-brand-600 focus:ring-brand-500" />
+                <label [for]="'current_' + i" class="dashboard-text-small cursor-pointer">
+                  J'occupe actuellement ce poste
+                </label>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <div class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+        <div class="flex gap-3">
+          <a routerLink="/dashboard/user/profile" class="dashboard-btn-secondary">
+            <i-lucide class="text-lg" [name]="icons.arrowBack" />
+            <span>Retour au profil</span>
+          </a>
+          @if (currentStep() > 1 && !mentorApply.isFormReadonly()) {
+          <button formActions type="button" (click)="previousStep()" class="dashboard-btn-secondary">
+            <i-lucide class="text-lg" [name]="icons.chevronLeft" />
+            <span>Précédent</span>
+          </button>
+          }
+        </div>
+
+        <div class="flex gap-3">
+          @if (currentStep() < maxSteps) {
+          <button
+            formActions
+            type="button"
+            (click)="nextStep()"
+            [disabled]="mentorApply.isFormReadonly()"
+            class="dashboard-btn-primary">
+            <span>Suivant</span>
+            <i-lucide class="text-lg" [name]="icons.chevronRight" />
+          </button>
+          } @else {
+          <button
+            formActions
+            type="submit"
+            [disabled]="applicationForm.invalid || mentorProfileStore.isLoading() || !mentorApply.canSubmitApplication()"
+            class="dashboard-btn-primary">
+            @if (mentorProfileStore.isLoading()) {
+            <div class="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+            <span>Soumission en cours...</span>
+            } @else {
+            <i-lucide class="text-lg" [name]="icons.send" />
+            <span>Soumettre ma candidature</span>
+            }
+          </button>
+          }
+        </div>
+      </div>
+    </app-form-manager>
+  </form>
+</div>

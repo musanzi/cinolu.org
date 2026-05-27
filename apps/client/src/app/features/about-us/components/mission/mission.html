@@ -1,0 +1,63 @@
+<section
+  class="public-band-surface relative bg-grid overflow-hidden"
+  id="mission">
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-primary-200/20 rounded-full hidden"></div>
+
+  <div
+    class="flex flex-col md:flex-row gap-12 lg:gap-16 px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto py-16 md:py-24 items-center">
+    <div class="w-full md:w-3/5 order-2 md:order-1">
+      <div class="flex items-center gap-3 mb-6 sm:hidden">
+        <div class="bg-primary-500/10 p-3 rounded-lg">
+          <i-lucide [name]="icons.mission" [strokeWidth]="1.5" class="text-primary-600 size-6" />
+        </div>
+        <h2 class="text-2xl font-black text-gray-900 font-satoshi">
+          {{ 'about_us.mission.title' | translate }}
+          <span class="text-brand-700"
+            >{{ 'about_us.mission.title_highlight' | translate }}</span
+          >
+        </h2>
+      </div>
+
+      <div class="hidden sm:block mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-6">
+          <div class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></div>
+          <span class="text-sm font-semibold text-primary-700 uppercase tracking-wider"
+            >{{ 'about_us.mission.badge' | translate }}</span
+          >
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 font-satoshi tracking-tight leading-[1.1]">
+          {{ 'about_us.mission.title' | translate }}
+          <span class="text-brand-700"
+            >{{ 'about_us.mission.title_highlight' | translate }}</span
+          >
+        </h2>
+      </div>
+
+      <div class="relative">
+        <div
+          class="absolute -right-4 top-4 h-24 w-1 rounded-full bg-brand-500"></div>
+
+        <div
+          class="backdrop-blur-sm border border-gray-100 p-8 lg:p-10 rounded-lg transition-all duration-500 hyphens-none">
+          <p
+            class="text-xl sm:text-2xl lg:text-3xl leading-relaxed text-gray-700 font-light"
+            [innerHTML]="'about_us.mission.description' | translate"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full md:w-2/5 justify-center md:justify-end hidden sm:flex order-1 md:order-2">
+      <div class="relative group">
+        <div
+          class="absolute inset-0 bg-brand-50 rounded-full opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
+        <div
+          class="absolute inset-0 bg-primary-500/5 rounded-full blur-2xl group-hover:hidden transition-all duration-500"></div>
+
+        <div
+          class="relative bg-white/80 backdrop-blur-sm rounded-full p-12 lg:p-16 shadow-lg border border-primary-100/50 group-group-hover:scale-105 transition-all duration-500">
+          <i-lucide [name]="icons.mission" [strokeWidth]="0.8" class="text-primary-500 size-32 lg:size-40" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

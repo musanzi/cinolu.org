@@ -1,0 +1,55 @@
+@if (testimonial(); as item) {
+<section class="relative bg-white rounded-lg overflow-hidden  transition-shadow duration-300">
+  <div
+    class="absolute top-0 right-0 left-0 h-2 bg-brand-600"
+    aria-hidden="true"></div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 lg:h-[60vh] items-stretch">
+    @if (item.avatar) {
+    <figure class="lg:col-span-2 relative h-56 sm:h-64 lg:h-full flex">
+      <img
+        [src]="item.avatar"
+        [alt]="item.name"
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+        decoding="async"
+        width="400"
+        height="300" />
+      <div
+        class="pointer-events-none absolute inset-0 bg-brand-600/10"
+        aria-hidden="true"></div>
+    </figure>
+    }
+    <div
+      [ngClass]="{ 'lg:col-span-3': item.avatar, 'lg:col-span-5': !item.avatar }"
+      class="p-6 sm:p-8 lg:p-10 flex flex-col justify-center h-full">
+      <i-lucide
+        [name]="quoteIcon"
+        class="w-12 h-12 sm:w-14 sm:h-14 text-primary-200 mb-4 sm:mb-6"
+        aria-hidden="true"></i-lucide>
+
+      <blockquote
+        class="text-base sm:text-lg text-gray-900 font-semibold leading-relaxed mb-6 sm:mb-8 italic">
+        "{{ item.quote }}"
+      </blockquote>
+
+      <footer class="flex items-center gap-3 sm:gap-4 mt-2">
+        <div
+          class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-600 flex items-center justify-center text-white font-black text-lg sm:text-xl"
+          role="img">
+          {{ item.name.charAt(0).toUpperCase() }}
+        </div>
+        <div class="flex-1 min-w-0">
+          <cite class="not-italic text-base font-bold text-gray-900 font-satoshi truncate">{{ item.name }}</cite>
+          <p class="text-gray-600 text-sm truncate">{{ item.role }}</p>
+          <div class="flex gap-1 mt-2" role="img" aria-label="5 étoiles sur 5">
+            @for (star of [1,2,3,4,5]; track star) {
+            <i-lucide [name]="starIcon" class="w-4 h-4 text-yellow-400 fill-yellow-400" aria-hidden="true"></i-lucide>
+            }
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</section>
+}

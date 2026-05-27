@@ -1,0 +1,63 @@
+<section class="about-section about-section--history" id="history">
+  <div class="about-wrap about-wrap--py">
+    <p class="about-label">{{ 'about_us.history.badge' | translate }}</p>
+    <h2 class="about-h2">
+      {{ 'about_us.history.title' | translate }}
+      <span>{{ 'about_us.history.title_highlight' | translate }}</span>
+    </h2>
+    <p class="about-lead">{{ 'about_us.history.subtitle' | translate }}</p>
+
+    <div class="about-history-rail" aria-label="Frise chronologique">
+      @for (item of historyData; track item.id) {
+      <article class="about-history-step">
+        <div class="about-history-step__node" aria-hidden="true">
+          <i-lucide [name]="item.icon" class="size-5"></i-lucide>
+        </div>
+        <p class="about-history-step__year">
+          {{ 'about_us.history.timeline.item_' + item.id + '.date' | translate }}
+        </p>
+        <span class="about-history-step__status">
+          {{ 'about_us.history.timeline.item_' + item.id + '.status' | translate }}
+        </span>
+        <p class="about-history-step__desc">
+          {{ 'about_us.history.timeline.item_' + item.id + '.description' | translate }}
+        </p>
+      </article>
+      }
+    </div>
+
+    <div class="about-history-mobile">
+      @for (item of historyData; track item.id) {
+      <article class="about-history-card" [class.is-open]="expandedMenu() === item.id">
+        <button
+          type="button"
+          class="about-history-card__head"
+          [attr.aria-expanded]="expandedMenu() === item.id"
+          (click)="toggleExpand(item.id)">
+          <div>
+            <p class="about-history-card__year">
+              {{ 'about_us.history.timeline.item_' + item.id + '.date' | translate }}
+            </p>
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-700">
+              {{ 'about_us.history.timeline.item_' + item.id + '.status' | translate }}
+            </span>
+          </div>
+          <i-lucide
+            [name]="icons.chevronRight"
+            class="size-5 shrink-0 text-gray-500 transition-transform duration-300"
+            [class.rotate-90]="expandedMenu() === item.id"></i-lucide>
+        </button>
+        <div
+          class="about-history-card__panel"
+          [attr.data-open]="expandedMenu() === item.id ? 'true' : 'false'">
+          <div class="about-history-card__panel-inner">
+            <p class="about-history-card__body">
+              {{ 'about_us.history.timeline.item_' + item.id + '.description' | translate }}
+            </p>
+          </div>
+        </div>
+      </article>
+      }
+    </div>
+  </div>
+</section>

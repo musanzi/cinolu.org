@@ -1,0 +1,120 @@
+<div class="w-full mx-auto py-8">
+  <header class="mb-8">
+    <h1 class="text-xl font-bold text-gray-900">Mes parcours</h1>
+    <p class="text-sm text-gray-600 mt-1">Retrouvez les programmes où votre participation est qualifiée et active</p>
+  </header>
+
+  @if (participationsStore.isLoading()) {
+  <div class="flex justify-center py-16 text-gray-500 text-sm">Chargement...</div>
+  } @else if (validParticipations().length > 0) { @if (stats().total > 0) {
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="w-full rounded-2xl border border-gray-200 bg-white p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center">
+          <i-lucide class="text-primary-600" [name]="icons.folder" />
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-gray-900">{{ stats().total }}</p>
+          <p class="text-xs text-gray-600">Programme{{ stats().total > 1 ? 's' : '' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-full bg-primary-50 rounded-lg border border-primary-200 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+          <i-lucide class="text-primary-600" [name]="icons.verified" />
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-primary-900">{{ stats().validated }}</p>
+          <p class="text-xs text-primary-700">Validé{{ stats().validated > 1 ? 's' : '' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-full bg-blue-50 rounded-lg border border-blue-200 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+          <i-lucide class="text-blue-600" [name]="icons.pending" />
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-blue-900">{{ stats().inProgress }}</p>
+          <p class="text-xs text-blue-700">En cours</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-full bg-gray-50 rounded-lg border border-gray-200 p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center">
+          <i-lucide class="text-gray-600" [name]="icons.trending" />
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-gray-900">{{ stats().averageProgress }}%</p>
+          <p class="text-xs text-gray-600">Progression moy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+  <ul class="space-y-3 w-full">
+    @for (participation of validParticipations(); track participation.id || participation.project?.id || $index) { @let
+    analysis = getAnalysis(participation); @let config = getConfig(participation);
+    <li class="w-full">
+      <div
+        class="w-full bg-white border rounded-lg p-4 hover: transition-all"
+        [ngClass]="config.borderClasses">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-gray-900 truncate">{{ participation.project.name }}</h3>
+            <p class="text-sm text-gray-500 truncate">{{ participation.venture?.name ?? '—' }}</p>
+            <div class="mt-2 flex items-center gap-2 flex-wrap">
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium"
+                [ngClass]="config.badgeClasses">
+                <i-lucide class="text-sm" [name]="config.icon" />
+                {{ config.label }}
+              </span>
+              <span class="text-xs text-gray-500"
+                >{{ analysis.completedPhases }}/{{ analysis.totalProjectPhases }} phases</span
+              >
+            </div>
+          </div>
+          <div class="sm:w-24 flex items-center gap-2">
+            <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden min-w-15">
+              <div
+                class="h-full rounded-full transition-all"
+                [ngClass]="config.classes"
+                [style.width.%]="analysis.progressPercentage"></div>
+            </div>
+            <span class="text-xs font-bold text-gray-700 w-8">{{ analysis.progressPercentage }}%</span>
+          </div>
+          <div class="flex gap-2 shrink-0">
+            <a
+              [routerLink]="['/dashboard/user/programs/', participation.project.slug, 'roadmap']"
+              class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
+              Roadmap
+            </a>
+            <a
+              [routerLink]="['/dashboard/user/programs/', participation.project.slug]"
+              class="px-4 py-2 border border-gray-200 hover:border-primary-400 hover:bg-primary-50 text-gray-700 text-sm font-medium rounded-lg transition-colors">
+              Détail
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+  } @else {
+  <div class="text-center py-16 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+    <i-lucide class="text-4xl text-gray-300 mb-3 block" [name]="icons.folder" />
+    <p class="font-medium text-gray-700 mb-1">Aucun programme accepté</p>
+    <p class="text-sm text-gray-500 mb-6">
+      Les parcours qualifiés apparaîtront ici dès que votre participation est validée par l'API.
+    </p>
+    <a
+      routerLink="/dashboard/user/programs/discover"
+      class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700">
+      Découvrir les programmes
+    </a>
+  </div>
+  }
+</div>

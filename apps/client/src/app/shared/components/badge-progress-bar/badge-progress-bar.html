@@ -1,0 +1,24 @@
+<div class="space-y-3">
+  <div class="flex items-center justify-between text-sm">
+    <span class="font-medium text-gray-700"> {{ currentBadge().name }} </span>
+    @if (!isMaxLevel()) {
+    <span class="text-gray-500">{{ progressPercentage() }}%</span>
+    }
+  </div>
+
+  <div class="relative h-3 bg-gray-200 rounded-full overflow-hidden">
+    <div
+      [ngClass]="currentBadge().progressColor"
+      class="h-full rounded-full transition-all duration-700 ease-out"
+      [style.width.%]="progressPercentage()">
+      <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent anim-shimmer"></div>
+    </div>
+  </div>
+
+  @if (showThresholds() && nextBadge()) {
+  <div class="flex items-center justify-between text-xs text-gray-500">
+    <span>{{ currentCount() }} / {{ nextBadge()!.threshold }}</span>
+    <span class="font-medium" [ngClass]="nextBadge()!.color"> {{ nextBadge()!.name }} </span>
+  </div>
+  }
+</div>

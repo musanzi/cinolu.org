@@ -1,0 +1,58 @@
+<section class="border border-gray-200 rounded-lg p-4 md:bg-white md:p-6">
+  <form class="w-full" [formGroup]="addUserForm" (ngSubmit)="onAddUser()">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <app-ui-input
+        [id]="'email'"
+        label="Email"
+        [required]="true"
+        formControlName="email"
+        placeholder="exemple@email.com" />
+      <app-ui-input
+        [id]="'name'"
+        label="Nom complet"
+        [required]="true"
+        formControlName="name"
+        placeholder="Nom de l'utilisateur" />
+      <app-ui-select
+        [id]="'gender'"
+        label="Genre"
+        [required]="true"
+        [options]="genders"
+        formControlName="gender"
+        placeholder="Sélectionner un genre" />
+      <app-ui-input
+        [id]="'phone_number'"
+        label="Numéro de téléphone"
+        [required]="true"
+        formControlName="phone_number"
+        placeholder="+243 XXX XXX XXX" />
+      <app-ui-input [id]="'city'" label="Ville" [required]="true" formControlName="city" placeholder="Ex: Kinshasa" />
+      <app-ui-input
+        [id]="'country'"
+        label="Pays"
+        [required]="true"
+        formControlName="country"
+        placeholder="Ex: République Démocratique du Congo" />
+      <app-ui-datepicker [id]="'birth_date'" label="Date de naissance" formControlName="birth_date" class="w-full" />
+      <app-ui-multi-select
+        [id]="'roles'"
+        label="Rôles"
+        [required]="true"
+        [optionLabel]="'name'"
+        [optionValue]="'id'"
+        [options]="rolesStore.allRoles()"
+        formControlName="roles"
+        placeholder="Sélectionner un ou plusieurs rôles" />
+    </div>
+    <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-200">
+      <app-ui-button
+        [size]="'small'"
+        [loading]="store.isLoading()"
+        [disabled]="store.isLoading() || addUserForm.invalid"
+        variant="primary"
+        type="submit">
+        Créer l'utilisateur
+      </app-ui-button>
+    </div>
+  </form>
+</section>

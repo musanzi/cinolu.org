@@ -1,0 +1,37 @@
+@if (items().length > 0) {
+<div class="space-y-4">
+  <div class="relative overflow-hidden rounded-2xl bg-slate-100">
+    <ng-content select="[gallery-item]" />
+
+    @if (items().length > 1) {
+    <button
+      type="button"
+      (click)="previous()"
+      class="absolute left-3 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md transition hover:bg-white">
+      <i-lucide [name]="leftIcon" class="size-4" />
+    </button>
+    <button
+      type="button"
+      (click)="next()"
+      class="absolute right-3 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-md transition hover:bg-white">
+      <i-lucide [name]="rightIcon" class="size-4" />
+    </button>
+    }
+  </div>
+
+  @if (items().length > 1) {
+  <div class="flex flex-wrap gap-3">
+    @for (_item of items(); track $index) {
+    <button
+      type="button"
+      (click)="select($index)"
+      class="overflow-hidden rounded-xl border-2 transition"
+      [class.border-primary-500]="$index === activeIndex()"
+      [class.border-transparent]="$index !== activeIndex()">
+      <ng-content select="[gallery-thumb]" />
+    </button>
+    }
+  </div>
+  }
+</div>
+}

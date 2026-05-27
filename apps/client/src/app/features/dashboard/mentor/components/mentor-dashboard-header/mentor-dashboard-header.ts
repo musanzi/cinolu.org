@@ -1,0 +1,131 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  signal,
+  HostListener
+} from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { AuthStore } from '@core/auth/auth.store';
+import { RightsService } from '@core/auth/rights.service';
+import { SidebarService } from '@shared/services/sidebar.service';
+import { ApiImgPipe } from '@shared/pipes';
+import {
+  LucideAngularModule,
+  Menu,
+  X,
+  Clock3,
+  LayoutDashboard,
+  KeyRound,
+  CircleQuestionMark,
+  ChevronDown,
+  BadgeCheck,
+  Badge,
+  LogOut
+} from 'lucide-angular';
+
+@Component({
+  selector: 'app-mentor-dashboard-header',
+  imports: [AsyncPipe, NgClass, ApiImgPipe, RouterLink, LucideAngularModule],
+  templateUrl: './mentor-dashboard-header.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MentorDashboardHeader implements OnDestroy {
+  private readonly authStore = inject(AuthStore);
+  private readonly rightsService = inject(RightsService);
+  readonly sidebarService = inject(SidebarService);
+
+  readonly isMobileOpen$ = this.sidebarService.isMobileOpen$;
+
+  readonly icons = {
+    menu: Menu,
+    close: X,
+    clock: Clock3,
+    dashboard: LayoutDashboard,
+    key: KeyRound,
+    help: CircleQuestionMark,
+    chevronDown: ChevronDown,
+    verified: BadgeCheck,
+    badge: Badge,
+    logout: LogOut
+  };
+
+  showUserMenu = signal(false);
+  private clockTimer?: number;
+  currentTime = signal(new Date());
+
+  user = computed(() => this.authStore.user());
+  referralCode = computed(() => this.authStore.user()?.referral_code || 'N/A');
+
+  formattedTime = computed(() =>
+    this.currentTime().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  );
+
+  dateLabel = computed(() =>
+    this.currentTime().toLocaleDateString('fr-FR', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    })
+  );
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      this.clockTimer = window.setInterval(() => this.currentTime.set(new Date()), 1000);
+    }
+  }
+
+  getRoleLabel(): string {
+    return this.rightsService.getRoleLabel(this.user());
+  }
+
+  getUserInitials(): string {
+    const name = this.user()?.name || 'U';
+    return name
+      .split(' ')
+      .map((n: string) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  }
+
+  handleToggle(): void {
+    this.sidebarService.handleToggle();
+  }
+
+  onUserMenuClick(event: MouseEvent): void {
+    event.stopPropagation();
+    this.showUserMenu.update((v) => !v);
+  }
+
+  closeUserMenu(): void {
+    this.showUserMenu.set(false);
+  }
+
+  signOut(): void {
+    this.closeUserMenu();
+    this.authStore.signOut();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const menuButton = target.closest('.user-menu-button');
+    const menuDropdown = target.closest('.user-menu-dropdown');
+
+    if (!menuButton && !menuDropdown && this.showUserMenu()) {
+      this.closeUserMenu();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.clockTimer !== undefined) {
+      clearInterval(this.clockTimer);
+      this.clockTimer = undefined;
+    }
+  }
+}

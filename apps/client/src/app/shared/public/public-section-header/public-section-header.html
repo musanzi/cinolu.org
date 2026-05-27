@@ -1,0 +1,57 @@
+<header
+  class="mb-12 flex flex-col justify-between gap-8 lg:mb-16"
+  [class.lg:flex-row]="layout() === 'split'"
+  [class.lg:items-end]="layout() === 'split'"
+  [class.text-center]="align() === 'center'"
+  [class.items-center]="align() === 'center'">
+  <div [class]="contentWidthClass()">
+    @if (badge() || badgeKey()) {
+    <div class="public-section-badge mb-6" [class.mx-auto]="align() === 'center'">
+      @if (badgeIcon()) {
+      <i-lucide [name]="badgeIcon()!" class="size-4 shrink-0" aria-hidden="true" />
+      } @else {
+      <div class="h-2 w-2 shrink-0 rounded-full bg-brand-600" aria-hidden="true"></div>
+      }
+      @if (badgeKey()) {
+      {{ badgeKey() | translate }}
+      } @else {
+      {{ badge() }}
+      }
+    </div>
+    }
+    <h2 [class]="titleClasses()">
+      @if (titleKey()) {
+      {{ titleKey() | translate }}
+      } @else {
+      {{ title() }}
+      }
+      @if (titleHighlightKey()) {
+      <span class="public-heading-accent">{{ titleHighlightKey() | translate }}</span>
+      } @else if (titleHighlight()) {
+      <span class="public-heading-accent">{{ titleHighlight() }}</span>
+      }
+    </h2>
+    @if (align() === 'center' && (descriptionKey() || description())) {
+    <p [class]="descriptionClasses()" class="mx-auto">
+      @if (descriptionKey()) {
+      {{ descriptionKey() | translate: descriptionParams() }}
+      } @else {
+      {{ description() }}
+      }
+    </p>
+    }
+  </div>
+  @if (layout() === 'split') {
+  @if (descriptionKey() || description()) {
+  <p [class]="splitDescriptionClasses()">
+    @if (descriptionKey()) {
+    {{ descriptionKey() | translate: descriptionParams() }}
+    } @else {
+    {{ description() }}
+    }
+  </p>
+  } @else {
+  <ng-content select="[headerEnd]" />
+  }
+  }
+</header>

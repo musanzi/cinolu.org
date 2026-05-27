@@ -1,0 +1,107 @@
+<a
+  [routerLink]="['/ambassadors', ambassador().email]"
+  class="group relative block cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white transition-colors duration-200 hover:border-brand-300">
+  @if ((currentPage() === 1) && index() < 3) {
+  <div class="absolute top-3 right-3 z-10">
+    @if (index() === 0) {
+    <div
+      class="w-11 h-11 bg-amber-500 rounded-full flex items-center justify-center  border-2 border-white animate-pulse">
+      <i-lucide [name]="icons.trophy" class="w-6 h-6 text-yellow-900" [strokeWidth]="2.5" />
+    </div>
+    } @else if (index() === 1) {
+    <div
+      class="w-10 h-10 bg-slate-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+      <i-lucide [name]="icons.medal" class="w-5 h-5 text-slate-700" [strokeWidth]="2.5" />
+    </div>
+    } @else if (index() === 2) {
+    <div
+      class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+      <i-lucide [name]="icons.medal" class="w-5 h-5 text-orange-800" [strokeWidth]="2.5" />
+    </div>
+    }
+  </div>
+  }
+
+  <div class="p-6">
+    <div class="flex justify-center mb-4">
+      <div class="relative">
+        @if (ambassador().profile) {
+        <img
+          [src]="ambassador() | apiIMG: 'user'"
+          [alt]="ambassador().name"
+          class="w-24 h-24 rounded-full object-cover border-4 border-gray-100 group-hover:border-primary-300 shadow-lg transition-all"
+          (error)="onImageError($event)" />
+        } @else {
+        <div
+          class="w-24 h-24 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-2xl border-4 border-gray-100 group-hover:border-primary-300 shadow-lg transition-all">
+          {{ getInitials(ambassador().name) }}
+        </div>
+        } @if ((ambassador().referralsCount ?? 0) > 5) {
+        <div
+          class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+          <i-lucide [name]="icons.sparkles" class="w-3 h-3 text-white" [strokeWidth]="3" />
+        </div>
+        }
+      </div>
+    </div>
+
+    <h3
+      class="text-center font-bold text-gray-900 text-lg mb-1 group-hover:text-primary-600 transition-colors truncate">
+      {{ ambassador().name }}
+    </h3>
+
+    @if (ambassador().email) {
+    <div class="flex items-center justify-center text-xs text-gray-500 mb-3">
+      <i-lucide [name]="icons.mail" class="w-3 h-3 mr-1 shrink-0" [strokeWidth]="2" />
+      <span class="truncate">{{ ambassador().email }}</span>
+    </div>
+    }
+
+    <div class="flex justify-center mb-3">
+      @if (getAmbassadorBadge(ambassador().referralsCount); as badge) {
+      <span
+        [class]="'inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold border ' + badge.color + ' ' + badge.bgColor + ' ' + badge.borderColor">
+        <i-lucide [name]="icons.star" class="w-3.5 h-3.5 mr-1.5" [strokeWidth]="2.5" />
+        {{ badge.label }}
+      </span>
+      }
+    </div>
+
+    @if (ambassador().city || ambassador().country) {
+    <div class="flex items-center justify-center text-sm text-gray-600 mb-4 bg-gray-50/50 rounded-lg py-2 px-3">
+      <i-lucide [name]="icons.mapPin" class="w-4 h-4 mr-1.5 shrink-0 text-primary-500" [strokeWidth]="2" />
+      <span class="truncate text-center font-medium">
+        {{ ambassador().city }}{{ ambassador().city && ambassador().country ? ', ' : '' }}{{ ambassador().country }}
+      </span>
+    </div>
+    }
+
+    <div class="border-t border-gray-100 pt-4 space-y-3">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5 text-sm text-gray-600">
+          <i-lucide [name]="icons.users" class="w-4 h-4" [strokeWidth]="2" />
+          <span class="font-medium">{{ 'ambassadors.referrals' | translate }}</span>
+        </div>
+        <span
+          class="inline-flex items-center px-3 py-1.5 bg-brand-600 text-white rounded-lg text-sm font-bold shadow-md">
+          <i-lucide [name]="icons.sparkles" class="w-3.5 h-3.5 mr-1.5" [strokeWidth]="2.5" />
+          {{ ambassador().referralsCount || 0 }}
+        </span>
+      </div>
+
+      @if ((ambassador().referralsCount ?? 0) > 0) {
+      <div class="w-full">
+        <div class="flex justify-between text-xs text-gray-500 mb-1">
+          <span>{{ 'ambassadors.progress' | translate }}</span>
+          <span class="font-semibold">{{ getProgressPercentage(ambassador().referralsCount ?? 0) }}%</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div
+            class="h-full bg-brand-600 rounded-full transition-all duration-500"
+            [style.width.%]="getProgressPercentage(ambassador().referralsCount ?? 0)"></div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</a>

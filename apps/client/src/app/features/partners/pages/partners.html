@@ -1,0 +1,58 @@
+<app-public-page-hero
+  variant="image"
+  background="/images/parteners-default.jpg"
+  [badgeIcon]="icons.handshake"
+  badgeText="Partenaires"
+  title="Ils nous font"
+  highlight="confiance"
+  description="Ensemble avec nos partenaires, nous soutenons les entrepreneurs dans leur parcours, favorisons les synergies et transformons les idées en succès durables." />
+
+@if (loading()) {
+<app-partners-skeleton />
+} @else {
+<app-public-section variant="muted" className="min-h-fit bg-grid">
+  <app-public-container className="py-12 md:py-20">
+    <div class="mb-10 flex flex-wrap items-center justify-center gap-2">
+      <button
+        type="button"
+        (click)="resetFilter()"
+        [class]="
+          !isActiveCategory()
+            ? 'border-brand-600 bg-brand-600 text-white'
+            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
+        "
+        class="rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-200">
+        Tout
+      </button>
+      @for (item of listCategories(); track item) {
+      <button
+        type="button"
+        (click)="filterByCategory(item)"
+        [class]="
+          isActiveButton(item)
+            ? 'border-brand-600 bg-brand-600 text-white'
+            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
+        "
+        class="rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-200">
+        {{ item }}
+      </button>
+      }
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+      @for (item of filtered(); track item.name || item.image) {
+      <app-partners-card [partner]="item" />
+      }
+    </div>
+
+    @if (canLoadMore()) {
+    <div class="mt-10 flex justify-center lg:mt-14">
+      <app-public-button variant="primary" type="button" (clicked)="loadMore()" className="group">
+        <span>Plus de partenaires</span>
+        <i-lucide [name]="icons.arrowRight" class="size-5 transition-transform duration-200 group-hover:translate-x-0.5" />
+      </app-public-button>
+    </div>
+    }
+  </app-public-container>
+</app-public-section>
+}

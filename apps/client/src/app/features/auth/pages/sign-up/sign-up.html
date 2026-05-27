@@ -1,0 +1,54 @@
+<app-auth-card [title]="'auth.signup.title' | translate" [description]="'auth.signup.description' | translate">
+  <ui-auth-panel variant="minimal">
+    <p class="mb-8 text-sm text-gray-500 dark:text-gray-400">
+      {{ 'auth.signup.alreadyHaveAccount' | translate }}
+      <a class="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400" [routerLink]="['/sign-in']">
+        {{ 'auth.signup.signInLink' | translate }}
+      </a>
+    </p>
+
+    <form [formGroup]="form" class="space-y-6" (ngSubmit)="onSignUp()">
+      <ui-textfield
+        inputId="signup-name"
+        formControlName="name"
+        [label]="'auth.signup.form.name' | translate"
+        [placeholder]="'auth.signup.form.namePlaceholder' | translate" />
+
+      <ui-textfield
+        inputId="signup-email"
+        formControlName="email"
+        type="email"
+        [label]="'auth.signup.form.email' | translate"
+        [placeholder]="'auth.signup.form.emailPlaceholder' | translate" />
+
+      <ui-password-field
+        inputId="signup-password"
+        formControlName="password"
+        [label]="'auth.signup.form.password' | translate"
+        [placeholder]="'auth.signup.form.passwordPlaceholder' | translate" />
+
+      <ui-password-field
+        inputId="signup-password-confirm"
+        formControlName="password_confirm"
+        [label]="'auth.signup.form.passwordConfirm' | translate"
+        [placeholder]="'auth.signup.form.passwordConfirmPlaceholder' | translate"
+        [error]="
+          form.hasError('passwordMismatch') && form.get('password_confirm')?.touched
+            ? ('auth.signup.errors.passwordMismatch' | translate)
+            : ''
+        " />
+
+      <div class="mt-4">
+        <ui-button
+          type="submit"
+          [fullWidth]="true"
+          [disabled]="form.invalid || store.isLoading()"
+          [loading]="store.isLoading()"
+          size="lg">
+          {{ 'auth.signup.form.submit' | translate }}
+        </ui-button>
+      </div>
+
+    </form>
+  </ui-auth-panel>
+</app-auth-card>

@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { LoadingBar } from './layout/components/loading-bar/loading-bar';
+import { LanguageService } from './core/services/language';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
   selector: 'app-root',
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  imports: [RouterOutlet, LoadingBar],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
-  protected title = 'client';
+  private readonly languageService = inject(LanguageService);
 }

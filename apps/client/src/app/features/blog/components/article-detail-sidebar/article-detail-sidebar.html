@@ -1,0 +1,70 @@
+<div class="rounded-lg border border-gray-100 bg-white p-6 shadow-lg">
+  <h2 class="mb-6 flex items-center gap-3 font-satoshi text-lg font-black tracking-tight text-gray-900">
+    <span
+      class="h-7 w-1 rounded-full bg-brand-600 shadow-sm"></span>
+    {{ 'blog.recent_articles' | translate }}
+  </h2>
+  <div class="space-y-2">
+    @for (article of articles(); track article.id; let first = $first) {
+    <a
+      [routerLink]="['/blog-ressources', article.slug]"
+      class="block rounded-lg p-3 transition-colors hover:bg-primary-50/40 group">
+      <div class="flex gap-4">
+        <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+          <img
+            [ngSrc]="article | apiIMG: 'article'"
+            [alt]="'Miniature de l\'article ' + article.title"
+            class="h-full w-full object-cover"
+            fill
+            [priority]="first"
+            [loading]="first ? undefined : 'lazy'" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <h3
+            class="mb-1 line-clamp-2 text-sm font-bold leading-tight text-gray-900 transition-colors group-hover:text-primary-600">
+            {{ article.title | titlecase }}
+          </h3>
+          <time class="text-xs font-medium text-gray-500">{{ article.published_at | date: 'shortDate' }}</time>
+        </div>
+      </div>
+    </a>
+    }
+  </div>
+</div>
+
+@if (gallery().length > 0) {
+<div class="mt-6 rounded-lg border border-gray-100 bg-white p-6 shadow-lg">
+  <h3 class="mb-6 flex items-center gap-3 font-satoshi text-lg font-black tracking-tight text-gray-900">
+    <span
+      class="h-7 w-1 rounded-full bg-brand-600 shadow-sm"></span>
+    {{ 'blog.gallery' | translate }}
+  </h3>
+  <div class="space-y-4">
+    <div class="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-100">
+      <img
+        [src]="gallery()[activeIndex()] | apiIMG: 'gallery'"
+        [alt]="gallery()[activeIndex()]?.image || 'Image de galerie'"
+        loading="lazy"
+        class="h-full w-full object-cover" />
+    </div>
+    <div class="flex flex-wrap gap-3">
+      @for (img of gallery(); track img.id; let idx = $index) {
+      <button
+        type="button"
+        (click)="activeIndex.set(idx)"
+        class="overflow-hidden rounded-lg border-2 transition"
+        [class.border-primary-500]="idx === activeIndex()"
+        [class.border-transparent]="idx !== activeIndex()">
+        <div class="relative h-16 w-16 overflow-hidden bg-gray-100">
+          <img
+            [src]="img | apiIMG: 'gallery'"
+            [alt]="img?.image || 'Miniature'"
+            loading="lazy"
+            class="h-full w-full object-cover" />
+        </div>
+      </button>
+      }
+    </div>
+  </div>
+</div>
+}

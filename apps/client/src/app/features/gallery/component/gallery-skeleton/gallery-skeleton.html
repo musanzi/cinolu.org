@@ -1,0 +1,17 @@
+<app-public-section variant="default">
+  <app-public-container className="pb-16">
+    <div class="mb-10 flex flex-wrap items-center justify-center gap-2">
+      @for (_ of [1, 2, 3, 4]; track _) {
+      <div class="h-10 w-24 animate-pulse rounded-full bg-gray-200"></div>
+      }
+    </div>
+
+    <div class="grid min-h-72 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      @for (_ of placeholders; track _) {
+      <article class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+        <div class="aspect-[4/3] w-full animate-pulse bg-gray-200"></div>
+      </article>
+      }
+    </div>
+  </app-public-container>
+</app-public-section>

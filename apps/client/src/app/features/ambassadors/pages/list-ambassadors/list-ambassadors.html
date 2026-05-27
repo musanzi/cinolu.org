@@ -1,0 +1,47 @@
+<app-hero-card
+  background="/images/blog.jpg"
+  [badgeIcon]="icons.edit"
+  [badgeTextKey]="'ambassadors.badge'"
+  [titleKey]="'ambassadors.page.title'"
+  [descriptionKey]="'ambassadors.page.description'" />
+
+<app-public-section variant="muted" className="min-h-screen">
+  <app-public-container>
+    @if (store.isLoading()) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mb-12">
+      @for (item of [1,2,3,4,5,6,7,8]; track $index) {
+      <app-ambassador-skeleton />
+      }
+    </div>
+    } @if (!store.isLoading() && totalItems() > 0) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mb-12">
+      @for (ambassador of paginatedAmbassadors(); track trackByAmbassadorId($index, ambassador); let idx = $index) {
+      <app-ambassador-card
+        [ambassador]="ambassador"
+        [index]="idx"
+        [currentPage]="currentPage()" />
+      }
+    </div>
+    <div class="mb-8">
+      <ui-pagination
+        [page]="currentPage()"
+        [pageSize]="pageSize"
+        [total]="totalItems()"
+        [loading]="loading()"
+        [showSummary]="true"
+        [showPageNumbers]="true"
+        [maxVisiblePages]="7"
+        (pageChange)="goToPage($event)" />
+    </div>
+    } @if (!store.isLoading() && totalItems() === 0) {
+    <div class="text-center py-20">
+      <div
+        class="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-6">
+        <i-lucide [name]="icons.users" class="w-12 h-12 text-gray-400" [strokeWidth]="1.5" />
+      </div>
+      <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ 'ambassadors.page.noAmbassadors' | translate }}</h3>
+      <p class="text-gray-600 text-lg">{{ 'ambassadors.page.checkBackLater' | translate }}</p>
+    </div>
+    }
+  </app-public-container>
+</app-public-section>

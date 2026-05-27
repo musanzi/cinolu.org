@@ -1,0 +1,171 @@
+<div class="overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/5">
+  <div class="relative border-b border-slate-100 px-6 py-5">
+    <button
+      type="button"
+      (click)="close()"
+      class="absolute right-4 top-4 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+      aria-label="Close dialog">
+      <i-lucide [name]="icons.x" class="size-5" />
+    </button>
+
+    <p class="text-xs font-bold uppercase text-primary-600">My Cinolu</p>
+    <h2 class="mt-2 pr-10 text-2xl font-black text-slate-950">
+      {{ activeTab() === 'login' ? 'Log in to your account' : 'Create your account' }}
+    </h2>
+    <p class="mt-2 text-sm text-slate-500">
+      {{ activeTab() === 'login' ? 'Access your profile, settings, and opportunities.' : 'Join Cinolu and start building your workspace.' }}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2">
+    <button
+      type="button"
+      (click)="switchTab('login')"
+      class="rounded-xl px-4 py-3 text-sm font-bold transition-all"
+      [class.bg-white]="activeTab() === 'login'"
+      [class.text-primary-700]="activeTab() === 'login'"
+      [class.shadow-sm]="activeTab() === 'login'"
+      [class.text-slate-500]="activeTab() !== 'login'">
+      Login
+    </button>
+    <button
+      type="button"
+      (click)="switchTab('register')"
+      class="rounded-xl px-4 py-3 text-sm font-bold transition-all"
+      [class.bg-white]="activeTab() === 'register'"
+      [class.text-primary-700]="activeTab() === 'register'"
+      [class.shadow-sm]="activeTab() === 'register'"
+      [class.text-slate-500]="activeTab() !== 'register'">
+      Register
+    </button>
+  </div>
+
+  <div class="px-6 py-6">
+    @if (errorMessage()) {
+    <p class="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{{ errorMessage() }}</p>
+    }
+
+    @if (activeTab() === 'login') {
+    <form (ngSubmit)="handleLogin()" [formGroup]="loginForm" class="space-y-4">
+      <label class="block">
+        <span class="mb-1.5 block text-sm font-bold text-slate-700">Email address</span>
+        <span class="relative block">
+          <i-lucide [name]="icons.mail" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+          <input
+            type="email"
+            formControlName="email"
+            class="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100"
+            placeholder="you@example.com" />
+        </span>
+      </label>
+
+      <label class="block">
+        <span class="mb-1.5 block text-sm font-bold text-slate-700">Password</span>
+        <span class="relative block">
+          <i-lucide [name]="icons.lock" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="password"
+            class="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-11 text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100"
+            placeholder="At least 6 characters" />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-400 transition-colors hover:text-slate-700"
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+            <i-lucide [name]="showPassword() ? icons.eyeOff : icons.eye" class="size-4" />
+          </button>
+        </span>
+      </label>
+
+      <label class="flex items-center gap-2 text-sm font-medium text-slate-600">
+        <input type="checkbox" formControlName="rememberMe" class="size-4 rounded border-slate-300 text-primary-600" />
+        <span>Remember me</span>
+      </label>
+
+      <button
+        type="submit"
+        [disabled]="isLoading()"
+        class="flex w-full items-center justify-center gap-2 rounded-xl bg-primary-600 px-4 py-3 font-bold text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60">
+        <span>{{ isLoading() ? 'Logging in...' : 'Login' }}</span>
+        <i-lucide [name]="icons.arrowRight" class="size-4" />
+      </button>
+    </form>
+    } @else {
+    <form (ngSubmit)="handleRegister()" [formGroup]="registerForm" class="space-y-4">
+      <label class="block">
+        <span class="mb-1.5 block text-sm font-bold text-slate-700">Email address</span>
+        <span class="relative block">
+          <i-lucide [name]="icons.mail" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+          <input
+            type="email"
+            formControlName="email"
+            class="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100"
+            placeholder="you@example.com" />
+        </span>
+      </label>
+
+      <label class="block">
+        <span class="mb-1.5 block text-sm font-bold text-slate-700">Password</span>
+        <span class="relative block">
+          <i-lucide [name]="icons.lock" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="password"
+            class="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-11 text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100"
+            placeholder="At least 6 characters" />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-400 transition-colors hover:text-slate-700"
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+            <i-lucide [name]="showPassword() ? icons.eyeOff : icons.eye" class="size-4" />
+          </button>
+        </span>
+      </label>
+
+      <label class="flex items-start gap-2 text-sm font-medium text-slate-600">
+        <input type="checkbox" formControlName="acceptTerms" class="mt-0.5 size-4 rounded border-slate-300 text-primary-600" />
+        <span>I agree to the terms and privacy policy.</span>
+      </label>
+
+      <button
+        type="submit"
+        [disabled]="isLoading()"
+        class="flex w-full items-center justify-center gap-2 rounded-xl bg-primary-600 px-4 py-3 font-bold text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60">
+        <span>{{ isLoading() ? 'Creating account...' : 'Register' }}</span>
+        <i-lucide [name]="icons.arrowRight" class="size-4" />
+      </button>
+    </form>
+    }
+
+    <div class="my-6 flex items-center gap-3">
+      <span class="h-px flex-1 bg-slate-200"></span>
+      <span class="text-xs font-semibold uppercase text-slate-400">or</span>
+      <span class="h-px flex-1 bg-slate-200"></span>
+    </div>
+
+    <div class="grid grid-cols-3 gap-3">
+      <button
+        type="button"
+        (click)="handleSocialLogin('google')"
+        class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-50">
+        Google
+      </button>
+      <button
+        type="button"
+        (click)="handleSocialLogin('github')"
+        class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 transition hover:bg-slate-50"
+        aria-label="Continue with GitHub">
+        <i-lucide [name]="icons.github" class="mx-auto size-5" />
+      </button>
+      <button
+        type="button"
+        (click)="handleSocialLogin('linkedin')"
+        class="rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 transition hover:bg-slate-50"
+        aria-label="Continue with LinkedIn">
+        <i-lucide [name]="icons.linkedin" class="mx-auto size-5" />
+      </button>
+    </div>
+  </div>
+</div>

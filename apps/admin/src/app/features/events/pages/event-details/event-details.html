@@ -1,0 +1,48 @@
+<section class="pt-32 dashboard-main-content flex flex-col gap-4">
+  @let event = eventsStore.event();
+  @if (event) {
+    <div
+      class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 mb-6">
+      <div class="flex-1">
+        <h2 class="text-xl font-bold text-gray-900">{{ event.name }}</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <app-ui-button
+          (clicked)="onShowcase()"
+          size="small"
+          [variant]="event.is_highlighted ? 'success' : 'primary'"
+          [outlined]="!event.is_highlighted">
+          <i-lucide [name]="icons.Star" class="size-4" />
+          {{ event.is_highlighted ? 'Retirer de la vedette' : 'Mettre en vedette' }}
+        </app-ui-button>
+        <app-ui-button
+          (clicked)="onPublish()"
+          size="small"
+          [variant]="event.is_published ? 'success' : 'primary'"
+          [outlined]="!event.is_published">
+          <i-lucide [name]="icons.Eye" class="size-4" />
+          {{ event.is_published ? 'Dépublier' : 'Publier' }}
+        </app-ui-button>
+      </div>
+    </div>
+  }
+  <app-ui-tabs [tabs]="tabs" [activeTab]="activeTab()" (tabChange)="onTabChange($event)" />
+  @if (eventsStore.isLoading()) {
+    <app-event-details-skeleton />
+  }
+  @if (activeTab() === 'details' && event) {
+    <app-event-sheet [event]="event" />
+  }
+  @if (activeTab() === 'gallery' && event) {
+    <app-event-gallery
+      [event]="event"
+      [gallery]="galleryStore.gallery()"
+      [isLoading]="galleryStore.isLoading()"
+      (coverUploaded)="onCoverUploaded()"
+      (galleryUploaded)="onGalleryUploaded()"
+      (deleteImage)="onDeleteImage($event)" />
+  }
+  @if (activeTab() === 'edit' && event) {
+    <app-event-update [event]="event" />
+  }
+</section>

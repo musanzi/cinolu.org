@@ -1,0 +1,44 @@
+@if (phases().length > 0) {
+<div
+  class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden transition-shadow duration-200 hover:shadow-md">
+  <div class="p-6">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="w-10 h-10 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center">
+        <i-lucide [name]="icons.layers" class="size-5 stroke-[1.5]"></i-lucide>
+      </div>
+      <h2 class="text-lg font-bold text-gray-900">Phases du programme</h2>
+    </div>
+    <ul class="space-y-4">
+      @for (phase of phases(); track phase.id; let i = $index) {
+      <li class="border border-gray-100 rounded-lg p-4 bg-gray-50/50 hover:bg-gray-50 transition-colors">
+        <div class="flex flex-col sm:flex-row items-start gap-3">
+          <span
+            class="shrink-0 w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-sm font-bold">
+            {{ i + 1 }}
+          </span>
+          <div class="min-w-0 flex-1">
+            <h3 class="font-semibold text-gray-900">{{ phase.name }}</h3>
+            @if (phase.description) {
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed hyphens-none text-justify">{{ phase.description }}</p>
+            }
+            <div class="flex flex-wrap items-center gap-3 mt-2 text-xs text-gray-500">
+              @if (phase.started_at) {
+              <span class="flex items-center gap-1">
+                <i-lucide [name]="icons.calendarDays" class="size-3.5"></i-lucide>
+                {{ phase.started_at | date: 'dd/MM/yyyy' }}
+              </span>
+              } @if (phase.ended_at) {
+              <span class="flex items-center gap-1">
+                <i-lucide [name]="icons.calendarCheck" class="size-3.5"></i-lucide>
+                {{ phase.ended_at | date: 'dd/MM/yyyy' }}
+              </span>
+              }
+            </div>
+          </div>
+        </div>
+      </li>
+      }
+    </ul>
+  </div>
+</div>
+}

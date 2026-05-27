@@ -1,0 +1,11 @@
+@if (showFixed()) {
+<div class="pointer-events-none fixed top-1/2 z-40 hidden -translate-y-1/2 lg:right-6 lg:block">
+  <button
+    type="button"
+    class="pointer-events-auto group flex min-h-[44px] items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-brand-700 dark:hover:bg-brand-500/10"
+    (click)="onGoBack()">
+    <i-lucide [name]="icons.back" class="size-5 transition-transform duration-300 group-hover:-translate-x-0.5" />
+    <span>{{ 'common.back' | translate }}</span>
+  </button>
+</div>
+}

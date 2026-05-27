@@ -1,0 +1,284 @@
+<div class="pb-20">
+  <div class="mb-8">
+    <div class="flex items-start gap-3 mb-4">
+      <div
+        class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+        <i-lucide class="text-white text-2xl" [name]="icons.award" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h1 class="dashboard-heading-2">Badge Ambassadeur</h1>
+        <p class="dashboard-text-body text-gray-600">Suis ta progression par niveau selon tes invitations</p>
+      </div>
+    </div>
+    <div class="mt-4 p-4 bg-white border rounded-lg border-l-4 border-primary-200">
+      <div class="flex items-start gap-2">
+        <i-lucide class="text-primary-600 text-base mt-0.5" [name]="icons.info" />
+        <p class="dashboard-text-small text-gray-600">
+          Ton niveau évolue automatiquement selon le nombre d'inscriptions générées via ton lien. Tu restes toujours
+          Ambassadeur.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid dashboard-grid-cols-12 mb-8">
+    <div class="col-span-12">
+      <div class="dashboard-card p-8">
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-6">
+          <div>
+            <h3 class="dashboard-heading-5 mb-1">Ton badge Ambassadeur</h3>
+            <p class="dashboard-text-small">Niveau {{ badgeProgress().currentBadge.level }} / 5</p>
+          </div>
+          <span
+            class="px-3 py-1.5 rounded-full text-primary-700 bg-primary-50 border border-primary-200 text-xs sm:text-sm font-semibold">
+            {{ referralsCount() }} inscriptions
+          </span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 mb-6">
+          <div
+            class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 shrink-0 flex items-center justify-center rounded-lg"
+            [class]="getBadgeGradientClass(badgeProgress().currentBadge.color)">
+            <i-lucide
+              class="text-white text-4xl sm:text-5xl lg:text-6xl"
+              [name]="resolveBadgeIcon(badgeProgress().currentBadge.icon)" />
+          </div>
+
+          <div class="flex-1 text-center sm:text-left">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-2">
+              {{ badgeProgress().currentBadge.name }}
+            </h2>
+            <p class="dashboard-text-body mb-2">{{ badgeProgress().currentBadge.description }}</p>
+            <span
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold"
+              [class]="'bg-' + badgeProgress().currentBadge.color + '-50 text-' + badgeProgress().currentBadge.color + '-700 border border-' + badgeProgress().currentBadge.color + '-200'">
+              <i-lucide class="text-base" [name]="icons.award" />
+              <span>Niveau {{ badgeProgress().currentBadge.secondaryLevel }}</span>
+            </span>
+          </div>
+        </div>
+
+        @if (!badgeProgress().isMaxLevel) {
+        <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+          <div class="flex items-center justify-between mb-3">
+            <p class="dashboard-text-small font-semibold">Progression vers le prochain niveau</p>
+            <p class="text-sm font-bold" [class]="'text-' + badgeProgress().currentBadge.color + '-700'">
+              {{ badgeProgress().progress.toFixed(0) }}%
+            </p>
+          </div>
+
+          <div class="relative h-3 bg-gray-200 rounded-full overflow-hidden mb-3">
+            <div
+              class="absolute top-0 left-0 h-full rounded-full transition-all duration-700 ease-out"
+              [class]="getBadgeGradientClass(badgeProgress().currentBadge.color)"
+              [style.width.%]="badgeProgress().progress"></div>
+          </div>
+
+          <p class="dashboard-text-tiny text-center">
+            Plus que <span class="font-bold">{{ badgeProgress().referralsToNext }}</span> inscription{{
+            badgeProgress().referralsToNext > 1 ? 's' : '' }} pour débloquer le niveau
+            <span class="font-bold">{{ badgeProgress().nextBadge?.secondaryLevel }}</span>
+          </p>
+        </div>
+        } @else {
+        <div class="bg-purple-50 rounded-lg p-5 border border-purple-200 text-center">
+          <i-lucide class="text-purple-500 text-4xl mb-3" [name]="icons.trophy" />
+          <p class="text-lg font-bold text-gray-900 mb-2">Niveau Légende atteint</p>
+          <p class="dashboard-text-small">
+            Tu as débloqué le niveau ultime ! Continue à inviter des membres pour maximiser ton impact.
+          </p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      @if (badgeProgress().nextBadge) {
+      <div class="dashboard-card p-6">
+        <h4 class="dashboard-heading-5 mb-4 flex items-center gap-2">
+          <i-lucide class="text-gray-600 text-xl" [name]="icons.flag" />
+          <span>Prochain objectif</span>
+        </h4>
+
+        <div class="flex items-start gap-3 sm:gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+          <div
+            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl sm:h-14 sm:w-14"
+            [class]="getBadgeGradientClass(badgeProgress().nextBadge!.color)">
+            <i-lucide
+              class="text-white text-2xl sm:text-3xl"
+              [name]="resolveBadgeIcon(badgeProgress().nextBadge!.icon)" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <h5 class="font-bold text-gray-900 mb-1 text-sm sm:text-base">
+              Niveau {{ badgeProgress().nextBadge!.secondaryLevel }}
+            </h5>
+            <p class="dashboard-text-tiny mb-2">Ambassadeur niveau {{ badgeProgress().nextBadge!.level }}</p>
+            <p class="text-xs font-semibold text-primary-600">
+              {{ badgeProgress().nextBadge!.minReferrals }} inscriptions requises
+            </p>
+          </div>
+        </div>
+      </div>
+      }
+
+      <div class="dashboard-card p-6">
+        <h4 class="dashboard-heading-5 mb-4">Tes statistiques</h4>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="dashboard-text-small">Niveaux débloqués</span>
+            <span class="dashboard-heading-5 text-primary-600"
+              >{{ unlockedBadges().length }} / {{ allBadges().length }}</span
+            >
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="dashboard-text-small">Niveau actuel</span>
+            <span class="dashboard-heading-5 text-primary-600">{{ badgeProgress().currentBadge.secondaryLevel }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="dashboard-text-small">Total inscriptions</span>
+            <span class="dashboard-heading-5 text-primary-600">{{ referralsCount() }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-card p-6 text-center">
+        <i-lucide class="text-primary-600 text-4xl mb-3" [name]="icons.share" />
+        <p class="dashboard-text-small mb-4 font-semibold">Partage ton lien pour faire évoluer ton niveau</p>
+        <a routerLink="/dashboard/user/referral/link" class="dashboard-btn-primary w-full inline-flex justify-center">
+          <i-lucide class="text-lg" [name]="icons.link" />
+          <span>Mon lien de parrainage</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-card p-8">
+    <div class="mb-8">
+      <h3 class="dashboard-heading-3 mb-2">Progression des niveaux</h3>
+      <p class="dashboard-text-body">
+        Les niveaux évoluent automatiquement selon le nombre d'inscriptions générées via ton lien
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      @for (badge of allBadges(); track badge.level) {
+      <div
+        class="relative group"
+        [class]="
+          isBadgeUnlocked(badge)
+            ? 'dashboard-card-hover p-6 cursor-default'
+            : 'dashboard-card p-6 opacity-70'
+        ">
+        @if (isBadgeUnlocked(badge)) {
+        <div class="absolute top-3 right-3">
+          <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
+            <i-lucide class="text-white text-sm" [name]="icons.check" />
+          </div>
+        </div>
+        } @else {
+        <div class="absolute top-3 right-3">
+          <div class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center">
+            <i-lucide class="text-gray-500 text-sm" [name]="icons.lock" />
+          </div>
+        </div>
+        }
+
+        <div class="flex justify-center mb-4">
+          <div
+            class="flex h-16 w-16 items-center justify-center rounded-lg"
+            [class]="
+              isBadgeUnlocked(badge)
+                ? getBadgeGradientClass(badge.color) + ' group-hover:scale-105 transition-transform'
+                : 'bg-gray-200'
+            ">
+            <i-lucide
+              class="text-4xl"
+              [class]="isBadgeUnlocked(badge) ? 'text-white' : 'text-gray-400'"
+              [name]="resolveBadgeIcon(badge.icon)" />
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="mb-2">
+            <span
+              class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold"
+              [class]="
+                isBadgeUnlocked(badge)
+                  ? 'bg-primary-50 text-primary-700 border border-primary-200'
+                  : 'bg-gray-200 text-gray-600'
+              ">
+              <i-lucide class="text-base" [name]="icons.award" />
+              <span>{{ badge.secondaryLevel }}</span>
+            </span>
+          </div>
+
+          <h5 class="font-black text-gray-900 mb-2 text-base">{{ badge.name }}</h5>
+          <p class="dashboard-text-tiny mb-3">Niveau {{ badge.level }} / 5</p>
+
+          <div class="pt-3 border-t border-gray-200">
+            @if (badge.maxReferrals !== null) {
+            <p
+              class="text-xs font-semibold"
+              [class]="isBadgeUnlocked(badge) ? 'text-' + badge.color + '-700' : 'text-gray-600'">
+              {{ badge.minReferrals }} - {{ badge.maxReferrals }} inscriptions
+            </p>
+            } @else {
+            <p
+              class="text-xs font-semibold"
+              [class]="isBadgeUnlocked(badge) ? 'text-' + badge.color + '-700' : 'text-gray-600'">
+              {{ badge.minReferrals }}+ inscriptions
+            </p>
+            }
+          </div>
+
+          @if (isBadgeUnlocked(badge)) {
+          <div class="mt-3">
+            <span class="dashboard-badge-success text-xs px-2 py-1">
+              <i-lucide class="text-xs" [name]="icons.verified" />
+              <span>Débloqué</span>
+            </span>
+          </div>
+          } @else {
+          <div class="mt-3">
+            <span class="dashboard-badge-neutral text-xs px-2 py-1">
+              <i-lucide class="text-xs" [name]="icons.lock" />
+              <span>Verrouillé</span>
+            </span>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="dashboard-card p-6 sm:p-8 mt-8 border-l-4 border-primary-200">
+    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+      <div
+        class="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-xl bg-brand-600 flex items-center justify-center">
+        <i-lucide class="text-white text-2xl sm:text-3xl" [name]="icons.info" />
+      </div>
+      <div class="flex-1 text-center sm:text-left">
+        <h4 class="dashboard-heading-4 mb-3">Comment ça fonctionne ?</h4>
+        <ul class="space-y-2 dashboard-text-body text-left">
+          <li class="flex items-start gap-2">
+            <i-lucide class="text-primary-600 text-lg mt-0.5 shrink-0" [name]="icons.arrowRight" />
+            <span>Tu es toujours Ambassadeur, seul ton niveau évolue</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i-lucide class="text-primary-600 text-lg mt-0.5 shrink-0" [name]="icons.arrowRight" />
+            <span>Le niveau change automatiquement selon le nombre d'inscriptions via ton lien</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i-lucide class="text-primary-600 text-lg mt-0.5 shrink-0" [name]="icons.arrowRight" />
+            <span>5 niveaux : Bronze (1) → Argent (5) → Or (15) → Diamant (30) → Légende (50+)</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i-lucide class="text-primary-600 text-lg mt-0.5 shrink-0" [name]="icons.arrowRight" />
+            <span>Partage ton lien pour faire évoluer ton niveau et maximiser ton impact</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

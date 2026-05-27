@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="flex flex-col gap-6">
+    <app-ui-input
+      [required]="true"
+      label="Titre de l'article"
+      id="title"
+      formControlName="title"
+      placeholder="Ex: Les tendances du développement web en 2025" />
+    <app-ui-multi-select
+      [required]="true"
+      label="Tags de l'article"
+      id="tags"
+      optionLabel="name"
+      optionValue="id"
+      display="chip"
+      [options]="tagsStore.allTags()"
+      [allowCreate]="true"
+      [createDisabled]="tagsStore.isLoading()"
+      createPlaceholder="Ajouter un tag"
+      createButtonLabel="Ajouter"
+      (createOption)="onCreateTag($event)"
+      formControlName="tags" />
+    <app-ui-text-editor
+      formControlName="content"
+      minHeight="400px"
+      placeholder="Commencez à écrire votre article..."
+      id="content" />
+
+    <div class="flex justify-end gap-3 border-t border-gray-100 pt-6">
+      <app-ui-button
+        type="submit"
+        variant="primary"
+        size="small"
+        [loading]="updateStore.isLoading()"
+        [disabled]="updateStore.isLoading() || form.invalid">
+        Mettre à jour
+      </app-ui-button>
+    </div>
+  </div>
+</form>

@@ -7,6 +7,7 @@
   "tags": [],
   "targets": {
     "build": {
+      "cache": true,
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -19,7 +20,12 @@
             "input": "apps/admin/public"
           }
         ],
-        "styles": ["apps/admin/src/styles.css"],
+        "styles": [
+          "apps/admin/src/styles/styles.css",
+          "node_modules/filepond/dist/filepond.min.css",
+          "node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css",
+          "node_modules/notyf/notyf.min.css"
+        ],
         "server": "apps/admin/src/main.server.ts",
         "ssr": {
           "entry": "apps/admin/src/server.ts"
@@ -31,13 +37,13 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumWarning": "2mb",
+              "maximumError": "2mb"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
+              "maximumWarning": "1mb",
+              "maximumError": "1mb"
             }
           ],
           "outputHashing": "all"
@@ -45,12 +51,21 @@
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/admin/src/environments/environment.ts",
+              "with": "apps/admin/src/environments/environment.development.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
     },
     "serve": {
+      "options": {
+        "port": 4000
+      },
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "configurations": {

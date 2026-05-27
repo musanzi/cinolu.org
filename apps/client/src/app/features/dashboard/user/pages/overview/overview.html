@@ -1,0 +1,312 @@
+<div class="pb-20">
+  @if (venturesStore.isLoading()) {
+  <div class="flex flex-col justify-center items-center py-24">
+    <div class="relative">
+      <div class="w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+      <div
+        class="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-primary-400 rounded-full animate-ping"></div>
+    </div>
+    <p class="mt-6 text-gray-600 font-medium animate-pulse">Chargement de votre écosystème...</p>
+  </div>
+  } @else {
+  <div class="grid grid-cols-12 gap-4 md:gap-6">
+    <div class="col-span-12">
+      <div class="tailadmin-card relative overflow-hidden">
+        <div
+          class="absolute top-0 right-0 w-96 h-96 hidden rounded-full blur-3xl z-0"></div>
+
+        <div class="relative z-10 flex items-center gap-4">
+          <div
+            class="w-14 h-14 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+            <i-lucide class="text-white text-2xl" [name]="icons.hand" />
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <h1 class="mb-1 text-xl font-semibold text-gray-800 dark:text-white/90">
+              {{ greeting() }}, {{ authStore.user()?.name }}
+            </h1>
+            @if (isAdminUser()) {
+            <div class="flex items-center gap-2 text-gray-700 text-sm flex-wrap">
+              <span class="dashboard-badge-purple">
+                <i-lucide class="text-xs" [name]="icons.shield" />
+                Administrateur
+              </span>
+              <span class="text-gray-600">•</span>
+              <a
+                class="inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-primary-700 transition-colors"
+                [href]="onestopUrl"
+                target="_blank"
+                rel="noopener noreferrer">
+                <span>admin.cinolu.org</span>
+                <i-lucide class="text-sm" [name]="icons.externalLink" />
+              </a>
+            </div>
+            } @else {
+            <p class="text-gray-600">Voici votre tableau de bord</p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12 mb-6">
+      <h2 class="mb-1 text-lg font-semibold text-gray-800 dark:text-white/90">Statistiques clés</h2>
+      <p class="text-theme-sm text-gray-500 dark:text-gray-400">Vue synthétique de vos indicateurs</p>
+    </div>
+
+    <div class="col-span-12">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+            <i-lucide class="h-6 w-6 text-gray-700 dark:text-gray-300" [name]="icons.business" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Mes Projets</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+              {{ venturesStore.ventures().length || 0 }}
+            </h4>
+          </div>
+        </div>
+
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+            <i-lucide class="h-6 w-6 text-gray-700 dark:text-gray-300" [name]="icons.package" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Produits Actifs</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">{{ productsCount || 0 }}</h4>
+          </div>
+        </div>
+
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+            <i-lucide class="h-6 w-6 text-gray-700 dark:text-gray-300" [name]="icons.userPlus" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Parrainages</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+              {{ authStore.user()?.referralsCount || 0 }}
+            </h4>
+          </div>
+        </div>
+
+        <div class="tailadmin-stat-card">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+            <i-lucide class="h-6 w-6 text-gray-700 dark:text-gray-300" [name]="icons.users" />
+          </div>
+          <div class="mt-5">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Profil</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+              {{ profileCompletion() }}<span class="text-lg">%</span>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="dashboard-card-elevated flex flex-col">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 mb-1">Complétion du Profil</h3>
+              <p class="text-sm text-gray-600">Progression en temps réel</p>
+            </div>
+            <span class="dashboard-badge-critical">
+              <span class="dashboard-status-online"></span>
+              <span>Live</span>
+            </span>
+          </div>
+          @defer (on viewport) {
+          <div class="relative flex-1 flex items-center justify-center min-h-0.5">
+            <svg
+              class="w-64 h-64 lg:h-72 lg:w-72 max-w-full transform -rotate-90 dashboard-progress-circle"
+              viewBox="0 0 200 200"
+              aria-hidden="true">
+              <circle cx="100" cy="100" r="85" stroke-width="16" fill="none" />
+              <circle
+                cx="100"
+                cy="100"
+                r="85"
+                stroke-width="16"
+                fill="none"
+                [attr.stroke-dasharray]="534.07"
+                [attr.stroke-dashoffset]="534.07 * (1 - profileCompletion() / 100)"
+                stroke-linecap="round"
+                class="transition-all duration-1000 ease-out dashboard-progress-circle-fill" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div class="text-center">
+                <span class="text-6xl font-black tracking-tighter dashboard-text-gradient-primary"
+                  >{{ profileCompletion() }}</span
+                >
+                <span class="text-3xl font-black text-gray-600">%</span>
+                <p class="text-sm text-gray-600 font-semibold mt-3">
+                  {{ profileCompletion() === 100 ? '✨ Profil complet !' : 'Complétez votre profil' }}
+                </p>
+              </div>
+            </div>
+          </div>
+          } @placeholder {
+          <div class="flex-1 flex items-center justify-center min-h-80">
+            <div class="dashboard-shimmer w-64 h-64 rounded-full"></div>
+          </div>
+          }
+        </div>
+
+        <div class="">
+          <div class="mb-4">
+            <h2 class="text-xl font-bold text-gray-900 mb-1">À la une</h2>
+            <p class="text-sm text-gray-600">Mise en avant dynamique</p>
+          </div>
+
+          <a
+            [routerLink]="highlightLink()"
+            class="relative dashboard-card-hover overflow-hidden group cursor-pointer h-90 flex flex-col justify-end">
+            <div class="absolute inset-0 overflow-hidden">
+              <img
+                [src]="highlightImage()"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                [alt]="highlightTitle()" />
+              <div class="absolute inset-0 bg-gray-900/70"></div>
+            </div>
+
+            <div class="relative z-10 space-y-4 p-8">
+              <span
+                class="dashboard-badge bg-brand-600 text-white border-0 inline-flex">
+                <i-lucide class="text-sm" [name]="icons.star" />
+                <span class="uppercase tracking-wider font-bold text-xs">{{ highlightBadge() }}</span>
+              </span>
+              <h4 class="text-2xl font-black text-white leading-tight dashboard-line-clamp-2">
+                {{ highlightTitle() }}
+              </h4>
+              <p class="text-gray-200 text-sm leading-relaxed dashboard-line-clamp-2">{{ highlightDescription() }}</p>
+              <div class="flex items-center gap-2 text-white font-semibold pt-2">
+                <span class="text-sm">Découvrir</span>
+                <i-lucide class="text-base group-hover:trangray-x-1 transition-transform" [name]="icons.arrowRight" />
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-1">Activité Récente</h2>
+        <p class="text-sm text-gray-600">Dernières actions sur vos projets</p>
+      </div>
+
+      @if (venturesStore.ventures() && venturesStore.ventures().length > 0) {
+      <div class="dashboard-grid-3">
+        @for (venture of venturesStore.ventures().slice(0, 3); track venture.id) {
+        <a
+          [routerLink]="['/dashboard/user/ventures', venture.slug]"
+          class="dashboard-card-hover p-6 flex items-center gap-4 group cursor-pointer">
+          @if (venture.logo) {
+          <div
+            class="w-16 h-16 rounded-xl overflow-hidden shrink-0 ring-2 ring-gray-100 group-hover:ring-primary-200 transition-all duration-300">
+            <img [src]="venture | apiIMG : 'venture'" [alt]="venture.name" class="w-full h-full object-cover" />
+          </div>
+          } @else {
+          <div
+            class="w-16 h-16 bg-brand-600 rounded-lg flex items-center justify-center font-black text-white text-lg shrink-0 group-hover:scale-105 transition-transform duration-300">
+            {{ venture.name.charAt(0) }}{{ (venture.name.split(' ')[1] || '').charAt(0) }}
+          </div>
+          }
+
+          <div class="flex-1 min-w-0">
+            <h5 class="font-bold text-gray-900 group-hover:text-primary-600 transition-colors truncate text-base mb-1">
+              {{ venture.name }}
+            </h5>
+            <p class="dashboard-text-tiny uppercase tracking-wider font-semibold text-gray-500">
+              {{ venture.sector || 'Secteur non défini' }}
+            </p>
+          </div>
+
+          <div
+            class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-primary-50 transition-all duration-300 shrink-0">
+            <i-lucide
+              class="text-gray-600 group-hover:text-primary-600 group-hover:trangray-x-0.5 transition-all text-xl"
+              [name]="icons.arrowRight" />
+          </div>
+        </a>
+        }
+      </div>
+      } @else {
+      <div class="dashboard-card flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+            <i-lucide class="text-primary-600 text-2xl" [name]="icons.business" />
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900">Aucun projet</h3>
+            <p class="text-sm text-gray-600">Créez votre premier projet</p>
+          </div>
+        </div>
+        <a [routerLink]="['/dashboard/user/ventures/create']" class="dashboard-btn-primary">
+          <i-lucide class="text-xl" [name]="icons.add" />
+          <span>Créer</span>
+        </a>
+      </div>
+      }
+    </div>
+
+    <div class="col-span-12">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-1">Actions rapides</h2>
+        <p class="text-sm text-gray-600">Accès immédiat aux tâches essentielles</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <a
+          routerLink="/dashboard/user/ventures/create"
+          class="dashboard-card-hover group cursor-pointer">
+          <div class="flex flex-col items-center gap-4 text-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-xl bg-brand-600 transition-transform duration-300 group-hover:scale-110">
+              <i-lucide class="text-4xl text-white" [name]="icons.business" />
+            </div>
+            <div>
+              <h4 class="mb-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-brand-700">
+                Créer un projet
+              </h4>
+              <p class="text-sm text-gray-600">Lancez votre projet</p>
+            </div>
+          </div>
+        </a>
+
+        <a routerLink="/dashboard/user/products/create" class="dashboard-card-hover group cursor-pointer">
+          <div class="flex flex-col items-center gap-4 text-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-xl bg-brand-600 transition-transform duration-300 group-hover:scale-110">
+              <i-lucide class="text-4xl text-white" [name]="icons.shoppingCart" />
+            </div>
+            <div>
+              <h4 class="mb-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-brand-700">
+                Ajouter un Produit
+              </h4>
+              <p class="text-sm text-gray-600">Créez votre catalogue</p>
+            </div>
+          </div>
+        </a>
+
+        <a routerLink="/dashboard/user/profile" class="dashboard-card-hover group cursor-pointer">
+          <div class="flex flex-col items-center gap-4 text-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-xl bg-brand-600 transition-transform duration-300 group-hover:scale-110">
+              <i-lucide class="text-4xl text-white" [name]="icons.edit" />
+            </div>
+            <div>
+              <h4 class="mb-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-brand-700">
+                Modifier le Profil
+              </h4>
+              <p class="text-sm text-gray-600">Mettez à jour vos infos</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  }
+</div>

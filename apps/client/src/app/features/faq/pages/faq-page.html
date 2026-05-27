@@ -1,0 +1,65 @@
+@if (loading()) {
+<app-faq-page-skeleton></app-faq-page-skeleton>
+} @else {
+<app-public-page-hero
+  variant="minimal"
+  align="center"
+  badgeText="Questions Fréquentes"
+  [badgeIcon]="icons.messageCircle"
+  title="FAQ - Foire Aux Questions"
+  description="Trouvez rapidement des réponses sur Cinolu, le tableau de bord, les programmes, le rôle mentor et nos services." />
+
+<app-public-section>
+  <app-public-container width="wide" className="min-h-[60vh]">
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      @for (cat of categories; track cat.key) {
+      <button
+        type="button"
+        (click)="selectedCategory.set(cat.key)"
+        [class.bg-brand-600]="selectedCategory() === cat.key"
+        [class.text-white]="selectedCategory() === cat.key"
+        [class.bg-white]="selectedCategory() !== cat.key"
+        [class.text-gray-700]="selectedCategory() !== cat.key"
+        class="rounded-full border border-gray-200 px-6 py-2.5 text-sm font-semibold transition-colors duration-200">
+        {{ cat.label }}
+      </button>
+      }
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-4">
+      @for (item of filteredFAQ(); track item.question) {
+      <app-public-card variant="interactive" className="overflow-hidden p-0">
+        <button
+          type="button"
+          (click)="toggleFAQ(item)"
+          class="flex w-full items-center justify-between p-6 text-left transition-colors duration-200 hover:bg-gray-50">
+          <span class="pr-8 font-semibold text-gray-900">{{ item.question }}</span>
+          <i-lucide
+            [name]="icons.chevronDown"
+            class="size-5 shrink-0 text-brand-600 transition-transform duration-200"
+            [class.rotate-180]="item.open" />
+        </button>
+        @if (item.open) {
+        <div class="border-t border-gray-100 px-6 pb-6 pt-4 leading-relaxed text-gray-600">{{ item.answer }}</div>
+        }
+      </app-public-card>
+      }
+    </div>
+
+    <div class="mx-auto mt-16 max-w-3xl rounded-2xl border border-brand-200 bg-brand-50 p-8 text-center">
+      <h3 class="mb-3 text-2xl font-bold text-gray-900">Vous n'avez pas trouvé votre réponse ?</h3>
+      <p class="mb-6 text-gray-600">Notre équipe est là pour vous aider. Contactez-nous directement.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <app-public-button variant="primary" routerLink="/contact-us">
+          <i-lucide [name]="icons.mail" class="size-5" />
+          <span>Nous contacter</span>
+        </app-public-button>
+        <app-public-button variant="secondary" href="tel:+243976807000">
+          <i-lucide [name]="icons.phone" class="size-5" />
+          <span>+243 976 807 000</span>
+        </app-public-button>
+      </div>
+    </div>
+  </app-public-container>
+</app-public-section>
+}

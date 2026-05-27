@@ -1,0 +1,218 @@
+<div class="space-y-6">
+  @let resources = resourcesStore.list();
+  @let total = resourcesStore.total();
+  @let isLoading = resourcesStore.isLoading();
+  @let isSaving = resourcesStore.isSaving();
+  <input
+    #replaceInput
+    type="file"
+    class="hidden"
+    accept=".pdf,.docx,.xlsx,.pptx,.zip,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/zip"
+    (change)="onReplaceSelection(replaceInput)" />
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex items-center gap-3">
+      <app-ui-badge [label]="total.toString() + ' ressources'" />
+    </div>
+    @if (!showForm()) {
+      <app-ui-button type="button" size="small" variant="primary" (clicked)="onCreateClick()">
+        <i-lucide [name]="icons.Plus" class="size-4" />
+        Ajouter une ressource
+      </app-ui-button>
+    }
+  </div>
+  <form [formGroup]="filtersForm" class="grid gap-3 md:grid-cols-[280px]">
+    <app-ui-select
+      [id]="'resource-category-filter'"
+      [options]="filterCategoryOptions"
+      formControlName="category"
+      placeholder="Toutes les catégories" />
+  </form>
+  @if (showForm()) {
+    <div class="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+      <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()" class="space-y-5">
+        <div class="grid gap-5 lg:grid-cols-3">
+          <div class="col-span-2">
+            <app-ui-input
+              [id]="'resource-title'"
+              [required]="true"
+              label="Titre"
+              formControlName="title"
+              placeholder="Ex: Guide de candidature" />
+          </div>
+          <app-ui-select
+            [id]="'resource-category'"
+            [required]="true"
+            label="Catégorie"
+            [options]="categoryOptions"
+            formControlName="category"
+            placeholder="Choisir une catégorie" />
+        </div>
+        <app-ui-textarea
+          [id]="'resource-description'"
+          [required]="true"
+          label="Description"
+          formControlName="description"
+          [rows]="4"
+          placeholder="Décrivez brièvement cette ressource" />
+        <div class="grid gap-5 lg:grid-cols-2 mt-4">
+          @if (!editingResourceId()) {
+            <app-ui-select
+              [id]="'resource-scope'"
+              [required]="true"
+              label="Portée"
+              [options]="scopeOptions"
+              formControlName="scope"
+              placeholder="Choisir une portée" />
+          }
+          @if (resourceForm.value.scope === 'phase') {
+            <div class="max-w-lg">
+              <app-ui-select
+                [id]="'resource-phase'"
+                [required]="true"
+                label="Phase"
+                [options]="phaseOptions()"
+                formControlName="phase_id"
+                placeholder="Choisir une phase" />
+            </div>
+          }
+        </div>
+        @if (!editingResourceId()) {
+          <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-4">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-800">Fichier</p>
+                <p class="text-xs text-gray-500">Formats acceptés: PDF, DOCX, XLSX, PPTX, ZIP</p>
+                @if (selectedFile()) {
+                  <p class="mt-2 text-sm text-primary-700">{{ selectedFile()?.name }}</p>
+                }
+              </div>
+              <div class="flex gap-2">
+                <input
+                  #createInput
+                  type="file"
+                  class="hidden"
+                  accept=".pdf,.docx,.xlsx,.pptx,.zip,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/zip"
+                  (change)="onSelectCreateFile(createInput)" />
+                <app-ui-button
+                  type="button"
+                  variant="secondary"
+                  [outlined]="true"
+                  size="small"
+                  (clicked)="createInput.click()">
+                  <i-lucide [name]="icons.Upload" class="size-4" />
+                  Choisir un fichier
+                </app-ui-button>
+              </div>
+            </div>
+          </div>
+        }
+        <div class="flex justify-end gap-2 border-t border-gray-100 pt-4">
+          <app-ui-button type="button" size="small" variant="secondary" [outlined]="true" (clicked)="onCancelForm()">
+            Annuler
+          </app-ui-button>
+          <app-ui-button type="submit" size="small" variant="primary" [loading]="isSaving" [disabled]="!canSubmit()">
+            {{ editingResourceId() ? 'Enregistrer' : 'Créer la ressource' }}
+          </app-ui-button>
+        </div>
+      </form>
+    </div>
+  }
+  @if (isLoading) {
+    <div class="space-y-3">
+      @for (item of [1, 2, 3]; track item) {
+        <div class="h-36 w-full bg-gray-100 animate-pulse rounded-2xl border border-slate-100"></div>
+      }
+    </div>
+  }
+  @if (!isLoading && resources.length > 0) {
+    <div class="space-y-4">
+      @for (resource of resources; track resource.id) {
+        <article class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div class="min-w-0 flex-1">
+              <div class="mb-3 flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-primary-50 px-3 py-1 text-xs font-medium text-primary-700">
+                  {{ categoryLabel(resource.category) }}
+                </span>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                  {{ scopeLabel(resource) }}
+                </span>
+              </div>
+              <div class="flex items-start gap-3">
+                <div
+                  class="mt-1 flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                  <i-lucide [name]="icons.FileText" class="size-5" />
+                </div>
+                <div class="min-w-0">
+                  <h4 class="text-base font-semibold text-slate-900">{{ resource.title }}</h4>
+                  <p class="mt-1 text-sm leading-6 text-slate-600">{{ resource.description }}</p>
+                  <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-400">
+                    <span>{{ fileName(resource) }}</span>
+                    <span>{{ resource.updated_at | date: 'dd MMM yyyy' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <a
+                [href]="fileUrl(resource)"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+                <i-lucide [name]="icons.FolderOpen" class="size-4" />
+                Ouvrir
+              </a>
+              <app-ui-button
+                type="button"
+                size="small"
+                variant="secondary"
+                [outlined]="true"
+                (clicked)="onReplaceFile(resource.id, replaceInput)">
+                <i-lucide [name]="icons.FilePenLine" class="size-4" />
+                Remplacer
+              </app-ui-button>
+              <app-ui-button
+                type="button"
+                size="small"
+                variant="primary"
+                [outlined]="true"
+                (clicked)="onEdit(resource)">
+                <i-lucide [name]="icons.Pencil" class="size-4" />
+                Modifier
+              </app-ui-button>
+              <app-ui-button type="button" size="small" variant="danger" (clicked)="onDelete(resource)">
+                <i-lucide [name]="icons.Trash2" class="size-4" />
+                Supprimer
+              </app-ui-button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+    <div class="justify-self-end border-t border-slate-100 px-1 pt-2">
+      <app-ui-pagination
+        [currentPage]="currentPage()"
+        [totalItems]="total"
+        [itemsPerPage]="20"
+        (pageChange)="onPageChange($event)" />
+    </div>
+  }
+  @if (!isLoading && resources.length === 0 && !showForm()) {
+    <div class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 py-16 text-center">
+      <div class="mx-auto flex size-14 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm">
+        <i-lucide [name]="icons.FileText" class="size-7" />
+      </div>
+      <h4 class="mt-4 text-lg font-semibold text-slate-800">Aucune ressource pour le moment</h4>
+      <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+        Ajoutez des guides, modèles, documents juridiques ou rapports pour centraliser les fichiers utiles du projet.
+      </p>
+      <div class="inline-flex">
+        <app-ui-button type="button" size="small" variant="primary" class="mt-6" (clicked)="onCreateClick()">
+          <i-lucide [name]="icons.Plus" class="size-4" />
+          Ajouter une ressource
+        </app-ui-button>
+      </div>
+    </div>
+  }
+  <app-ui-confirm-dialog />
+</div>

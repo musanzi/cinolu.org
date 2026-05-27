@@ -1,0 +1,47 @@
+<div
+  class="transition overflow-hidden flex flex-col gap-6 sm:flex-row h-full md:min-h-96 bg-white/20 shadow-sm border backdrop-blur-[2px] border-slate-200 rounded-lg">
+  <div class="sm:w-2/5 w-full aspect-video sm:aspect-auto">
+    <div class="relative w-full h-full overflow-hidden">
+      <img
+        [ngSrc]="project() | apiIMG: 'project'"
+        alt="Image de l'activité {{ project().name }}"
+        class="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+        loading="lazy"
+        fill />
+    </div>
+  </div>
+  <div class="sm:w-3/5 w-full flex flex-col p-4 sm:p-6 gap-4 justify-between">
+    <h3 class="font-semibold text-xl sm:text-2xl text-gray-800 flex items-center gap-2 hyphens-none">
+      <i-lucide [name]="icons.tag" class="size-4" />
+      {{ project().name }}
+    </h3>
+    <quill-view class="hyphens-none" [content]="project().description" />
+    <div class="flex justify-between max-sm:flex-col gap-4 text-sm sm:text-base">
+      <div class="flex items-center gap-2 text-gray-700">
+        <i-lucide [name]="icons.calendar" class="size-4 sm:size-5" />
+        <span>
+          <strong>Début :</strong>
+          {{ project().started_at | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+      <div class="flex items-center gap-2 text-gray-700">
+        <i-lucide [name]="icons.endedAt" class="size-4 sm:size-5" />
+        <span>
+          <strong>Fin :</strong>
+          {{ project().ended_at | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-3 items-center justify-between text-sm sm:text-base">
+      <div class="font-medium">
+        @switch (getStatut(project())) { @case ('En cours') {
+        <ui-tag variant="primary">En cours</ui-tag>
+        } @case ('À venir') {
+        <ui-tag variant="info">À venir</ui-tag>
+        } @default {
+        <ui-tag variant="warning">{{ getStatut(project()) }}</ui-tag>
+        } }
+      </div>
+    </div>
+  </div>
+</div>

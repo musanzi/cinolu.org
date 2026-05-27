@@ -1,0 +1,96 @@
+<footer class="relative bg-gray-900 overflow-hidden">
+  <div class="absolute inset-0 bg-[url('/images/about.jpg')] bg-cover bg-center bg-no-repeat opacity-20"></div>
+  <div class="absolute inset-0 bg-gray-950/75"></div>
+
+  <div class="relative z-10">
+    <div class="px-6 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto py-12 sm:py-16 lg:py-20">
+      <div class="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
+        <div class="lg:col-span-4 space-y-4 sm:space-y-6">
+          <a routerLink="/" class="inline-block group">
+            <img
+              ngSrc="images/logo/logo-w.png"
+              alt="Logo CINOLU"
+              class="w-14 sm:w-16 h-auto transition-transform duration-300 group-hover:scale-110"
+              width="64"
+              height="68"
+              priority />
+          </a>
+          <p class="text-gray-300 text-sm leading-relaxed max-w-sm">{{ 'footer.description' | translate }}</p>
+          <div class="flex items-center gap-2 text-gray-400 text-xs">
+            <div class="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></div>
+            <span>{{ 'common.welcome' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+          @for (link of links; track link.titleKey) {
+          <div class="space-y-3 sm:space-y-4">
+            <h5 class="font-bold text-white text-sm sm:text-base tracking-wide relative inline-block pb-2">
+              {{ link.titleKey | translate }}
+              <span
+                class="absolute -bottom-0 left-0 w-8 h-0.5 bg-brand-600 rounded-full"></span>
+            </h5>
+            <ul class="space-y-2.5 sm:space-y-3">
+              @for (url of link.urls; track $index) { @if (url.external) {
+              <li>
+                <a
+                  target="_blank"
+                  [href]="url.path"
+                  class="group flex items-center gap-2 text-gray-300 hover:text-white text-sm transition-all duration-200">
+                  <i-lucide
+                    [name]="icons.arrowRight"
+                    class="size-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                  <span class="relative">
+                    @if (url.translationKey) { {{ url.translationKey | translate }} } @else { {{ url.name }} }
+                    <span
+                      class="absolute -bottom-0.5 left-0 w-0 h-px bg-brand-500 transition-all duration-300 group-hover:w-full"></span>
+                  </span>
+                </a>
+              </li>
+              } @else {
+              <li>
+                <a
+                  [fragment]="url.fragment"
+                  [routerLink]="url.path"
+                  class="group flex items-center gap-2 text-gray-300 hover:text-white text-sm transition-all duration-200">
+                  <i-lucide
+                    [name]="icons.arrowUpRight"
+                    class="size-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <span class="relative">
+                    @if (url.translationKey) { {{ url.translationKey | translate }} } @else { {{ url.name }} }
+                    <span
+                      class="absolute -bottom-0.5 left-0 w-0 h-px bg-brand-500 transition-all duration-300 group-hover:w-full"></span>
+                  </span>
+                </a>
+              </li>
+              } }
+            </ul>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10">
+      <div class="px-6 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-screen-2xl mx-auto py-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm">
+          <p class="text-gray-400 text-center sm:text-left">
+            &copy; {{ currentYear() }} <span class="font-semibold text-white">CINOLU</span>. {{ 'footer.rights' |
+            translate }}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-gray-400">
+            <a href="/faq" class="hover:text-white transition-colors duration-200 text-center">FAQ</a>
+            <span class="hidden sm:block w-1 h-1 rounded-full bg-gray-600"></span>
+            <a href="#" class="hover:text-white transition-colors duration-200 text-center"
+              >{{ 'footer.privacy_policy' | translate }}</a
+            >
+            <span class="hidden sm:block w-1 h-1 rounded-full bg-gray-600"></span>
+            <a href="#" class="hover:text-white transition-colors duration-200 text-center"
+              >{{ 'footer.terms' | translate }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

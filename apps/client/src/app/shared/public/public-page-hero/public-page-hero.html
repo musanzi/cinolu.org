@@ -1,0 +1,108 @@
+@if (variant() === 'minimal') {
+<section
+  class="border-b border-gray-200/80 bg-white pt-32 pb-10 sm:pb-12"
+  [attr.aria-label]="ariaLabel() || 'Page header'"
+  role="region">
+  <app-public-container [width]="containerWidth()">
+    <div [class]="headerAlignClass()">
+      @if (badgeText() || badgeTextKey()) {
+      <div class="public-section-badge mb-4" [class.mx-auto]="align() === 'center'">
+        @if (badgeIcon()) {
+        <i-lucide [name]="badgeIcon()!" class="size-4 shrink-0" aria-hidden="true" />
+        }
+        @if (badgeTextKey()) {
+        {{ badgeTextKey() | translate }}
+        } @else {
+        {{ badgeText() }}
+        }
+      </div>
+      }
+      <h1 [class]="h1Classes()">
+        @if (titleKey()) {
+        {{ titleKey() | translate }}
+        } @else {
+        {{ title() }}
+        }
+        @if (highlight() || highlightKey()) {
+        <span class="text-brand-600">
+          @if (highlightKey()) {
+          {{ highlightKey() | translate }}
+          } @else {
+          {{ highlight() }}
+          }
+        </span>
+        }
+      </h1>
+      @if (description() || descriptionKey()) {
+      <p [class]="descriptionClasses()">
+        @if (descriptionKey()) {
+        {{ descriptionKey() | translate }}
+        } @else {
+        {{ description() }}
+        }
+      </p>
+      }
+      <ng-content select="[heroActions]" />
+    </div>
+  </app-public-container>
+</section>
+} @else {
+<section
+  class="relative flex min-h-[50vh] flex-col items-center justify-center overflow-hidden pt-32 pb-12 content-center sm:pt-40 sm:pb-20"
+  [attr.aria-label]="ariaLabel() || 'Page hero'"
+  role="region">
+  @if (background()) {
+  <img
+    [src]="background()"
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+    aria-hidden="true" />
+  }
+  <div class="absolute inset-0 bg-grid" [ngClass]="overlayColor()" aria-hidden="true"></div>
+  <app-public-container className="relative z-10 flex flex-col items-center justify-center text-center">
+    @if (badgeText() || badgeTextKey()) {
+    <p
+      class="mb-2 inline-flex max-w-fit items-center gap-2 rounded-full border border-neutral-400/20 bg-neutral-300/20 px-4 py-1.5 text-sm font-semibold text-primary-50 backdrop-blur-[1px] hover:bg-neutral-300/30 lg:px-6">
+      @if (badgeIcon()) {
+      <i-lucide [name]="badgeIcon()!" class="size-4" aria-hidden="true" />
+      }
+      @if (badgeTextKey()) {
+      {{ badgeTextKey() | translate }}
+      } @else {
+      {{ badgeText() }}
+      }
+    </p>
+    }
+    <h1
+      class="mb-6 flex flex-wrap items-center justify-center gap-2 text-center text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+      [@fadeInOut]>
+      @if (titleKey()) {
+      {{ titleKey() | translate }}
+      } @else {
+      {{ title() }}
+      }
+      @if (highlight() || highlightKey()) {
+      <span class="text-primary-400">
+        @if (highlightKey()) {
+        {{ highlightKey() | translate }}
+        } @else {
+        {{ highlight() }}
+        }
+      </span>
+      }
+    </h1>
+    @if (description() || descriptionKey()) {
+    <p class="max-w-2xl hyphens-none text-base leading-relaxed text-white/90 md:text-lg">
+      @if (descriptionKey()) {
+      {{ descriptionKey() | translate }}
+      } @else {
+      {{ description() }}
+      }
+    </p>
+    }
+    <ng-content select="[heroActions]" />
+  </app-public-container>
+</section>
+}

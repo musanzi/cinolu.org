@@ -1,0 +1,37 @@
+@if (project().gallery && project().gallery.length > 0) {
+<div class="space-y-4 rounded-lg bg-white p-4 shadow">
+  <figure class="relative h-80 w-full overflow-hidden rounded-md md:h-[30rem]">
+    <img
+      [src]="project().gallery[activeIndex()] | apiIMG: 'gallery'"
+      [alt]="project().gallery[activeIndex()].image || project().name || 'gallery image'"
+      class="h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high" />
+  </figure>
+  <div class="flex flex-wrap gap-3">
+    @for (img of project().gallery; track img.id; let idx = $index) {
+    <button
+      type="button"
+      (click)="activeIndex.set(idx)"
+      class="overflow-hidden rounded-md border-2 transition"
+      [class.border-primary-500]="idx === activeIndex()"
+      [class.border-transparent]="idx !== activeIndex()">
+      <img
+        [src]="img | apiIMG: 'gallery'"
+        [alt]="img.image || 'thumbnail'"
+        class="h-20 w-20 object-cover"
+        loading="lazy" />
+    </button>
+    }
+  </div>
+</div>
+} @else {
+<figure class="relative w-full overflow-hidden h-80 md:h-[34rem] rounded-md shadow bg-gray-50">
+  <img
+    [src]="project() | apiIMG: 'project'"
+    [alt]="project().name"
+    class="object-cover w-full h-full"
+    loading="eager"
+    fetchpriority="high" />
+</figure>
+}

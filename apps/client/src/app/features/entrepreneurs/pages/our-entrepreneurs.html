@@ -1,0 +1,60 @@
+<app-hero-card
+  background="/images/talent-default.jpg"
+  [badgeIcon]="icons.users"
+  badgeTextKey="entrepreneurs.badge"
+  titleKey="entrepreneurs.title"
+  highlightKey="entrepreneurs.title_highlight"
+  descriptionKey="entrepreneurs.description" />
+
+<app-public-section variant="muted" className="min-h-[75vh] bg-grid">
+  <app-public-container>
+    @if (venturesStore.isLoading()) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6 md:mb-10">
+      @for (i of [1, 2, 3, 4]; track i) {
+      <app-entrepreneur-card-skeleton />
+      }
+    </div>
+    } @else if (venturesStore.ventures().length === 0) {
+    <div
+      class="flex flex-col items-center justify-center py-20 px-6 w-full border-dashed border-2 border-gray-300 rounded-lg">
+      <div
+        class="relative mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-primary-50 to-primary-100 border-2 border-primary-500/40 shadow-sm">
+        <div class="absolute inset-0 animate-ping rounded-full bg-primary-200 opacity-20"></div>
+        <i-lucide [name]="icons.userRound" class="relative z-10 h-16 w-16 text-primary-500 stroke-[1.5]" />
+      </div>
+
+      <h2 class="mb-3 text-center text-3xl font-bold text-gray-900">
+        {{ 'entrepreneurs.no_entrepreneurs_title' | translate }}
+      </h2>
+
+      <p class="mb-8 max-w-md text-center text-lg text-gray-600">
+        {{ 'entrepreneurs.no_entrepreneurs_message' | translate }}
+      </p>
+
+      <div class="flex items-center gap-2 rounded-lg bg-primary-50 px-6 py-3 border border-primary-200">
+        <i-lucide [name]="icons.sparkles" class="h-5 w-5 text-primary-600" />
+        <span class="text-sm font-medium text-primary-700">{{ 'entrepreneurs.coming_soon' | translate }}</span>
+      </div>
+    </div>
+    } @else {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6 md:mb-10">
+      @for (venture of pagedVentures; track venture.id) {
+      <app-entrepreneur-user-card [entrepreneurs]="venture" />
+      }
+    </div>
+
+    <div class="mt-2 md:mt-0">
+      <ui-pagination
+        [page]="currentPage"
+        [pageSize]="pageSize"
+        [total]="totalItems()"
+        [loading]="loading()"
+        [showSummary]="true"
+        [showPageNumbers]="true"
+        [maxVisiblePages]="7"
+        [scrollToTop]="true"
+        (pageChange)="onPageChange($event)" />
+    </div>
+    }
+  </app-public-container>
+</app-public-section>

@@ -1,0 +1,15 @@
+<select
+  [id]="inputId()"
+  [multiple]="multiple()"
+  [ngModel]="value()"
+  (ngModelChange)="onValueChange($event)"
+  (blur)="onBlur()"
+  [disabled]="disabled()"
+  class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-primary-400 focus:ring-4 focus:ring-primary-100 disabled:bg-slate-100 disabled:text-slate-500">
+  @if (!multiple()) {
+  <option [ngValue]="null" [selected]="!hasValue()" disabled>{{ placeholder() || 'Select an option' }}</option>
+  }
+  @for (option of options(); track option.value) {
+  <option [ngValue]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
+  }
+</select>

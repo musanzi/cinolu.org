@@ -1,0 +1,56 @@
+<app-public-section variant="muted" className="min-h-fit items-center content-center bg-grid" appAnimationsOnScroll>
+  <app-public-container>
+    <app-landing-section-header
+      badgeKey="programs.badge"
+      titleKey="programs.title"
+      titleHighlightKey="programs.title_highlight"
+      descriptionKey="programs.description" />
+    <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-6 mt-14 lg:mt-20">
+      @for (p of store.programs(); track p.id) {
+      <div
+        class="group relative flex flex-col overflow-visible rounded-2xl border border-gray-200 bg-white px-5 pb-5 pt-16 transition-colors duration-200 hover:border-primary-300 md:px-6 md:pb-6 md:pt-16">
+        <div
+          class="absolute -top-12 left-1/2 flex h-20 w-20 -translate-x-1/2 items-center justify-center overflow-hidden rounded-full border-4 border-primary-400 bg-white transition-colors duration-200">
+          <div class="p-4 w-full h-full flex items-center justify-center">
+            @if (p.logo && (p | apiIMG: 'program')) {
+            <img
+              [ngSrc]="p | apiIMG: 'program'"
+              [alt]="'Logo du programme ' + p.name"
+              [title]="p.name"
+              class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+              fill />
+            } @else {
+            <span class="text-2xl font-bold text-primary-600">{{ p.name.charAt(0) }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="flex flex-1 flex-col text-center min-h-0 gap-3">
+          <div class="space-y-2 sm:space-y-3">
+            <h5 class="line-clamp-1 text-lg font-semibold leading-tight text-gray-900 sm:text-xl">
+              {{ p?.name }}
+            </h5>
+            <div class="w-12 h-0.5 bg-brand-500 mx-auto rounded-full"></div>
+          </div>
+
+          <p class="text-sm leading-6 text-slate-600 sm:text-[15px] line-clamp-3">{{ p.description }}</p>
+        </div>
+
+        <div class="pt-2 md:pt-4 mx-auto shrink-0">
+          <a [routerLink]="['/our-programs/', p.slug]">
+            <ui-button variant="secondary" size="sm" [fullWidth]="true">
+              <div class="flex items-center justify-center gap-2 group/btn px-2">
+                <span class="text-sm font-medium">{{ 'programs.learn_more' | translate }}</span>
+                <i-lucide
+                  class="size-4 group-hover/btn:translate-x-1 transition-transform duration-300"
+                  [name]="icons.MoveRight" />
+              </div>
+            </ui-button>
+          </a>
+        </div>
+      </div>
+      }
+    </div>
+  </app-public-container>
+</app-public-section>

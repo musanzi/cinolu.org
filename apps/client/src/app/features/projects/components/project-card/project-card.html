@@ -1,0 +1,64 @@
+<a
+  [routerLink]="['/programs', project().slug]"
+  class="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white text-left transition-colors duration-200 hover:border-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+  <div class="absolute left-3 top-3 z-10">
+    <span
+      class="inline-flex items-center rounded-full border border-gray-200 bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-700 backdrop-blur-sm">
+      Programme
+    </span>
+  </div>
+
+  <div class="relative aspect-video w-full overflow-hidden">
+    <img
+      fill
+      [ngSrc]="project() | apiIMG: 'project'"
+      [alt]="project().name"
+      class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
+
+    <div class="absolute inset-0 bg-gray-900/50 transition-opacity duration-200 group-hover:bg-gray-900/55"></div>
+
+    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+      <h3 class="line-clamp-2 text-lg font-bold leading-snug text-white sm:text-xl">
+        {{ project().name | titlecase }}
+      </h3>
+    </div>
+  </div>
+
+  <div class="flex flex-1 flex-col p-5 md:p-6">
+    <p class="line-clamp-3 text-sm leading-relaxed text-gray-600 sm:text-[15px]">
+      {{ project().description }}
+    </p>
+
+    <div class="mt-5 grid grid-cols-2 overflow-hidden rounded-xl border border-gray-200">
+      <div class="flex items-center gap-3 border-r border-gray-200 bg-gray-50 p-3">
+        <div class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-emerald-600">
+          <i-lucide class="size-4" [name]="icons.calendarCheck" />
+        </div>
+        <div class="min-w-0 flex flex-col">
+          <span class="text-[10px] font-semibold uppercase tracking-tight text-gray-500">Début</span>
+          <span class="truncate text-xs font-semibold text-gray-900">
+            {{ project().started_at | date: 'shortDate' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 bg-gray-50 p-3">
+        <div class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-rose-600">
+          <i-lucide class="size-4" [name]="icons.calendarX" />
+        </div>
+        <div class="min-w-0 flex flex-col">
+          <span class="text-[10px] font-semibold uppercase tracking-tight text-gray-500">Fin</span>
+          <span class="truncate text-xs font-semibold text-gray-900">
+            {{ project().ended_at | date: 'shortDate' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-5 flex items-center gap-2 self-start text-sm font-semibold text-brand-700 transition-colors group-hover:text-brand-800">
+      <span>{{ buttonTextKey() | translate }}</span>
+      <i-lucide class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" [name]="icons.moveRight" />
+    </div>
+  </div>
+</a>

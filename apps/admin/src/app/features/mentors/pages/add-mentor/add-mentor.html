@@ -1,0 +1,133 @@
+<section class="pt-32 dashboard-main-content flex flex-col gap-6">
+  <form
+    class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:p-7"
+    [formGroup]="form"
+    autocomplete="off"
+    (ngSubmit)="onSubmit()">
+    <div class="mb-6 flex flex-col gap-2 border-b border-gray-100 pb-5">
+      <h2 class="text-lg font-semibold text-gray-900">Informations utilisateur</h2>
+      <p class="text-sm text-gray-600">
+        Recherchez puis sélectionnez un utilisateur existant comme propriétaire du profil mentor.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <app-ui-select
+        [id]="'email'"
+        label="Utilisateur"
+        [required]="true"
+        [filter]="true"
+        [filterPlaceholder]="'Nom ou email (minimum 2 caracteres)'"
+        [options]="userSearchOptions()"
+        formControlName="email"
+        (searchTermChange)="store.searchUsers($event)"
+        class="w-full"
+        placeholder="Selectionner un utilisateur" />
+    </div>
+    @if (isSearchingUsers()) {
+      <p class="mt-2 text-sm text-gray-500">Recherche en cours...</p>
+    } @else if (currentUserSearchTerm().length >= 2 && userSearchOptions().length === 0) {
+      <p class="mt-2 text-sm text-amber-600">Aucun utilisateur trouvé pour ce terme.</p>
+    }
+    <div class="my-8 border-b border-gray-100"></div>
+    <div class="mb-6 flex flex-col gap-2">
+      <h2 class="text-lg font-semibold text-gray-900">Informations mentor</h2>
+      <p class="text-sm text-gray-600">Ajoutez les expertises, annees d'experience et parcours professionnel.</p>
+    </div>
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <app-ui-input
+        [id]="'years_experience'"
+        label="Annees d'experience"
+        formControlName="years_experience"
+        class="w-full"
+        placeholder="Ex: 5" />
+      <div class="grid grid-cols-1 gap-6">
+        <app-ui-select
+          [id]="'type'"
+          label="Type de mentor"
+          [options]="mentorTypeOptions"
+          formControlName="type"
+          class="w-full"
+          placeholder="Selectionner un type" />
+        <app-ui-multi-select
+          [id]="'expertises'"
+          label="Expertises"
+          [optionLabel]="'name'"
+          [optionValue]="'id'"
+          [options]="expertisesStore.allExpertises()"
+          [allowCreate]="true"
+          [createDisabled]="expertisesStore.isLoading()"
+          [createPlaceholder]="'Ajouter une expertise'"
+          [createButtonLabel]="'Ajouter'"
+          (createOption)="onCreateExpertise($event)"
+          formControlName="expertises"
+          placeholder="Selectionner une ou plusieurs expertises" />
+      </div>
+    </div>
+    <div class="mt-8 flex items-center justify-between">
+      <h3 class="text-base font-semibold text-gray-900">Experiences professionnelles</h3>
+    </div>
+    <div formArrayName="experiences" class="mt-4 space-y-4">
+      @for (experienceControl of experiences.controls; track $index) {
+        <div [formGroupName]="$index" class="rounded-xl border border-gray-200 p-4">
+          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <app-ui-input
+              [id]="'company_name_' + $index"
+              label="Entreprise"
+              formControlName="company_name"
+              class="w-full"
+              placeholder="Nom de l'entreprise" />
+            <app-ui-input
+              [id]="'job_title_' + $index"
+              label="Poste"
+              formControlName="job_title"
+              class="w-full"
+              placeholder="Intitule du poste" />
+            <app-ui-datepicker
+              [yearSelect]="true"
+              [monthSelect]="true"
+              [id]="'start_date_' + $index"
+              label="Date de debut"
+              formControlName="start_date"
+              class="w-full" />
+            <app-ui-datepicker
+              [yearSelect]="true"
+              [monthSelect]="true"
+              [id]="'end_date_' + $index"
+              label="Date de fin"
+              formControlName="end_date"
+              class="w-full" />
+            <div class="lg:col-span-2">
+              <app-ui-checkbox [id]="'is_current_' + $index" [label]="'Poste actuel'" formControlName="is_current" />
+            </div>
+          </div>
+          <div class="mt-4 flex justify-end">
+            <app-ui-button
+              type="button"
+              variant="danger"
+              [outlined]="true"
+              [disabled]="experiences.length === 1"
+              (clicked)="removeExperience($index)">
+              Supprimer
+            </app-ui-button>
+          </div>
+        </div>
+      }
+      <div class="flex items-end justify-end">
+        <app-ui-button type="button" variant="secondary" [outlined]="true" (clicked)="addExperience()">
+          Ajouter une experience
+        </app-ui-button>
+      </div>
+    </div>
+    <div class="mt-8 flex justify-end border-t border-gray-200 pt-6">
+      <app-ui-button
+        [size]="'small'"
+        [loading]="store.isSaving()"
+        [disabled]="store.isSaving() || form.invalid"
+        type="submit"
+        variant="primary">
+        Creer le mentor
+      </app-ui-button>
+    </div>
+  </form>
+</section>

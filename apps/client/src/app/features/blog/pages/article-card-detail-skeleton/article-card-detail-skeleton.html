@@ -1,0 +1,116 @@
+<section class="min-h-screen bg-gray-50">
+  <div class="relative w-full h-[80vh] overflow-hidden bg-gray-200 animate-pulse"></div>
+
+  <div class="max-w-7xl mx-auto px-4 lg:px-8 -mt-40">
+    <div class="flex flex-col lg:flex-row gap-8 items-start relative z-10">
+      <div class="lg:w-3/4 w-full">
+        <article class="bg-white rounded-lg  overflow-hidden border border-gray-100">
+          <header class="p-6 sm:p-8 lg:p-12 bg-white">
+            <div class="flex gap-2 mb-6">
+              <div class="h-6 w-20 bg-gray-200 rounded-full animate-pulse"></div>
+              <div class="h-6 w-24 bg-gray-200 rounded-full animate-pulse"></div>
+              <div class="h-6 w-16 bg-gray-200 rounded-full animate-pulse"></div>
+            </div>
+
+            <div class="space-y-3 mb-8">
+              <div class="h-10 bg-gray-200 rounded animate-pulse w-full"></div>
+              <div class="h-10 bg-gray-200 rounded animate-pulse w-4/5"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-4 bg-white/80 rounded-lg p-4 border border-gray-200/50">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
+                <div class="h-4 w-32 bg-gray-200 rounded animate-pulse"></div>
+              </div>
+              <div class="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+              <div class="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
+            </div>
+          </header>
+
+          <div class="px-4 sm:px-6 lg:px-12 pb-12">
+            <div class="bg-primary-50/50 rounded-lg p-8 mb-10 border-l-4 border-primary-400">
+              <div class="space-y-3">
+                <div class="h-6 bg-gray-200 rounded animate-pulse w-full"></div>
+                <div class="h-6 bg-gray-200 rounded animate-pulse w-full"></div>
+                <div class="h-6 bg-gray-200 rounded animate-pulse w-3/4"></div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-5/6"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-4/5"></div>
+              <div class="h-64 bg-gray-200 rounded-lg animate-pulse mt-6 mb-6"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+              <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+            </div>
+          </div>
+
+          <section
+            class="bg-gray-50 px-4 sm:px-6 lg:px-12 py-12 border-t border-gray-200/50">
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-1 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+              <div class="h-8 w-48 bg-gray-200 rounded animate-pulse"></div>
+            </div>
+
+            <div class="bg-white rounded-lg p-6 sm:p-8 shadow-md border border-gray-200 mb-10">
+              <div class="h-32 bg-gray-200 rounded-lg animate-pulse mb-4"></div>
+              <div class="flex justify-end pt-4 border-t border-gray-100">
+                <div class="h-10 w-32 bg-gray-200 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              @for (i of [1, 2, 3]; track i) {
+              <div class="bg-white rounded-lg p-5 border border-gray-200">
+                <div class="flex gap-3">
+                  <div class="w-10 h-10 rounded-full bg-gray-200 animate-pulse shrink-0"></div>
+                  <div class="flex-1 space-y-3">
+                    <div class="h-4 w-40 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse w-5/6"></div>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+          </section>
+        </article>
+      </div>
+
+      <aside class="lg:w-1/4 w-full lg:sticky lg:top-28 space-y-6">
+        <div class="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-1 h-7 bg-gray-200 rounded-full animate-pulse"></div>
+            <div class="h-6 w-40 bg-gray-200 rounded animate-pulse"></div>
+          </div>
+
+          <div class="space-y-5">
+            @for (i of [1, 2, 3, 4]; track i) {
+            <div class="flex gap-4">
+              <div class="h-16 w-16 bg-gray-200 rounded-lg animate-pulse shrink-0"></div>
+              <div class="flex-1 space-y-2">
+                <div class="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
+                <div class="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                <div class="h-3 bg-gray-200 rounded animate-pulse w-20"></div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-1 h-7 bg-gray-200 rounded-full animate-pulse"></div>
+            <div class="h-6 w-32 bg-gray-200 rounded animate-pulse"></div>
+          </div>
+          <div class="aspect-video bg-gray-200 rounded-lg animate-pulse"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

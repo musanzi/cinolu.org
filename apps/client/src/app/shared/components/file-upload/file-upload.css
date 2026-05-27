@@ -1,0 +1,158 @@
+@import 'filepond/dist/filepond.min.css';
+@import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* FilePond — contenu dans le flux du formulaire (pas de position absolute qui casse la page) */
+:host ::ng-deep .filepond--root {
+  margin-bottom: 0;
+  box-shadow: none !important;
+  font-family: inherit;
+  max-width: 100%;
+}
+
+:host ::ng-deep .filepond--root[data-style-panel-layout~='integrated'] {
+  width: 100%;
+}
+
+:host ::ng-deep .filepond--panel-root {
+  background-color: transparent;
+  border-radius: 0.75rem;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .filepond--panel-center,
+:host ::ng-deep .filepond--panel-top,
+:host ::ng-deep .filepond--panel-bottom {
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .filepond--drop-label {
+  min-height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 0.75rem;
+  border: 2px dashed #e2e8f0;
+  background: #f8fafc;
+}
+
+:host ::ng-deep .filepond--drop-label label {
+  cursor: pointer;
+  width: 100%;
+}
+
+:host ::ng-deep .filepond--browser {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  font-size: 0;
+  color: transparent;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* Liste des fichiers — grille contenue (évite le débordement sous les boutons du formulaire) */
+:host ::ng-deep .filepond--list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+}
+
+:host ::ng-deep .filepond--list:empty {
+  display: none;
+  margin: 0;
+}
+
+:host ::ng-deep .filepond--item {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  width: calc(50% - 0.375rem);
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  :host ::ng-deep .filepond--item {
+    width: calc(33.333% - 0.5rem);
+  }
+}
+
+:host ::ng-deep .filepond--item-panel {
+  box-shadow: none !important;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+:host ::ng-deep .filepond--file {
+  position: relative !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .filepond--file-info {
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  max-width: 100%;
+}
+
+:host ::ng-deep .filepond--file-info-main {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host ::ng-deep .filepond--file-status {
+  font-size: 0.6875rem;
+}
+
+:host ::ng-deep .filepond--image-preview-wrapper {
+  border-radius: 0.5rem;
+}
+
+:host ::ng-deep .filepond--image-preview-overlay-idle {
+  color: rgba(15, 23, 42, 0.35);
+}
+
+:host ::ng-deep .filepond--action-remove-item {
+  cursor: pointer;
+}
+
+:host ::ng-deep .filepond--file-action-button {
+  cursor: pointer;
+}
+
+:host ::ng-deep .filepond--drip {
+  display: none;
+}
+
+/* Erreurs de validation lisibles */
+:host ::ng-deep .filepond--file-status-main {
+  color: #dc2626;
+}
+
+:host ::ng-deep [data-filepond-item-state*='error'] .filepond--item-panel {
+  border-color: #fecaca;
+  background: #fef2f2;
+}

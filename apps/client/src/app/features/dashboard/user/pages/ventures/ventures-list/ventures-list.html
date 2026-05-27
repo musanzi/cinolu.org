@@ -1,0 +1,267 @@
+<div class="pb-20">
+  <!-- En-tête : fil d’Ariane + titre + onglets -->
+  <header class="mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div
+          class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-600 text-white">
+          <i-lucide class="text-3xl" [name]="icons.project" />
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Mes Projets</h1>
+          <p class="text-gray-600 text-sm mt-0.5">Gérez vos projets et vos produits</p>
+        </div>
+      </div>
+
+      <!-- Onglets Projets / Produits -->
+      <div class="inline-flex rounded-lg border border-gray-200 bg-gray-50/80 p-1 gap-0.5" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          (click)="switchTab('ventures')"
+          [class.bg-white]="activeTab() === 'ventures'"
+          [class.text-primary-700]="activeTab() === 'ventures'"
+          [class.ring-1]="activeTab() === 'ventures'"
+          [class.ring-gray-200]="activeTab() === 'ventures'"
+          class="flex items-center gap-2.5 px-5 py-3 rounded-lg font-semibold text-sm text-gray-600 transition-all duration-200 hover:text-gray-900 min-h-11">
+          <i-lucide class="text-xl" [name]="icons.business" />
+          <span>Projets</span>
+          <span
+            class="ml-1 min-w-5.5 h-5 flex items-center justify-center rounded-full text-xs font-bold px-1.5"
+            [class.bg-primary-100]="activeTab() === 'ventures'"
+            [class.text-primary-700]="activeTab() === 'ventures'"
+            [class.bg-gray-200]="activeTab() !== 'ventures'"
+            [class.text-gray-600]="activeTab() !== 'ventures'">
+            {{ venturesStore.ventures().length }}
+          </span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          (click)="switchTab('products')"
+          [class.bg-white]="activeTab() === 'products'"
+          [class.text-primary-700]="activeTab() === 'products'"
+          [class.ring-1]="activeTab() === 'products'"
+          [class.ring-gray-200]="activeTab() === 'products'"
+          class="flex items-center gap-2.5 px-5 py-3 rounded-lg font-semibold text-sm text-gray-600 transition-all duration-200 hover:text-gray-900 min-h-11">
+          <i-lucide class="text-xl" [name]="icons.package" />
+          <span>Produits</span>
+          <span
+            class="ml-1 min-w-5.5 h-5 flex items-center justify-center rounded-full text-xs font-bold px-1.5"
+            [class.bg-primary-100]="activeTab() === 'products'"
+            [class.text-primary-700]="activeTab() === 'products'"
+            [class.bg-gray-200]="activeTab() !== 'products'"
+            [class.text-gray-600]="activeTab() !== 'products'">
+            {{ productsStore.products().length }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu : onglet Projets -->
+  @if (activeTab() === 'ventures') {
+  <section class="dashboard-fade-in-up">
+    @if (venturesStore.isLoading()) {
+    <div class="flex flex-col items-center justify-center py-24">
+      <div class="w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+      <p class="mt-6 text-gray-600 font-medium">Chargement de vos projets...</p>
+    </div>
+    } @else if (venturesStore.ventures().length === 0) {
+    <div class="dashboard-card-elevated p-10 sm:p-12 text-center max-w-lg mx-auto">
+      <div
+        class="w-20 h-20 rounded-2xl bg-brand-600 flex items-center justify-center mx-auto mb-6">
+        <i-lucide class="text-white text-5xl" [name]="icons.project" />
+      </div>
+      <h2 id="ventures-heading" class="text-xl font-bold text-gray-900 mb-2">Aucun projet</h2>
+      <p class="text-gray-600 text-sm mb-8">Créez votre premier projet pour commencer à gérer vos produits.</p>
+      <a routerLink="/dashboard/user/ventures/create" class="dashboard-btn-primary inline-flex gap-2">
+        <i-lucide class="text-xl" [name]="icons.add" />
+        <span>Créer un projet</span>
+      </a>
+    </div>
+    } @else {
+    <div class="flex justify-end mb-6">
+      <a routerLink="/dashboard/user/ventures/create" class="dashboard-btn-primary inline-flex gap-2">
+        <i-lucide class="text-xl" [name]="icons.add" />
+        <span>Créer un projet</span>
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      @for (venture of venturesStore.ventures(); track venture.id) {
+      <article
+        class="group flex flex-col rounded-2xl border border-gray-200 bg-white overflow-hidden transition-all duration-300 hover:border-gray-300">
+        <!-- Image / couverture -->
+        <div class="relative h-40 overflow-hidden bg-gray-100">
+          @if (venture.cover) {
+          <img
+            [src]="venture | apiIMG: 'ventureCover'"
+            [alt]="venture.name"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy" />
+          } @else if (venture.logo) {
+          <div class="w-full h-full flex items-center justify-center p-6 bg-gray-50">
+            <img
+              [src]="venture.logo"
+              [alt]="venture.name"
+              class="max-h-full max-w-full object-contain"
+              loading="lazy" />
+          </div>
+          } @else {
+          <div class="w-full h-full flex items-center justify-center bg-brand-50">
+            <i-lucide class="text-primary-500 text-6xl" [name]="icons.business" />
+          </div>
+          }
+          <div class="absolute inset-0 bg-gray-900/50"></div>
+          <div class="absolute top-3 right-3">
+            @if (venture.is_published) {
+            <span
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-primary-500/95 text-white text-xs font-semibold backdrop-blur-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+              Publié
+            </span>
+            } @else {
+            <span
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-700/90 text-white text-xs font-semibold backdrop-blur-sm">
+              <i-lucide class="text-sm" [name]="icons.eyeOff" />
+              Brouillon
+            </span>
+            }
+          </div>
+        </div>
+
+        <!-- Corps de la carte -->
+        <div class="flex flex-1 flex-col p-5">
+          <h3
+            class="text-lg font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-primary-600 transition-colors">
+            {{ venture.name }}
+          </h3>
+          @if (venture.description) {
+          <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-4">{{ venture.description }}</p>
+          }
+          <div class="flex flex-wrap gap-2 mb-4">
+            @if (venture.sector) {
+            <span
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-primary-50 text-primary-700 text-xs font-medium border border-primary-100">
+              <i-lucide class="text-sm" [name]="icons.category" />
+              {{ venture.sector }}
+            </span>
+            } @if (venture.stage) {
+            <span
+              class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-gray-100 text-gray-700 text-xs font-medium border border-gray-200">
+              <i-lucide class="text-sm" [name]="icons.trendingUp" />
+              {{ venture.stage }}
+            </span>
+            }
+          </div>
+          @if (venture.products && venture.products.length > 0) {
+          <p class="text-gray-500 text-sm mb-4 flex items-center gap-1.5">
+            <i-lucide class="text-primary-500 text-lg" [name]="icons.package" />
+            <span class="font-medium">{{ venture.products.length }}</span>
+            produit{{ venture.products.length > 1 ? 's' : '' }}
+          </p>
+          }
+
+          <!-- Actions -->
+          <div class="mt-auto pt-4 border-t border-gray-100 flex gap-2">
+            <a
+              [routerLink]="['/dashboard/user/ventures', venture.slug]"
+              class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-primary-50 text-primary-700 font-semibold text-sm hover:bg-primary-100 transition-colors min-h-11">
+              <i-lucide class="text-lg" [name]="icons.view" />
+              <span>Voir</span>
+            </a>
+            <a
+              [routerLink]="['/dashboard/user/ventures/edit', venture.slug]"
+              class="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-gray-100 text-gray-700 font-semibold text-sm hover:bg-gray-200 transition-colors min-h-11">
+              <i-lucide class="text-lg" [name]="icons.edit" />
+            </a>
+            <button
+              type="button"
+              (click)="deleteVenture(venture.id, venture.name)"
+              class="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg bg-red-50 text-red-600 font-semibold text-sm hover:bg-red-100 transition-colors min-h-11">
+              <i-lucide class="text-lg" [name]="icons.delete" />
+            </button>
+          </div>
+        </div>
+      </article>
+      }
+    </div>
+    }
+  </section>
+  }
+
+  <!-- Contenu : onglet Produits -->
+  @if (activeTab() === 'products') {
+  <section class="dashboard-fade-in-up">
+    @if (productsStore.isLoading()) {
+    <div class="flex flex-col items-center justify-center py-24">
+      <div class="w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+      <p class="mt-6 text-gray-600 font-medium">Chargement de vos produits...</p>
+    </div>
+    } @else if (productsStore.isEmpty()) {
+    <div class="dashboard-card-elevated p-10 sm:p-12 text-center max-w-lg mx-auto">
+      <div
+        class="w-20 h-20 rounded-2xl bg-brand-600 flex items-center justify-center mx-auto mb-6">
+        <i-lucide class="text-white text-5xl" [name]="icons.package" />
+      </div>
+      <h2 id="products-heading" class="text-xl font-bold text-gray-900 mb-2">Aucun produit</h2>
+      <p class="text-gray-600 text-sm mb-8">Ajoutez vos premiers produits ou associez-les à un projet.</p>
+      <a routerLink="/dashboard/user/products/create" class="dashboard-btn-primary inline-flex gap-2">
+        <i-lucide class="text-xl" [name]="icons.add" />
+        <span>Créer un produit</span>
+      </a>
+    </div>
+    } @else {
+    <div class="flex justify-end mb-6">
+      <a routerLink="/dashboard/user/products/create" class="dashboard-btn-primary inline-flex gap-2">
+        <i-lucide class="text-xl" [name]="icons.add" />
+        <span>Ajouter un produit</span>
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      @for (product of productsStore.products(); track product.id) {
+      <article
+        class="group flex flex-col rounded-2xl border border-gray-200 bg-white overflow-hidden transition-all duration-300 hover:border-gray-300">
+        <div class="flex flex-1 flex-col p-6">
+          @if (product.venture) {
+          <a
+            [routerLink]="['/dashboard/user/ventures', product.venture.slug]"
+            class="inline-flex items-center gap-1.5 w-fit mb-4 px-2.5 py-1 rounded-lg bg-primary-50 text-primary-700 text-xs font-semibold border border-primary-100 hover:bg-primary-100 transition-colors">
+            <i-lucide class="text-sm" [name]="icons.business" />
+            {{ product.venture.name }}
+          </a>
+          }
+          <div class="flex items-start justify-between gap-3 mb-3">
+            <h3
+              class="text-lg font-semibold text-gray-900 line-clamp-2 flex-1 group-hover:text-primary-600 transition-colors">
+              {{ product.name }}
+            </h3>
+            <div
+              class="shrink-0 px-3 py-1.5 rounded-lg bg-brand-600 text-white">
+              <span class="text-lg font-bold">{{ product.price | number: '1.0-0' }}</span>
+              <span class="text-sm font-semibold text-white/90">$</span>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm line-clamp-3 leading-relaxed flex-1 mb-5">{{ product.description }}</p>
+          <div class="pt-4 border-t border-gray-100 flex gap-2">
+            <a
+              [routerLink]="['/dashboard/user/products/edit', product.slug]"
+              class="flex-1 dashboard-btn-primary py-2.5 text-sm font-semibold rounded-lg inline-flex items-center justify-center gap-1.5">
+              <i-lucide class="text-lg" [name]="icons.edit" />
+              <span>Modifier</span>
+            </a>
+            <button
+              type="button"
+              (click)="deleteProduct(product.id, product.name)"
+              class="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-lg bg-red-50 text-red-600 font-semibold text-sm hover:bg-red-100 transition-colors min-h-11">
+              <i-lucide class="text-lg" [name]="icons.delete" />
+            </button>
+          </div>
+        </div>
+      </article>
+      }
+    </div>
+    }
+  </section>
+  }
+</div>

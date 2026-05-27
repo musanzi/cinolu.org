@@ -1,0 +1,18 @@
+<app-public-section variant="muted">
+  <app-public-container>
+    <app-landing-section-header
+      badgeKey="services.badge"
+      titleKey="services.title"
+      titleHighlightKey="services.titleHighlight"
+      descriptionKey="services.description" />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-5 gap-8 lg:gap-8 mb-12">
+      @for (service of services; track service.id) {
+      <app-service-card
+        [service]="service"
+        [titleKey]="serviceKeys[service.title].titleKey"
+        [descriptionKey]="serviceKeys[service.title].descriptionKey" />
+      }
+    </div>
+  </app-public-container>
+</app-public-section>

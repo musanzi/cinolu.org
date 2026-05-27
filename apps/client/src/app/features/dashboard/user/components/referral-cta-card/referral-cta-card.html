@@ -1,0 +1,31 @@
+<div class="dashboard-card p-5 sm:p-6 bg-brand-50">
+  <div class="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6">
+    <div
+      class="w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-xl bg-brand-600 flex items-center justify-center">
+      <i-lucide [name]="icons.rocket" class="w-7 h-7 text-white" />
+    </div>
+    <div class="flex-1">
+      <h4 class="dashboard-heading-4 sm:dashboard-heading-5 mb-2 sm:mb-3">Développe ton réseau</h4>
+      <p class="dashboard-text-small sm:dashboard-text-body mb-4">
+        Plus tu invites de membres, plus tu renforces l'écosystème entrepreneurial africain et maximises ton impact sur
+        la communauté Cinolu.
+      </p>
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+        <a
+          routerLink="/dashboard/user/referral/link"
+          class="dashboard-btn-primary inline-flex"
+          aria-label="Partager mon lien de parrainage">
+          <i-lucide [name]="icons.share" class="w-4 h-4" />
+          <span>Partager mon lien</span>
+        </a>
+        <a
+          routerLink="/dashboard/user/referral/badges"
+          class="dashboard-btn-secondary inline-flex"
+          aria-label="Consulter mes badges de parrainage">
+          <i-lucide [name]="icons.award" class="w-4 h-4" />
+          <span>Voir mes badges</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

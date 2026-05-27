@@ -1,0 +1,108 @@
+<div class="pb-20">
+  <div class="dashboard-card p-6 mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+          <i-lucide class="text-primary-700 text-2xl" [name]="icons.users" />
+        </div>
+        <div>
+          <h1 class="dashboard-heading-2">Personnes invitées</h1>
+          <p class="dashboard-text-body text-gray-600">Les membres inscrits via ton lien de parrainage</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 lg:ml-auto">
+        <div class="px-4 py-2 rounded-lg bg-primary-50/80 border dashboard-badge-primary border-primary-200/60">
+          <p class="dashboard-text-tiny text-primary-700 uppercase tracking-wide">Total :</p>
+          <p class="font-bold text-primary-700 leading-none">{{ totalInvitations() }}</p>
+        </div>
+
+        <a routerLink="/dashboard/user/referral/badges" class="dashboard-btn-secondary inline-flex">
+          <i-lucide class="text-lg" [name]="icons.award" />
+          <span>Voir mes badges</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  @if (referralsStore.isLoadingReferredUsers()) {
+  <div class="flex flex-col justify-center items-center py-24">
+    <div class="relative">
+      <div class="w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+    </div>
+    <p class="mt-6 text-gray-600 font-medium">Chargement des personnes invitées...</p>
+  </div>
+  } @else {
+  <div class="dashboard-card p-6 mb-6">
+    <div class="mb-6">
+      <h3 class="dashboard-heading-4">Liste des inscriptions ({{ totalInvitations() }})</h3>
+      <p class="dashboard-text-small mt-1">Historique des personnes inscrites via ton lien</p>
+    </div>
+
+    @if (invitedUsers().length === 0) {
+    <div class="py-16 text-center">
+      <div class="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center mx-auto mb-6">
+        <i-lucide class="text-gray-400 text-4xl" [name]="icons.userOff" />
+      </div>
+      <h4 class="dashboard-heading-4 mb-2">Aucune personne invitée</h4>
+      <p class="dashboard-text-body text-gray-600 mb-6">
+        Commence à partager ton lien de parrainage pour voir tes premières inscriptions
+      </p>
+      <a routerLink="/dashboard/user/referral/link" class="dashboard-btn-primary inline-flex">
+        <i-lucide class="text-lg" [name]="icons.share" />
+        <span>Partager mon lien</span>
+      </a>
+    </div>
+    } @else {
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (user of invitedUsers(); track user.id) {
+      <div class="dashboard-card-hover p-5 group">
+        <div class="flex items-start gap-4">
+          @if (user.profile) {
+          <div
+            class="w-14 h-14 rounded-lg overflow-hidden shrink-0 ring-2 ring-gray-100 group-hover:ring-primary-200 transition-all ">
+            <img [src]="user | apiIMG : 'user'" [alt]="user.name" class="w-full h-full object-cover" />
+          </div>
+          } @else {
+          <div
+            class="w-14 h-14 bg-brand-600 rounded-lg flex items-center justify-center font-black text-white text-base shrink-0">
+            {{ getUserInitials(user) }}
+          </div>
+          }
+
+          <div class="flex-1 min-w-0">
+            <h5 class="font-bold text-gray-900 truncate text-base mb-1 group-hover:text-primary-600 transition-colors">
+              {{ user.name || 'Utilisateur' }}
+            </h5>
+            <p class="dashboard-text-tiny truncate mb-2">{{ user.email }}</p>
+
+            <div class="flex items-center gap-2">
+              <span class="dashboard-text-tiny flex items-center gap-1">
+                <i-lucide class="text-xs align-middle" [name]="icons.calendar" />
+                {{ formatDate(user.created_at) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="mt-8">
+      <ui-pagination
+        [page]="currentPage()"
+        [pageSize]="itemsPerPage"
+        [total]="totalUsers()"
+        [loading]="loading()"
+        [showSummary]="true"
+        [showPageNumbers]="true"
+        [maxVisiblePages]="7"
+        (pageChange)="goToPage($event)" />
+    </div>
+    }
+  </div>
+
+  @if (invitedUsers().length > 0){
+  <app-referral-cta-card />
+  } }
+</div>

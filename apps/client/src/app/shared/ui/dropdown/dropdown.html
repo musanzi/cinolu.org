@@ -1,0 +1,52 @@
+<!-- Trigger Button -->
+<button
+  type="button"
+  data-dropdown-trigger
+  (click)="toggleDropdown()"
+  class="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100">
+  <span>My Cinolu</span>
+  <svg
+    [class.rotate-180]="isOpen()"
+    class="size-4 transition-transform duration-200"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+  </svg>
+</button>
+
+<!-- Dropdown Menu -->
+<div
+  data-dropdown-menu
+  [class.hidden]="!isOpen()"
+  [class.block]="isOpen()"
+  class="absolute right-0 top-full z-50 mt-1 w-64 origin-top-right rounded-lg border border-slate-200 bg-white shadow-lg transition-all duration-200"
+  role="menu"
+  [attr.aria-hidden]="!isOpen()">
+  <!-- Menu Items -->
+  <div class="py-1">
+    @for (item of items$(); track item.label; let last = $last) { @if (item.divider) {
+    <div class="my-1 h-px bg-slate-100"></div>
+    } @else {
+    <button
+      type="button"
+      (click)="selectItem(item)"
+      [routerLink]="item.routerLink"
+      routerLinkActive="bg-slate-50"
+      class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:bg-slate-50"
+      role="menuitem">
+      @if (item.icon) {
+      <svg class="size-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      }
+      <span class="flex-1 text-left">{{ item.label }}</span>
+    </button>
+    } }
+  </div>
+</div>
+
+<!-- Backdrop (for mobile) -->
+@if (isOpen()) {
+<div class="fixed inset-0 z-40 bg-black/0 md:hidden" (click)="closeDropdown()" [attr.aria-hidden]="true"></div>
+}

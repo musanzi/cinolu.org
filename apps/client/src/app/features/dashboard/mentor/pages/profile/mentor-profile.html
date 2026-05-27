@@ -1,0 +1,376 @@
+<div class="pb-20">
+  @if (profileStore.isLoading()) {
+  <div class="flex flex-col justify-center items-center py-24">
+    <div class="relative">
+      <div class="w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+      <div
+        class="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-primary-400 rounded-full animate-ping"></div>
+    </div>
+    <p class="mt-6 text-gray-600 font-medium animate-pulse">Chargement du profil...</p>
+  </div>
+  } @else { @if (profileStore.profile(); as profile) {
+
+  <div class="dashboard-grid dashboard-grid-cols-12">
+    <div class="col-span-12">
+      <div class="dashboard-card p-6">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div class="flex items-center gap-4">
+            <div
+              class="w-14 h-14 rounded-xl bg-purple-600 flex items-center justify-center">
+              <i-lucide [name]="icons.badge" class="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <h1 class="dashboard-heading-3">Mon Profil Mentor</h1>
+              <p class="dashboard-text-body">Gérez vos informations professionnelles</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span [class]="getStatusBadgeClass()">
+              <i-lucide [name]="getStatusIcon()" class="w-3.5 h-3.5" />
+              {{ getStatusLabel() }}
+            </span>
+
+            @if (!isEditMode()) {
+            <button type="button" (click)="enableEditMode()" class="dashboard-btn-primary">
+              <i-lucide [name]="icons.edit" class="w-3.5 h-3.5" />
+              Modifier
+            </button>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-span-12">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div id="mentor-cv-section" class="dashboard-card p-6 mb-6">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="dashboard-stat-icon bg-blue-600">
+              <i-lucide [name]="icons.work" class="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 class="dashboard-heading-4">Expérience professionnelle</h2>
+              <p class="dashboard-text-tiny">Années d'expérience totales</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="years_experience">
+              Années d'expérience <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="years_experience"
+              type="number"
+              formControlName="years_experience"
+              [readonly]="!isEditMode()"
+              class="form-input"
+              placeholder="Ex: 5"
+              min="0" />
+            @if (profileForm.get('years_experience')?.invalid && profileForm.get('years_experience')?.touched) {
+            <p class="form-error">Ce champ est requis</p>
+            }
+          </div>
+        </div>
+
+        <div class="dashboard-card p-6 mb-6">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="dashboard-stat-icon bg-emerald-600">
+              <i-lucide [name]="icons.psychology" class="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 class="dashboard-heading-4">Domaines d'expertise</h2>
+              <p class="dashboard-text-tiny">Vos domaines de compétences</p>
+            </div>
+          </div>
+
+          @if (!isEditMode()) { @if (selectedExpertiseObjects().length > 0) {
+          <div class="flex flex-wrap gap-2">
+            @for (expertise of selectedExpertiseObjects(); track expertise.id) {
+            <span
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-50 border border-primary-200 text-primary-700 text-sm font-medium">
+              <i-lucide [name]="icons.checkCircle" class="w-3 h-3 text-primary-500" />
+              {{ expertise.name }}
+            </span>
+            }
+          </div>
+          } @else {
+          <p class="dashboard-text-body text-center py-8">Aucune expertise sélectionnée</p>
+          } } @else {
+          <div class="space-y-3">
+            <label for="expertisesTrigger" class="dashboard-label flex items-center gap-2">
+              <i-lucide [name]="icons.manageSearch" class="w-4 h-4 text-primary-600" />
+              <span>Sélectionner vos domaines</span>
+            </label>
+            <div class="relative">
+              <button
+                type="button"
+                id="expertisesTrigger"
+                (click)="toggleExpertiseDropdown()"
+                class="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-left transition hover:border-primary-300 focus:outline-none focus:ring-4 focus:ring-primary-100">
+                <div class="flex flex-1 flex-wrap gap-2">
+                  @if (selectedExpertises().length > 0) { @for (expertise of selectedExpertiseObjects(); track
+                  expertise.id) {
+                  <span
+                    class="inline-flex items-center gap-1 rounded-lg border border-primary-200 bg-primary-50 px-2 py-1 text-xs font-medium text-primary-700">
+                    {{ expertise.name }}
+                    <button
+                      type="button"
+                      (click)="toggleExpertise(expertise.id)"
+                      class="text-primary-500 hover:text-primary-700">
+                      <i-lucide [name]="icons.close" class="h-3 w-3" />
+                    </button>
+                  </span>
+                  } } @else {
+                  <span class="text-sm text-gray-400">Sélectionner des expertises</span>
+                  }
+                </div>
+                <i-lucide [name]="icons.manageSearch" class="h-4 w-4 text-gray-400" />
+              </button>
+
+              @if (isExpertiseDropdownOpen()) {
+              <div class="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white p-3 ">
+                <div class="relative">
+                  <input
+                    id="expertisesFilter"
+                    type="text"
+                    [value]="expertiseFilter()"
+                    (input)="updateExpertiseFilter($event)"
+                    class="form-input w-full pr-10"
+                    placeholder="Rechercher une expertise..." />
+                  @if (expertiseFilter()) {
+                  <button
+                    type="button"
+                    (click)="clearExpertiseFilter()"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-400 hover:text-gray-600">
+                    <i-lucide [name]="icons.close" class="h-4 w-4" />
+                  </button>
+                  } @else {
+                  <i-lucide
+                    [name]="icons.manageSearch"
+                    class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                  }
+                </div>
+
+                <div
+                  class="mt-3 grid grid-cols-1 3xl:grid-cols-2 gap-2 max-h-48 overflow-y-auto rounded-lg border border-gray-200 bg-gray-50 p-2">
+                  @for (expertise of filteredExpertises(); track expertise.id) {
+                  <label
+                    class="flex items-center gap-2 cursor-pointer rounded-lg px-2.5 py-2 transition hover:bg-white">
+                    <input
+                      type="checkbox"
+                      [checked]="isExpertiseSelected(expertise.id)"
+                      (change)="toggleExpertise(expertise.id)"
+                      class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500" />
+                    <span class="text-sm text-gray-700">{{ expertise.name }}</span>
+                  </label>
+                  } @if (filteredExpertises().length === 0) {
+                  <div class="col-span-full rounded-lg border border-dashed border-gray-200 p-4 text-center">
+                    <p class="text-sm text-gray-500">Aucune expertise ne correspond a votre recherche.</p>
+                  </div>
+                  }
+                </div>
+
+                <div class="mt-3 flex items-center justify-between text-xs text-gray-500">
+                  <span>{{ selectedExpertises().length }} selectionnee(s)</span>
+                  <button type="button" (click)="closeExpertiseDropdown()" class="text-primary-600 hover:underline">
+                    Fermer
+                  </button>
+                </div>
+              </div>
+              }
+            </div>
+            <p class="dashboard-text-tiny text-gray-500">
+              Utilisez la recherche pour trouver rapidement vos domaines parmi une longue liste.
+            </p>
+          </div>
+          }
+        </div>
+
+        <div class="dashboard-card p-6 mb-6">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <div class="dashboard-stat-icon bg-amber-600">
+                <i-lucide [name]="icons.historyEdu" class="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 class="dashboard-heading-4">Parcours professionnel</h2>
+                <p class="dashboard-text-tiny">Vos expériences détaillées</p>
+              </div>
+            </div>
+
+            @if (isEditMode()) {
+            <button type="button" (click)="addExperience()" class="dashboard-btn-primary">
+              <i-lucide [name]="icons.add" class="w-3.5 h-3.5" />
+              Ajouter une expérience
+            </button>
+            }
+          </div>
+
+          <div formArrayName="experiences" class="space-y-4">
+            @for (experience of experiencesArray.controls; track $index; let i = $index) {
+            <div [formGroupName]="i" class="p-5 rounded-lg border-2 border-gray-200 bg-gray-50">
+              <div class="flex items-start justify-between mb-4">
+                <h3 class="dashboard-heading-5 text-gray-800">Expérience {{ i + 1 }}</h3>
+                @if (isEditMode()) {
+                <button type="button" (click)="removeExperience(i)" class="dashboard-btn-danger">
+                  <i-lucide [name]="icons.delete" class="w-4 h-4" />
+                </button>
+                }
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label class="form-label" for="company_name_{{i}}">
+                    Projet <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="company_name_{{i}}"
+                    type="text"
+                    formControlName="company_name"
+                    [readonly]="!isEditMode()"
+                    class="form-input"
+                    placeholder="Ex: Google" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="job_title"> Poste <span class="text-red-500">*</span> </label>
+                  <input
+                    type="text"
+                    formControlName="job_title"
+                    [readonly]="!isEditMode()"
+                    class="form-input"
+                    placeholder="Ex: Senior Developer" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="start_date"> Date de début <span class="text-red-500">*</span> </label>
+                  <input
+                    type="date"
+                    id="form-label"
+                    formControlName="start_date"
+                    [readonly]="!isEditMode()"
+                    class="form-input" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="end_date">Date de fin</label>
+                  <input type="date" id="end_date" formControlName="end_date" class="form-input" />
+                </div>
+
+                <div class="col-span-full">
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      formControlName="is_current"
+                      (change)="isEditMode() && toggleCurrentPosition(i)"
+                      [class.pointer-events-none]="!isEditMode()"
+                      class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" />
+                    <span class="dashboard-text-body">Poste actuel</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            } @empty {
+            <div class="p-8 text-center">
+              <div
+                class="w-16 h-16 mx-auto rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
+                <i-lucide [name]="icons.work" class="w-7 h-7 text-gray-400" />
+              </div>
+              <p class="dashboard-text-body">Aucune expérience ajoutée</p>
+              @if (isEditMode()) {
+              <button type="button" (click)="addExperience()" class="dashboard-btn-primary mt-4">
+                <i-lucide [name]="icons.add" class="w-3.5 h-3.5" />
+                Ajouter votre première expérience
+              </button>
+              }
+            </div>
+            }
+          </div>
+        </div>
+
+        <div id="mentor-upload-cv-section" class="dashboard-card p-6 mb-6">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="dashboard-stat-icon bg-purple-600">
+              <i-lucide [name]="icons.description" class="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 class="dashboard-heading-4">Curriculum Vitae</h2>
+              <p class="dashboard-text-tiny">Téléchargez votre CV (PDF uniquement, max 1 MB)</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            @if (profile.cv) {
+            <div class="flex items-center justify-between p-4 bg-primary-50 border-2 border-primary-200 rounded-lg">
+              <div class="flex items-center gap-3">
+                <i-lucide [name]="icons.checkCircle" class="w-6 h-6 text-primary-500" />
+                <div>
+                  <p class="font-semibold text-primary-700">CV téléchargé</p>
+                  <p class="text-sm text-primary-500">Votre CV est disponible</p>
+                </div>
+              </div>
+              <a [href]="profileStore.cvUrl()" target="_blank" class="dashboard-btn-outline text-sm">
+                <i-lucide [name]="icons.visibility" class="w-3.5 h-3.5" />
+                Voir
+              </a>
+            </div>
+            } @if (isEditMode()) {
+            <div class="relative">
+              <input type="file" accept=".pdf" (change)="handleCVUpload($event)" class="hidden" #cvInput />
+              <button
+                type="button"
+                (click)="cvInput.click()"
+                [disabled]="profileStore.isUploadingCV()"
+                class="w-full dashboard-btn-outline py-3">
+                @if (profileStore.isUploadingCV()) {
+                <i-lucide [name]="icons.sync" class="w-3.5 h-3.5 animate-spin" />
+                <span>Téléchargement en cours...</span>
+                } @else {
+                <i-lucide [name]="icons.uploadFile" class="w-3.5 h-3.5" />
+                <span>{{ profile?.cv ? 'Remplacer le CV' : 'Télécharger le CV' }}</span>
+                }
+              </button>
+            </div>
+            }
+          </div>
+        </div>
+
+        @if (isEditMode()) {
+        <div class="flex items-center justify-end gap-3">
+          <button type="button" (click)="cancelEdit()" class="dashboard-btn-outline">
+            <i-lucide [name]="icons.close" class="w-3.5 h-3.5" />
+            Annuler
+          </button>
+          <button
+            type="submit"
+            [disabled]="profileStore.isLoading() || profileForm.invalid"
+            class="dashboard-btn-primary">
+            @if (profileStore.isLoading()) {
+            <i-lucide [name]="icons.sync" class="w-3.5 h-3.5 animate-spin" />
+            <span>Enregistrement...</span>
+            } @else {
+            <i-lucide [name]="icons.save" class="w-3.5 h-3.5" />
+            <span>Enregistrer</span>
+            }
+          </button>
+        </div>
+        }
+      </form>
+    </div>
+  </div>
+  } @else {
+  <div class="flex flex-col items-center justify-center py-24">
+    <div
+      class="w-20 h-20 rounded-2xl bg-red-100 flex items-center justify-center mb-4">
+      <i-lucide [name]="icons.error" class="w-9 h-9 text-red-500" />
+    </div>
+    <h3 class="dashboard-heading-4 mb-2">Profil non trouvé</h3>
+    <p class="dashboard-text-body text-center max-w-md mb-6">Nous n'avons pas pu charger votre profil mentor</p>
+    <button (click)="ngOnInit()" class="dashboard-btn-primary">
+      <i-lucide [name]="icons.sync" class="w-3.5 h-3.5" />
+      Réessayer
+    </button>
+  </div>
+  } }
+</div>

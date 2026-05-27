@@ -1,0 +1,23 @@
+<app-public-section variant="muted" className="min-h-fit bg-grid">
+  <app-public-container className="py-12 md:py-20">
+    <div class="mb-10 flex items-center justify-center gap-2">
+      @for (i of [1, 2, 3]; track i) {
+      <div class="h-10 w-24 animate-pulse rounded-full bg-gray-200"></div>
+      }
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+      @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+      <div class="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+        <div class="flex items-center gap-4">
+          <div class="h-14 w-14 shrink-0 animate-pulse rounded-xl bg-gray-200"></div>
+          <div class="min-w-0 flex-1 space-y-2">
+            <div class="h-4 w-3/4 animate-pulse rounded bg-gray-200"></div>
+            <div class="h-3 w-1/2 animate-pulse rounded-full bg-gray-200"></div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </app-public-container>
+</app-public-section>

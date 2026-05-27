@@ -1,0 +1,311 @@
+<header
+  class="sticky top-0 z-99999 flex w-full border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 xl:border-b"
+  role="banner">
+  <div class="flex w-full grow flex-col items-center justify-between xl:flex-row xl:px-6">
+    <!-- Mobile -->
+    <div
+      class="flex h-14 w-full items-center justify-between gap-3 border-b border-gray-200 px-4 dark:border-gray-800 xl:hidden">
+      <button
+        type="button"
+        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/[0.06]"
+        [ngClass]="{ 'bg-gray-100 dark:bg-white/[0.05]': isMobileOpen$ | async }"
+        (click)="handleToggle()"
+        aria-label="Basculer le menu">
+        @if (isMobileOpen$ | async) {
+        <i-lucide [name]="icons.close" class="h-5 w-5" />
+        } @else {
+        <i-lucide [name]="icons.menu" class="h-5 w-5" />
+        }
+      </button>
+
+      <a routerLink="/" class="flex min-w-0 flex-1 justify-center" aria-label="Cinolu">
+        <img
+          src="images/logo/logo-g.png"
+          width="64"
+          height="68"
+          alt="Cinolu"
+          class="h-8 w-auto object-contain dark:brightness-0 dark:invert" />
+      </a>
+
+      <div class="flex shrink-0 items-center gap-1">
+        @if (showAdminLink()) {
+        <a
+          [href]="adminDashboardUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-800 transition-colors hover:bg-amber-100"
+          aria-label="Admin">
+          <i-lucide [name]="icons.adminPanel" class="h-5 w-5" />
+        </a>
+        }
+
+        <a
+          href="/contact-us"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+          aria-label="Aide">
+          <i-lucide [name]="icons.help" class="h-5 w-5" />
+        </a>
+
+        <div class="relative">
+          <button
+            type="button"
+            (click)="onUserMenuClick($event)"
+            class="user-menu-button inline-flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-gray-100 dark:hover:bg-white/[0.06]"
+            aria-label="Menu utilisateur"
+            [attr.aria-expanded]="showUserMenu()">
+            <div class="relative">
+              @if (user()?.profile || user()?.google_image) {
+              <div
+                class="relative h-8 w-8 min-h-8 min-w-8 overflow-hidden rounded-full ring-2 ring-gray-200 dark:ring-gray-700">
+                <img
+                  [src]="user() | apiIMG: 'user'"
+                  [alt]="user()?.name ?? ''"
+                  width="32"
+                  height="32"
+                  class="h-full w-full object-cover" />
+              </div>
+              } @else {
+              <div
+                class="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-xs font-bold text-white">
+                {{ getUserInitials() }}
+              </div>
+              }
+              <span
+                class="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-success-500"></span>
+            </div>
+          </button>
+
+          @if (showUserMenu()) {
+          <div
+            class="user-menu-dropdown absolute right-0 top-full z-99999 mt-2 w-56 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-theme-lg dark:border-gray-800 dark:bg-gray-900 anim-fade-in">
+            <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-800">
+              <p class="text-sm font-semibold text-gray-800 dark:text-white/90">{{ user()?.name }}</p>
+              <p class="text-theme-xs text-gray-500 dark:text-gray-400">{{ user()?.email }}</p>
+              <span
+                class="mt-2 inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-1 text-theme-xs font-semibold text-brand-700 dark:bg-brand-500/15 dark:text-brand-400">
+                <i-lucide [name]="icons.verified" class="h-3 w-3" />
+                {{ getRoleLabel() }}
+              </span>
+            </div>
+
+            <div class="py-1">
+              @if (showAdminLink()) {
+              <a
+                [href]="adminDashboardUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                (click)="closeUserMenu()"
+                class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-amber-50 dark:hover:bg-amber-500/10">
+                <i-lucide [name]="icons.adminPanel" class="h-4 w-4 text-gray-500" />
+                <span class="text-sm text-gray-700 dark:text-gray-300">Dashboard Admin</span>
+              </a>
+              }
+
+              <a
+                routerLink="/dashboard/user/profile"
+                (click)="closeUserMenu()"
+                class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                <i-lucide [name]="icons.accountCircle" class="h-4 w-4 text-gray-500" />
+                <span class="text-sm text-gray-700 dark:text-gray-300">Mon Profil</span>
+              </a>
+
+              <a
+                routerLink="/dashboard/user/profile/security"
+                (click)="closeUserMenu()"
+                class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                <i-lucide [name]="icons.security" class="h-4 w-4 text-gray-500" />
+                <span class="text-sm text-gray-700 dark:text-gray-300">Sécurité</span>
+              </a>
+
+              <a
+                routerLink="/dashboard/user/referral/referred-users"
+                (click)="closeUserMenu()"
+                class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                <i-lucide [name]="icons.groupAdd" class="h-4 w-4 text-gray-500" />
+                <span class="text-sm text-gray-700 dark:text-gray-300">Mes Parrainages</span>
+              </a>
+            </div>
+
+            <div class="border-t border-gray-200 py-1 dark:border-gray-800">
+              <button
+                type="button"
+                (click)="signOut()"
+                class="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-red-50 dark:hover:bg-red-500/10">
+                <i-lucide [name]="icons.logout" class="h-4 w-4 text-gray-500" />
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Déconnexion</span>
+              </button>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop left -->
+    <div
+      class="hidden w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 dark:border-gray-800 sm:gap-4 xl:flex xl:justify-normal xl:border-b-0 xl:px-0 lg:py-4">
+      <button
+        type="button"
+        class="z-99999 flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/[0.06] lg:h-10 lg:w-10"
+        [ngClass]="{ 'bg-gray-100 dark:bg-white/[0.05]': isMobileOpen$ | async }"
+        (click)="handleToggle()"
+        aria-label="Basculer le menu">
+        @if (isMobileOpen$ | async) {
+        <i-lucide [name]="icons.close" class="h-6 w-6" />
+        } @else {
+        <i-lucide [name]="icons.menu" class="h-4 w-3" />
+        }
+      </button>
+
+      <div class="hidden xl:block">
+        <div class="relative">
+          <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2">
+            <i-lucide [name]="icons.clock" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          </span>
+          <time
+            [attr.datetime]="currentTime().toISOString()"
+            class="flex h-11 w-full items-center rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-4 text-sm text-gray-800 dark:border-gray-800 dark:bg-white/[0.03] dark:text-white/90 xl:w-[430px]"
+            role="status">
+            <span class="dashboard-clock font-medium text-gray-800 dark:text-white/90">{{ formattedTime() }}</span>
+            <span class="dashboard-date-label ml-2 hidden text-gray-500 sm:inline dark:text-gray-400">{{ dateLabel() }}</span>
+          </time>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop right -->
+    <div
+      class="hidden w-full items-center justify-between gap-4 px-5 py-4 xl:flex xl:justify-end xl:px-0">
+      <div class="flex items-center gap-2 2xsm:gap-3">
+        @if (showAdminLink()) {
+        <a
+          [href]="adminDashboardUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800 transition-colors hover:bg-amber-100">
+          <i-lucide [name]="icons.adminPanel" class="h-4 w-4" />
+          <span class="hidden sm:inline">Admin</span>
+        </a>
+        }
+
+        <div
+          class="hidden items-center gap-2 rounded-lg border border-brand-200/60 bg-brand-50 px-3 py-1.5 lg:flex">
+          <i-lucide [name]="icons.key" class="h-3.5 w-3.5 text-brand-600" />
+          <span class="text-xs font-bold tracking-wider text-brand-700">{{ referralCode() }}</span>
+        </div>
+
+        <a
+          href="/contact-us"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-lg p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+          aria-label="Aide">
+          <i-lucide [name]="icons.help" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+        </a>
+      </div>
+
+      <div class="relative">
+        <button
+          type="button"
+          (click)="onUserMenuClick($event)"
+          class="user-menu-button flex items-center gap-2.5 rounded-lg py-1.5 pl-2 pr-3 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
+          <div class="relative">
+            @if (user()?.profile || user()?.google_image) {
+            <div
+              class="relative h-9 w-9 min-h-9 min-w-9 overflow-hidden rounded-full ring-2 ring-gray-200 dark:ring-gray-700">
+              <img
+                [src]="user() | apiIMG: 'user'"
+                [alt]="user()?.name ?? ''"
+                width="36"
+                height="36"
+                class="h-full w-full object-cover" />
+            </div>
+            } @else {
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-xs font-bold text-white ring-2 ring-gray-200 dark:ring-gray-700">
+              {{ getUserInitials() }}
+            </div>
+            }
+            <span
+              class="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white bg-success-500"></span>
+          </div>
+
+          <div class="hidden text-left md:block">
+            <p class="text-sm font-medium text-gray-800 dark:text-white/90">{{ user()?.name }}</p>
+            <p class="text-theme-xs text-gray-500 dark:text-gray-400">{{ getRoleLabel() }}</p>
+          </div>
+
+          <i-lucide
+            [name]="icons.chevronDown"
+            class="hidden h-4 w-4 text-gray-500 transition-transform md:block dark:text-gray-400"
+            [ngClass]="{ 'rotate-180': showUserMenu() }" />
+        </button>
+
+        @if (showUserMenu()) {
+        <div
+          class="user-menu-dropdown absolute right-0 top-full z-99999 mt-2 w-56 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-theme-lg dark:border-gray-800 dark:bg-gray-900 anim-fade-in">
+          <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-800">
+            <p class="text-sm font-semibold text-gray-800 dark:text-white/90">{{ user()?.name }}</p>
+            <p class="text-theme-xs text-gray-500 dark:text-gray-400">{{ user()?.email }}</p>
+            <span
+              class="mt-2 inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-1 text-theme-xs font-semibold text-brand-700 dark:bg-brand-500/15 dark:text-brand-400">
+              <i-lucide [name]="icons.verified" class="h-3 w-3" />
+              {{ getRoleLabel() }}
+            </span>
+          </div>
+
+          <div class="py-1">
+            @if (showAdminLink()) {
+            <a
+              [href]="adminDashboardUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              (click)="closeUserMenu()"
+              class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-amber-50 dark:hover:bg-amber-500/10">
+              <i-lucide [name]="icons.adminPanel" class="h-4 w-4 text-gray-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Dashboard Admin</span>
+            </a>
+            }
+
+            <a
+              routerLink="/dashboard/user/profile"
+              (click)="closeUserMenu()"
+              class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+              <i-lucide [name]="icons.accountCircle" class="h-4 w-4 text-gray-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Mon Profil</span>
+            </a>
+
+            <a
+              routerLink="/dashboard/user/profile/security"
+              (click)="closeUserMenu()"
+              class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+              <i-lucide [name]="icons.security" class="h-4 w-4 text-gray-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Sécurité</span>
+            </a>
+
+            <a
+              routerLink="/dashboard/user/referral/referred-users"
+              (click)="closeUserMenu()"
+              class="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+              <i-lucide [name]="icons.groupAdd" class="h-4 w-4 text-gray-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Mes Parrainages</span>
+            </a>
+          </div>
+
+          <div class="border-t border-gray-200 py-1 dark:border-gray-800">
+            <button
+              type="button"
+              (click)="signOut()"
+              class="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-red-50 dark:hover:bg-red-500/10">
+              <i-lucide [name]="icons.logout" class="h-4 w-4 text-gray-500" />
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Déconnexion</span>
+            </button>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</header>

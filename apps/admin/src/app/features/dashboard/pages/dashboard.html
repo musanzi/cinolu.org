@@ -1,0 +1,43 @@
+<div class="space-y-8">
+  @let isLoadingGeneral = store.isLoadingGeneral();
+  @let generalData = store.general();
+  @let isLoadingByYear = store.isLoadingByYear();
+  @let byYearData = store.byYear();
+
+  <app-stats-overview [data]="generalData" [isLoading]="isLoadingGeneral" />
+
+  <div class="flex flex-col gap-6 mt-10">
+    <div
+      class="flex flex-col md:flex-row md:items-center justify-between gap-4 border bg-white/90 border-gray-200 px-8 py-6 rounded-lg">
+      <h2 class="text-lg font-bold text-gray-900">Participations par année</h2>
+      <app-ui-select
+        id="stats-year-select"
+        class="w-full md:w-32"
+        [options]="yearSelectOptions()"
+        [(ngModel)]="selectedYear" />
+    </div>
+    @if (isLoadingByYear && !byYearData) {
+      <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm animate-pulse">
+        <div class="h-24 bg-gray-100 rounded-xl mb-6"></div>
+        <div class="h-64 bg-gray-100 rounded-xl"></div>
+      </div>
+    }
+    @if (byYearData; as data) {
+      <app-year-summary [summary]="data.summary" />
+      @if (data.detailedParticipations.programs.length > 0) {
+        <div class="flex flex-col gap-6 mt-6">
+          <app-program-tabs
+            [programs]="data.detailedParticipations.programs"
+            [selectedProgramId]="selectedProgram()"
+            (programSelected)="selectProgram($event)" />
+          <app-program-details [program]="getSelectedProgram(data.detailedParticipations.programs)" />
+        </div>
+      } @else {
+        <div class="rounded-lg border border-gray-200 bg-white p-12 text-center text-gray-500">
+          <i-lucide [name]="icons.LayoutList" class="size-12 mx-auto mb-3 text-gray-300" aria-hidden="true" />
+          <p class="font-medium">Aucune participation pour l'année {{ data.year }}</p>
+        </div>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,49 @@
+@if (isOpen()) {
+<div
+  class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40"
+  role="dialog"
+  aria-modal="true"
+  (click)="onBackdropClick()"
+  (keydown)="$event.key === 'Escape' && closed.emit()">
+  <div
+    class="bg-white rounded-lg border border-gray-200 w-full max-w-sm p-6"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+    role="document">
+    <div class="flex items-start justify-between gap-4 mb-5">
+      <div class="flex items-center gap-3">
+        <span
+          class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600"
+          aria-hidden="true">
+          <i-lucide [name]="icons.lock" class="size-5" stroke-width="2"></i-lucide>
+        </span>
+        <h2 id="auth-modal-title" class="text-lg font-semibold text-gray-900">Connexion requise</h2>
+      </div>
+      <button
+        type="button"
+        class="shrink-0 p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+        aria-label="Fermer"
+        (click)="closed.emit()">
+        <i-lucide [name]="icons.x" class="size-5"></i-lucide>
+      </button>
+    </div>
+    <p class="text-sm text-gray-600 leading-relaxed mb-6">{{ message() }}</p>
+    <div class="flex flex-col gap-3">
+      <button
+        type="button"
+        class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+        (click)="goToSignIn()">
+        <i-lucide [name]="icons.logIn" class="size-4"></i-lucide>
+        Se connecter
+      </button>
+      <button
+        type="button"
+        class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+        (click)="goToSignUp()">
+        <i-lucide [name]="icons.userPlus" class="size-4"></i-lucide>
+        Créer un compte
+      </button>
+    </div>
+  </div>
+</div>
+}

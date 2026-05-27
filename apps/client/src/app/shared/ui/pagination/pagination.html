@@ -1,0 +1,84 @@
+@if (totalPages() > 1) {
+<nav
+  class="flex flex-col items-center justify-center gap-3"
+  [attr.aria-label]="'common.pagination.ariaLabel' | translate">
+  @if (showSummary() && total() > 0) {
+  <p class="text-sm text-gray-600 dark:text-gray-400">
+    {{
+      'common.pagination.summary'
+        | translate
+          : {
+              start: rangeStart(),
+              end: rangeEnd(),
+              total: total(),
+              page: page(),
+              totalPages: totalPages()
+            }
+    }}
+  </p>
+  }
+
+  <div class="flex flex-wrap items-center justify-center gap-2">
+    <button
+      type="button"
+      (click)="previousPage()"
+      [disabled]="isPreviousDisabled()"
+      [attr.aria-disabled]="isPreviousDisabled()"
+      [attr.aria-label]="'common.pagination.previous' | translate"
+      class="inline-flex h-10 min-w-10 items-center justify-center rounded-lg border border-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-white/5">
+      <i-lucide [name]="icons.chevronLeft" class="size-5" aria-hidden="true" />
+    </button>
+
+    @if (showPageNumbers()) {
+      @for (item of visiblePages(); track item === 'ellipsis' ? 'ellipsis-' + $index : item) {
+        @if (item === 'ellipsis') {
+        <span
+          class="inline-flex h-10 min-w-10 items-center justify-center px-2 text-sm font-medium text-gray-500 dark:text-gray-400"
+          aria-hidden="true">
+          …
+        </span>
+        } @else {
+        <button
+          type="button"
+          (click)="setPage(item)"
+          [disabled]="isInteractionDisabled()"
+          [attr.aria-disabled]="isInteractionDisabled()"
+          [attr.aria-current]="item === page() ? 'page' : null"
+          [attr.aria-label]="
+            ('common.pagination.goToPage' | translate) + ' ' + item
+          "
+          class="inline-flex h-10 min-w-10 items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+          [class.bg-primary-600]="item === page()"
+          [class.font-bold]="item === page()"
+          [class.text-white]="item === page()"
+          [class.border]="item !== page()"
+          [class.border-gray-200]="item !== page()"
+          [class.text-gray-700]="item !== page()"
+          [class.hover:bg-gray-50]="item !== page()"
+          [class.dark:border-gray-700]="item !== page()"
+          [class.dark:text-gray-300]="item !== page()"
+          [class.dark:hover:bg-white/5]="item !== page()">
+          {{ item }}
+        </button>
+        }
+      }
+    }
+
+    <button
+      type="button"
+      (click)="nextPage()"
+      [disabled]="isNextDisabled()"
+      [attr.aria-disabled]="isNextDisabled()"
+      [attr.aria-label]="'common.pagination.next' | translate"
+      class="inline-flex h-10 min-w-10 items-center justify-center rounded-lg border border-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-white/5">
+      <i-lucide [name]="icons.chevronRight" class="size-5" aria-hidden="true" />
+    </button>
+  </div>
+
+  @if (loading()) {
+  <p class="text-xs text-gray-500 dark:text-gray-400" role="status">
+    {{ 'common.loading' | translate }}
+  </p>
+  }
+</nav>
+}

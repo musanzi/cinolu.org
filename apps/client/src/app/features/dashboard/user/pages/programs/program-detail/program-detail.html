@@ -1,0 +1,449 @@
+<div class="min-h-screen">
+  <!-- Confirm modal -->
+  <ui-dialog [open]="showConfirmModal()" [title]="confirmTitle()" (openChange)="showConfirmModal.set($event)">
+    <div class="p-6 space-y-6">
+      <div class="flex items-start gap-4">
+        <i-lucide
+          class="size-6 shrink-0 mt-0.5"
+          [name]="confirmIcon() === 'alert' ? icons.alertTriangle : icons.info"
+          [ngClass]="confirmIcon() === 'alert' ? 'text-amber-500' : 'text-blue-500'" />
+        <p class="text-gray-700">{{ confirmMessage() }}</p>
+      </div>
+      <div class="flex justify-end gap-3">
+        @if (!confirmHideReject()) {
+        <ui-button variant="secondary" (click)="showConfirmModal.set(false)">Annuler</ui-button>
+        }
+        <ui-button variant="primary" (click)="onConfirmAccept()">{{ confirmAcceptLabel() }}</ui-button>
+      </div>
+    </div>
+  </ui-dialog>
+
+  @if (projectStore.isLoading()) {
+  <div class="flex items-center justify-center py-32">
+    <div class="text-center">
+      <div class="relative w-20 h-20 mx-auto mb-8">
+        <div class="absolute inset-0 rounded-full border-4 border-primary-100"></div>
+        <div class="absolute inset-0 rounded-full border-4 border-primary-600 border-t-transparent animate-spin"></div>
+      </div>
+      <div class="space-y-2">
+        <p class="text-xl font-bold text-gray-900">Chargement</p>
+        <p class="text-gray-600">Préparation du programme...</p>
+      </div>
+    </div>
+  </div>
+  } @else { @if (projectStore.project(); as project) {
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 h-125">
+      @if (project.cover) {
+      <img [src]="project | apiIMG: 'project'" [alt]="project.name" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gray-900/90"></div>
+      } @else {
+      <div class="absolute inset-0 bg-brand-800"></div>
+      }
+      <div class="absolute inset-0 bg-[radial-linear(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_70%)]"></div>
+    </div>
+
+    <div class="relative pt-10 lg:pt-16 pb-24">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex items-start justify-between gap-8 flex-wrap">
+          <div class="flex-1 max-w-3xl">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg backdrop-blur-md border-2 text-sm font-bold"
+                [ngClass]="statusBadgeClasses()">
+                <span
+                  class="w-2 h-2 rounded-full animate-pulse"
+                  [ngClass]="{'bg-primary-400': !isProgramClosed(), 'bg-red-400': isProgramClosed()}"></span>
+                {{ projectStatus() }}
+              </div>
+
+              @if (hasApplied()) {
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold border-2 border-blue-400/30">
+                <i-lucide class="text-base" [name]="icons.verified" />
+                <span>Candidature soumise</span>
+              </div>
+              }
+            </div>
+
+            <h1 class="text-5xl lg:text-6xl font-black text-white mb-8 leading-tight tracking-tight">
+              {{ project.name }}
+            </h1>
+
+            <div class="flex items-center gap-6 mb-8 flex-wrap">
+              @if (project.duration_hours) {
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-12 h-12 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                  <i-lucide class="text-white" [name]="icons.clock" />
+                </div>
+                <div>
+                  <p class="text-white/60 text-xs font-semibold uppercase tracking-wider">Durée</p>
+                  <p class="text-white text-lg font-bold">{{ project.duration_hours }}h</p>
+                </div>
+              </div>
+              } @if (project.started_at) {
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-12 h-12 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                  <i-lucide class="text-white" [name]="icons.calendar" />
+                </div>
+                <div>
+                  <p class="text-white/60 text-xs font-semibold uppercase tracking-wider">Début</p>
+                  <p class="text-white text-lg font-bold">{{ project.started_at | date: 'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+
+          @if (!isProgramClosed() && !hasApplied()) {
+          <div class="flex flex-col items-end gap-3">
+            <button
+              (click)="onApplyClick()"
+              class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-bold border-2 border-primary-400/30 transition-all duration-300 transform hover:scale-105 overflow-hidden">
+              <div
+                class="hidden"></div>
+              <div class="relative flex items-center gap-3">
+                <i-lucide class="text-xl" [name]="icons.rocket" />
+                <span class="text-lg">Postuler maintenant</span>
+              </div>
+            </button>
+            <p class="text-white/70 text-sm">Rejoignez cette aventure</p>
+          </div>
+          } @else if (hasApplied()) {
+          <div class="flex flex-col items-end gap-3">
+            <div
+              class="px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-lg font-bold border-2 border-white/30 flex items-center gap-3">
+              <i-lucide [name]="icons.checkCircle" />
+              <span>Candidature envoyée</span>
+            </div>
+            <p class="text-white/70 text-sm">Nous reviendrons vers vous</p>
+          </div>
+          } @else {
+          <div class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white/60 rounded-lg font-bold border border-white/20">
+            <div class="flex items-center gap-3">
+              <i-lucide [name]="icons.lock" />
+              <span>Programme fermé</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 max-sm:hidden">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+        <path
+          d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z"
+          fill="white"
+          fill-opacity="0.1" />
+        <path
+          d="M0 120L60 105C120 90 240 60 360 50C480 40 600 50 720 60C840 70 960 80 1080 80C1200 80 1320 70 1380 65L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z"
+          fill="url(#paint0_linear)"
+          fill-opacity="0.5" />
+        <defs>
+          <linearGradient id="paint0_linear" x1="720" y1="40" x2="720" y2="120" linearUnits="userSpaceOnUse">
+            <stop stop-color="white" stop-opacity="0.8" />
+            <stop offset="1" stop-color="white" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 py-12 lg:py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2 space-y-8">
+          <div
+            class="relative group rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 md:p-6 lg:p-8 transition-all duration-300 overflow-hidden border-l-4 border-l-primary-500">
+            <div class="flex items-start gap-4 mb-6">
+              <div
+                class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+                <i-lucide class="text-white text-xl" [name]="icons.description" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Description du programme</h2>
+                <p class="text-gray-600 text-sm">Présentation générale</p>
+              </div>
+            </div>
+            <div class="prose prose-slate max-w-none">
+              <p class="text-gray-700 leading-relaxed text-base whitespace-pre-line">{{ project.description }}</p>
+            </div>
+          </div>
+
+          @if (project.context) {
+          <div
+            class="relative group rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 md:p-6 lg:p-8 transition-all duration-300 overflow-hidden border-l-4 border-l-primary-500">
+            <div class="flex items-start gap-4 mb-6">
+              <div
+                class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+                <i-lucide class="text-white text-xl" [name]="icons.lightbulb" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Contexte du programme</h2>
+                <p class="text-gray-600 text-sm">Comprenez les enjeux et l'origine</p>
+              </div>
+            </div>
+            <div class="prose prose-slate max-w-none">
+              <p class="text-gray-700 leading-relaxed text-base whitespace-pre-line">{{ project.context }}</p>
+            </div>
+          </div>
+          } @if (project.objectives) {
+          <div
+            class="relative group rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 md:p-6 lg:p-8 transition-all duration-300 overflow-hidden border-l-4 border-l-primary-500">
+            <div class="flex items-start gap-4 mb-6">
+              <div
+                class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+                <i-lucide class="text-white text-xl" [name]="icons.trophy" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Objectifs visés</h2>
+                <p class="text-gray-600 text-sm">Les résultats attendus et impacts</p>
+              </div>
+            </div>
+            <div class="prose prose-slate max-w-none">
+              <p class="text-gray-700 leading-relaxed text-base whitespace-pre-line">{{ project.objectives }}</p>
+            </div>
+          </div>
+          } @if (project.selection_criteria) {
+          <div
+            class="relative group rounded-2xl border border-gray-200 bg-white p-5 hover:border-primary-300 md:p-6 lg:p-8 transition-all duration-300 overflow-hidden border-l-4 border-l-primary-500">
+            <div class="flex items-start gap-4 mb-6">
+              <div
+                class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+                <i-lucide class="text-white text-xl" [name]="icons.verified" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Critères de sélection</h2>
+                <p class="text-gray-600 text-sm">Ce que nous recherchons</p>
+              </div>
+            </div>
+            <div class="prose prose-slate max-w-none">
+              <p class="text-gray-700 leading-relaxed text-base whitespace-pre-line">
+                {{ project.selection_criteria }}
+              </p>
+            </div>
+          </div>
+          }
+        </div>
+
+        <div class="lg:col-span-1">
+          <div
+            class="relative rounded-2xl border border-gray-200 bg-white p-5 md:p-6 transition-all duration-300 overflow-hidden">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+                <i-lucide class="text-white text-lg" [name]="icons.info" />
+              </div>
+              <h3 class="text-lg font-bold text-gray-900">Informations clés</h3>
+            </div>
+
+            <div class="space-y-4">
+              @if (project.duration_hours) {
+              <div
+                class="flex items-start gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50/50 hover:border-gray-300 transition-colors duration-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                  <i-lucide class="text-primary-600 text-lg" [name]="icons.clock" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Durée</p>
+                  <p class="text-sm text-gray-900 font-bold">{{ project.duration_hours }}h</p>
+                </div>
+              </div>
+              } @if (project.started_at) {
+              <div
+                class="flex items-start gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50/50 hover:border-gray-300 transition-colors duration-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                  <i-lucide class="text-primary-600 text-lg" [name]="icons.calendar" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Début</p>
+                  <p class="text-sm text-gray-900 font-bold">{{ project.started_at | date: 'dd/MM/yy' }}</p>
+                </div>
+              </div>
+              } @if (project.ended_at) {
+              <div
+                class="flex items-start gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50/50 hover:border-gray-300 transition-colors duration-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                  <i-lucide class="text-primary-600 text-lg" [name]="icons.calendarX" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Fin</p>
+                  <p class="text-sm text-gray-900 font-bold">{{ project.ended_at | date: 'dd/MM/yy' }}</p>
+                </div>
+              </div>
+              } @if (project.project_manager) {
+              <div
+                class="flex items-start gap-3 p-3 rounded-lg border border-gray-200 bg-gray-50/50 hover:border-gray-300 transition-colors duration-200">
+                <div class="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                  <i-lucide class="text-primary-600 text-lg" [name]="icons.user" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Responsable</p>
+                  <p class="text-sm text-gray-900 font-bold truncate">{{ project.project_manager.name }}</p>
+                </div>
+              </div>
+              }
+            </div>
+
+            @if (project.categories && project.categories.length > 0) {
+            <div class="mt-6 pt-6 border-t border-gray-200">
+              <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i-lucide class="text-xs" [name]="icons.tag" />
+                Catégories
+              </p>
+              <div class="flex flex-wrap gap-2">
+                @for (category of project.categories; track category.id) {
+                <span
+                  class="inline-flex items-center px-2.5 py-1 bg-brand-50 text-primary-700 rounded-lg text-xs font-bold border border-primary-200">
+                  {{ category.name }}
+                </span>
+                }
+              </div>
+            </div>
+            }
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+              @if (!isProgramClosed() && !hasApplied()) {
+              <button
+                (click)="onApplyClick()"
+                class="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-primary-400/30 bg-brand-600 px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-700">
+                <div
+                  class="hidden"></div>
+                <i-lucide class="text-lg relative" [name]="icons.send" />
+                <span class="relative">Postuler</span>
+              </button>
+              } @else if (hasApplied()) {
+              <div
+                class="w-full px-4 py-3 bg-brand-50 text-primary-700 rounded-lg font-bold border-2 border-primary-200 flex items-center justify-center gap-2 text-sm">
+                <i-lucide class="text-lg" [name]="icons.checkCircle" />
+                <span>Candidature envoyée</span>
+              </div>
+              } @else {
+              <div
+                class="w-full px-4 py-3 bg-red-50 text-red-700 rounded-lg font-bold border-2 border-red-300 flex items-center justify-center gap-2 text-sm">
+                <i-lucide class="text-lg" [name]="icons.lock" />
+                <span>Fermé</span>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        @if (project.gallery && project.gallery.length > 0) {
+        <div
+          class="relative group rounded-2xl border border-gray-200 bg-white hover:border-primary-300 p-6 lg:p-8 transition-all duration-300 overflow-hidden border-l-4 border-l-primary-500">
+          <div class="flex items-start gap-4 mb-6">
+            <div
+              class="w-12 h-12 rounded-xl bg-brand-600 flex items-center justify-center shrink-0">
+              <i-lucide class="text-white text-xl" [name]="icons.images" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h2 class="text-xl font-bold text-gray-900 mb-1">Galerie photos</h2>
+              <p class="text-gray-600 text-sm">Découvrez l'ambiance du programme</p>
+            </div>
+          </div>
+
+          <div class="rounded-lg overflow-hidden border-2 border-gray-200">
+            <div class="space-y-3">
+              @for (img of project.gallery; track img; let i = $index) {
+              <figure class="relative h-96 w-full">
+                <img [src]="img | apiIMG: 'gallery'" [alt]="project.name" class="object-cover w-full h-full" />
+              </figure>
+              }
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="flex flex-col items-center justify-center py-32 px-6">
+    <div class="relative mb-8">
+      <div
+        class="absolute inset-0 rounded-full bg-gray-100 animate-pulse blur-xl opacity-60"></div>
+      <div
+        class="relative flex h-32 w-32 items-center justify-center rounded-full border-4 border-gray-200 bg-gray-100">
+        <i-lucide class="text-7xl text-gray-300" [name]="icons.search" />
+      </div>
+    </div>
+
+    <h2 class="text-3xl font-black text-gray-900 mb-3">Programme introuvable</h2>
+    <p class="text-gray-600 text-lg mb-8 text-center max-w-md">
+      Ce programme n'existe pas ou n'est plus disponible. Il a peut-être été supprimé ou archivé.
+    </p>
+    <a
+      routerLink="/dashboard/user/programs"
+      class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-lg transition-colors">
+      <i-lucide class="text-xl" [name]="icons.arrowLeft" />
+      Retour aux programmes
+    </a>
+  </div>
+  } }
+
+  <ui-dialog
+    [open]="showVentureSelectionModal()"
+    title="Choisissez votre projet"
+    (openChange)="showVentureSelectionModal.set($event)">
+    <div class="p-8 bg-white">
+      <div class="mb-6 p-4 bg-primary-50 border-l-4 border-primary-500 rounded-r-lg">
+        <p class="text-gray-700 leading-relaxed">
+          Vous postulez au programme
+          <span class="font-bold text-primary-700">{{ projectStore.project()?.name }}</span>. Choisissez le projet qui
+          participera à ce programme.
+        </p>
+      </div>
+
+      <div class="space-y-3 max-h-96 overflow-y-auto pr-2">
+        @for (venture of venturesStore.ventures(); track venture.id) {
+        <button
+          (click)="submitApplication(venture.id)"
+          [disabled]="participationsStore.isLoading()"
+          class="group relative w-full overflow-hidden rounded-lg border-2 border-gray-200 p-5 text-left transition-colors hover:border-primary-400 hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-50">
+          <div class="relative flex items-center gap-5">
+            @if (venture.logo) {
+            <div class="w-16 h-16 rounded-xl overflow-hidden border-2 border-white shrink-0">
+              <img [src]="venture | apiIMG: 'venture'" [alt]="venture.name" class="w-full h-full object-cover" />
+            </div>
+            } @else {
+            <div
+              class="w-16 h-16 rounded-xl bg-gray-100 flex items-center justify-center border-2 border-gray-200 shrink-0">
+              <i-lucide class="text-gray-400 text-2xl" [name]="icons.briefcase" />
+            </div>
+            }
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-gray-900 text-lg group-hover:text-primary-700 transition-colors mb-1 truncate">
+                {{ venture.name }}
+              </h4>
+              <p class="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                {{ venture.description || 'Aucune description disponible' }}
+              </p>
+            </div>
+            <div
+              class="w-10 h-10 rounded-lg bg-gray-100 group-hover:bg-primary-500 flex items-center justify-center transition-colors duration-300 shrink-0">
+              <i-lucide
+                class="text-gray-400 group-hover:text-white transition-colors duration-300"
+                [name]="icons.arrowRight" />
+            </div>
+          </div>
+        </button>
+        }
+      </div>
+
+      @if (venturesStore.ventures().length === 0) {
+      <div class="text-center py-12">
+        <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+          <i-lucide class="text-4xl text-gray-400" [name]="icons.briefcase" />
+        </div>
+        <h4 class="text-lg font-bold text-gray-900 mb-2">Aucun projet</h4>
+        <p class="text-gray-600 text-sm">Vous devez d'abord créer un projet pour postuler.</p>
+      </div>
+      }
+    </div>
+  </ui-dialog>
+</div>

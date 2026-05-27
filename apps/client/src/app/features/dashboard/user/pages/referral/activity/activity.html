@@ -1,0 +1,174 @@
+<div class="pb-20">
+  <div class="mb-8">
+    <div class="flex gap-3 mb-4">
+      <div
+        class="w-14 h-12 rounded-xl bg-brand-600 flex items-center justify-center">
+        <i-lucide class="text-white text-2xl" [name]="icons.history" />
+      </div>
+      <div>
+        <h1 class="dashboard-heading-2">Activité récente</h1>
+        <p class="dashboard-text-body text-gray-600">Suis l'historique de tes inscriptions et badges débloqués</p>
+      </div>
+    </div>
+  </div>
+
+  @if (referralsStore.isLoadingReferredUsers()) {
+  <div class="flex flex-col justify-center items-center py-24">
+    <div class="relative">
+      <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+    </div>
+    <p class="mt-6 text-gray-600 font-medium animate-pulse">Chargement de l'activité...</p>
+  </div>
+  } @else {
+  <div class="dashboard-grid-3 mb-8">
+    <div class="dashboard-card p-6">
+      <div class="flex items-start justify-between mb-4">
+        <div
+          class="w-11 h-11 rounded-xl bg-brand-600 flex items-center justify-center">
+          <i-lucide class="text-white text-xl" [name]="icons.timeline" />
+        </div>
+        <div class="dashboard-badge-info">
+          <i-lucide class="text-xs" [name]="icons.calendarCheck" />
+        </div>
+      </div>
+      <h3 class="dashboard-heading-3 mb-1">{{ totalEvents() }}</h3>
+      <p class="dashboard-text-small">Événements totaux</p>
+    </div>
+
+    <div class="dashboard-card p-6">
+      <div class="flex items-start justify-between mb-4">
+        <div
+          class="w-11 h-11 rounded-xl bg-emerald-600 flex items-center justify-center">
+          <i-lucide class="text-white text-xl" [name]="icons.personAdd" />
+        </div>
+        <div class="dashboard-badge-success">
+          <i-lucide class="text-xs" [name]="icons.users" />
+        </div>
+      </div>
+      <h3 class="dashboard-heading-3 mb-1">{{ referralEvents() }}</h3>
+      <p class="dashboard-text-small">Inscriptions</p>
+    </div>
+
+    <div class="dashboard-card p-6">
+      <div class="flex items-start justify-between mb-4">
+        <div
+          class="w-11 h-11 rounded-xl bg-amber-600 flex items-center justify-center">
+          <i-lucide class="text-white text-xl" [name]="icons.award" />
+        </div>
+        <div class="dashboard-badge-warning">
+          <i-lucide class="text-xs" [name]="icons.badgeUnlocked" />
+        </div>
+      </div>
+      <h3 class="dashboard-heading-3 mb-1">{{ badgeEvents() }}</h3>
+      <p class="dashboard-text-small">Badges débloqués</p>
+    </div>
+  </div>
+
+  @if (timelineEvents().length === 0) {
+  <div class="dashboard-card p-16 text-center">
+    <div class="w-24 h-24 rounded-lg bg-gray-100 flex items-center justify-center mx-auto mb-6">
+      <i-lucide class="text-gray-400 text-5xl" [name]="icons.calendarX" />
+    </div>
+    <h3 class="dashboard-heading-3 mb-3">Aucune activité pour le moment</h3>
+    <p class="dashboard-text-body mb-8 max-w-md mx-auto">
+      Commence à partager ton lien de parrainage pour voir apparaître tes événements ici
+    </p>
+    <a routerLink="/dashboard/user/referral/link" class="dashboard-btn-primary inline-flex">
+      <i-lucide class="text-lg" [name]="icons.share" />
+      <span>Partager mon lien</span>
+    </a>
+  </div>
+  } @else {
+  <div class="dashboard-card p-6 sm:p-8">
+    <h3 class="dashboard-heading-4 mb-8 flex items-center gap-2">
+      <i-lucide class="text-primary-600 text-xl" [name]="icons.timeline" />
+      <span>Timeline de tes inscriptions</span>
+    </h3>
+
+    <div class="relative">
+      <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200 hidden sm:block"></div>
+
+      <div class="space-y-6">
+        @for (event of timelineEvents(); track event.id) {
+        <div class="relative flex flex-col sm:flex-row gap-4 sm:gap-6 group">
+          <div class="relative shrink-0">
+            <div
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+              [class]="getColorClasses(event.color).icon">
+              <i-lucide class="text-white text-xl sm:text-2xl" [name]="resolveEventIcon(event.icon)" />
+            </div>
+
+            @if (!$last) {
+            <div class="absolute left-1/2 top-14 -translate-x-1/2 w-0.5 h-6 bg-gray-200 hidden sm:block"></div>
+            }
+          </div>
+
+          <div class="flex-1 pb-6">
+            <div
+              class="dashboard-card-hover p-6 border-l-4 transition-all duration-300"
+              [class]="getColorClasses(event.color).bg + ' ' + getColorClasses(event.color).border">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2 sm:gap-4">
+                <div class="flex-1">
+                  <h5 class="font-bold text-gray-900 text-base mb-1">{{ event.title }}</h5>
+                  <p class="dashboard-text-small">{{ event.description }}</p>
+                </div>
+
+                <div class="text-left sm:text-right shrink-0">
+                  <p class="text-xs font-semibold mb-1" [class]="getColorClasses(event.color).text">
+                    {{ getRelativeTime(event.date) }}
+                  </p>
+                  <p class="dashboard-text-tiny">{{ event.date | date:'longDate'}}</p>
+                  <p class="dashboard-text-tiny">{{ event.date | date:'shortTime' }}</p>
+                </div>
+              </div>
+
+              @if (event.type === 'invitation' && event.user) {
+              <div
+                class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 pt-3 border-t"
+                [class]="getColorClasses(event.color).border">
+                <span class="dashboard-badge-success text-[11px] px-2 py-1">
+                  <i-lucide class="text-xs" [name]="icons.person" />
+                  <span>Inscription</span>
+                </span>
+                <p class="dashboard-text-tiny truncate">
+                  <i-lucide class="text-xs align-middle" [name]="icons.mail" />
+                  {{ event.user.email }}
+                </p>
+              </div>
+              } @else if (event.type === 'badge_unlocked' && event.badge) {
+              <div
+                class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 pt-3 border-t"
+                [class]="getColorClasses(event.color).border">
+                <span
+                  class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-white"
+                  [class]="'bg-' + event.badge.color + '-600'">
+                  <i-lucide class="text-xs" [name]="resolveEventIcon(event.badge.icon)" />
+                  <span>Niveau {{ event.badge.level }}</span>
+                </span>
+                <p class="dashboard-text-tiny">{{ event.badge.description }}</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    @if (timelineEvents().length >= maxEventsToShow) {
+    <div class="mt-8 text-center">
+      <p class="dashboard-text-small mb-4">Affichage des {{ maxEventsToShow }} événements les plus récents</p>
+      <button
+        class="dashboard-btn-secondary inline-flex"
+        aria-label="Fonctionnalité de chargement supplémentaire à venir"
+        disabled>
+        <i-lucide class="text-lg" [name]="icons.expandMore" />
+        <span>Charger plus (bientôt disponible)</span>
+      </button>
+    </div>
+    }
+  </div>
+
+  <app-referral-cta-card />
+  } }
+</div>
