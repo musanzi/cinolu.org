@@ -20,11 +20,6 @@
           {
             "glob": "**/*",
             "input": "apps/client/public"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/client/src/assets",
-            "output": "apps/client/assets"
           }
         ],
         "styles": [
