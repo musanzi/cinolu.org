@@ -20,9 +20,9 @@ import {
   Eye
 } from 'lucide-angular';
 import { AmbassadorStore } from '../../store/ambassador.store';
-import { getInitials } from '../../../../shared/helpers/ambassador.helpers';
-import { ApiImgPipe, resolveApiImageUrl } from '../../../../shared/pipes/api-img.pipe';
-import type { IImage } from '../../../../shared/models/entities.models';
+import { getInitials } from '@shared/helpers/ambassador.helpers';
+import { ApiImgPipe, resolveApiImageUrl } from '@shared/pipes/api-img.pipe';
+import type { IImage } from '@shared/models/entities.models';
 import { ImageLightboxComponent } from '@shared/components/image-lightbox/image-lightbox';
 import { ImageLightboxItem } from '@shared/components/image-lightbox/image-lightbox.model';
 import { SeoService } from '@core/services/seo';

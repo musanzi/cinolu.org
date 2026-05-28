@@ -6,7 +6,7 @@ import { UiAvatar } from '@ui';
 import { AuthStore } from '@core/auth';
 import { LucideAngularModule } from 'lucide-angular';
 import { ADMIN_LAYOUT_ICONS } from '@shared/data';
-import { ApiImgPipe } from '../../../shared/pipes/api-img.pipe';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { MobileMenu } from '../../components/mobile-menu/mobile-menu';
 
 @Component({

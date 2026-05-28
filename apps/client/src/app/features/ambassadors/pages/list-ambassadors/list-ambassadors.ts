@@ -12,9 +12,9 @@ import { AmbassadorsStore } from '../../store/ambassadors.store';
 import {
   getAmbassadorLevel,
   getInitials,
-} from '../../../../shared/helpers/ambassador.helpers';
+} from '@shared/helpers/ambassador.helpers';
 import { environment } from '../../../../../environments/environment';
-import { IUser } from '../../../../shared/models';
+import { IUser } from '@shared/models';
 import { Edit, LucideAngularModule, MapPin, Star, Users } from 'lucide-angular';
 import { AmbassadorCard } from '../../components/ambassador-card/ambassador-card';
 import { AmbassadorSkeleton } from '../../components/ambassador-skeleton/ambassador-skeleton';

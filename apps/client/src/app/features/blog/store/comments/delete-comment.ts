@@ -4,7 +4,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, map, of, pipe, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CommentsStore } from './comments.store';
-import { ToastrService } from '../../../../core/services/toast/toastr.service';
+import { ToastrService } from '@core/services/toast/toastr.service';
 
 interface IDeleteCommentStore {
   isLoading: boolean;

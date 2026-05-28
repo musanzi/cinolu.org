@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, map, of, pipe, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from '../../../../core/services/toast/toastr.service';
-import { IComment } from '../../../../shared/models/entities.models';
+import { ToastrService } from '@core/services/toast/toastr.service';
+import { IComment } from '@shared/models/entities.models';
 import { CommentsStore } from './comments.store';
 
 interface IUpdateCommentStore {

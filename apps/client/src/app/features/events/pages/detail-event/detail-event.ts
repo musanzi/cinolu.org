@@ -17,8 +17,8 @@ import {
 } from 'lucide-angular';
 import { EventStore } from '../../store/event.store';
 import { ActivatedRoute } from '@angular/router';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
-import { IEvent, IImage } from '../../../../shared/models/entities.models';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
+import { IEvent, IImage } from '@shared/models/entities.models';
 import { GalleryEventStore } from '../../store/galleries.event.store';
 import { TranslateModule } from '@ngx-translate/core';
 import { formatDateForGoogleCalendarUTC, openExternalUrl } from '@shared/helpers';

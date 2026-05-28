@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IProduct } from '../../../shared/models';
+import { IProduct } from '@shared/models';
 
 interface IPublicProductStore {
   isLoading: boolean;

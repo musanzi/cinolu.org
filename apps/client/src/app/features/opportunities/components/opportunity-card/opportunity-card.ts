@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule, ArrowRight, Globe } from 'lucide-angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { IOpportunity } from '../../../../shared/models';
+import { IOpportunity } from '@shared/models';
 
 @Component({
   selector: 'app-opportunity-card',

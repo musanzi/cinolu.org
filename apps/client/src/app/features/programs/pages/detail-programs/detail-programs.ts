@@ -18,7 +18,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ProgramStore } from '../../../landing/store/program.store';
 import { SubprogramCardSkeleton } from '../../component/subprogram-card-skeleton/subprogram-card-skeleton';
 import { Subject, takeUntil } from 'rxjs';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '@shared/ui';
 

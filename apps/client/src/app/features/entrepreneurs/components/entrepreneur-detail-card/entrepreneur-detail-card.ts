@@ -26,8 +26,8 @@ import {
 } from 'lucide-angular';
 import { map } from 'rxjs';
 import { PublicVentureStore } from '@features/entrepreneurs/store/venture.store';
-import { IImage, IProduct, IUser, IVenture } from '../../../../shared/models';
-import { ApiImgPipe, resolveApiImageUrl } from '../../../../shared/pipes';
+import { IImage, IProduct, IUser, IVenture } from '@shared/models';
+import { ApiImgPipe, resolveApiImageUrl } from '@shared/pipes';
 import { ImageLightboxComponent } from '@shared/components/image-lightbox/image-lightbox';
 import { ImageLightboxItem } from '@shared/components/image-lightbox/image-lightbox.model';
 import { TranslateModule } from '@ngx-translate/core';

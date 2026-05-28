@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, exhaustMap, of, pipe, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { IProject } from '../../../shared/models/entities.models';
+import { IProject } from '@shared/models/entities.models';
 
 interface IRecentProjectsStore {
   isLoading: boolean;

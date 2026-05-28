@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoadingBar } from './layout/components/loading-bar/loading-bar';
-import { LanguageService } from './core/services/language';
+import { LanguageService } from '@core/services/language';
 
 @Component({
   selector: 'app-root',

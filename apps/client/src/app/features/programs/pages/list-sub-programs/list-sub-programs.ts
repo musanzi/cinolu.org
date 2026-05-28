@@ -13,7 +13,7 @@ import {
 } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
 import { SubprogramsStore } from '../../../landing/store/subprogram.store';
-import { IProject } from '../../../../shared/models/entities.models';
+import { IProject } from '@shared/models/entities.models';
 import { SubprogramCardSkeleton } from '../../component/subprogram-card-skeleton/subprogram-card-skeleton';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProjectCard } from '@features/projects/components/project-card/project-card';

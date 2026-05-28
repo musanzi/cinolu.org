@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Signal } from '@angular/core';
 import { catchError, exhaustMap, of, pipe, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { IProgram, ISubprogram, IEvent, IProject, IArticle, IHighlight } from '../../../shared/models';
+import { IProgram, ISubprogram, IEvent, IProject, IArticle, IHighlight } from '@shared/models';
 
 export type HighlightSource = 'programs' | 'subprograms' | 'events' | 'projects' | 'articles';
 

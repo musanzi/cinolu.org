@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IMemberItem, TEAM_MEMBERS } from '../../data/our-team.data';
-import { FadeInOnScrollDirective } from '../../../../shared/directives/animations-on-scroll.directive';
+import { FadeInOnScrollDirective } from '@shared/directives/animations-on-scroll.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

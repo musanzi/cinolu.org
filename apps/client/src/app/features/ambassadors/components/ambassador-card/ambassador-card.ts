@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LucideAngularModule, Mail, MapPin, Medal, Sparkles, Star, Trophy, Users } from 'lucide-angular';
-import { IUser } from '../../../../shared/models';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
-import { getInitials, getAmbassadorLevel } from '../../../../shared/helpers/ambassador.helpers';
+import { IUser } from '@shared/models';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
+import { getInitials, getAmbassadorLevel } from '@shared/helpers/ambassador.helpers';
 
 @Component({
   selector: 'app-ambassador-card',

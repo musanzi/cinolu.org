@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { LoadingService } from '../../../core/services/loading';
+import { LoadingService } from '@core/services/loading';
 
 @Component({
   selector: 'app-loading-bar',

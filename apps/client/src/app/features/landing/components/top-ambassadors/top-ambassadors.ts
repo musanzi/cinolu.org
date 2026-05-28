@@ -4,9 +4,9 @@ import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LucideAngularModule, Crown, MoveRight, UserCircle } from 'lucide-angular';
 import { AmbassadorsStore } from '../../../ambassadors/store/ambassadors.store';
-import { getInitials } from '../../../../shared/helpers/ambassador.helpers';
-import { IUser } from '../../../../shared/models';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
+import { getInitials } from '@shared/helpers/ambassador.helpers';
+import { IUser } from '@shared/models';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { LandingSectionHeader } from '../landing-section-header/landing-section-header';
 import { PublicContainer, PublicSection } from '@shared/public';
 

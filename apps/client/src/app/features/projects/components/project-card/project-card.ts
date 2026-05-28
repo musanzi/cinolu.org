@@ -2,8 +2,8 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule, CalendarCheck, CalendarX, MoveRight } from 'lucide-angular';
-import { IProject } from '../../../../shared/models/entities.models';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
+import { IProject } from '@shared/models/entities.models';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

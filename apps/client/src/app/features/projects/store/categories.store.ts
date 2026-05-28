@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, exhaustMap, of, pipe, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { ICategory } from '../../../shared/models/entities.models';
+import { ICategory } from '@shared/models/entities.models';
 
 interface ICategoriesStore {
   isLoading: boolean;

@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
-      "@web-apps/ui": ["./libs/ui/src/index.ts"]
+      "@libs/shared": ["./libs/shared/src/index.ts"],
+      "@libs/helpers": ["./libs/shared/src/helpers/index.ts"],
+      "@libs/helpers/*": ["./libs/shared/src/helpers/*"],
+      "@libs/ui": ["./libs/shared/src/ui/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

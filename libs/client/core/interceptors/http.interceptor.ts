@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/h
 import { inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
 import { AuthStore } from '../auth/auth.store';
 import { validateReturnUrl } from '../auth/auth-redirect.util';
 

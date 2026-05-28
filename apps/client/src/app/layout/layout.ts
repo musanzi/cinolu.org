@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, filter, takeUntil } from 'rxjs';
-import { AppConfigService } from '../core/services/config/config.service';
-import { AppConfig } from '../core/services/config/config.types';
+import { AppConfigService } from '@core/services/config/config.service';
+import { AppConfig } from '@core/services/config/config.types';
 import { EmptyLayout } from './pages/empty-layout/empty-layout';
 import { FixedLayout } from './pages/fixed-layout/fixed-layout';
 import { FullLayout } from './pages/full-layout/full-layout';

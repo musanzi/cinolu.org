@@ -4,8 +4,8 @@ import { inject } from '@angular/core';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { FilterArticlesDto } from '../../dto/filter-articles.dto';
-import { IArticle } from '../../../../shared/models/entities.models';
-import { buildQueryParams } from '../../../../shared/helpers';
+import { IArticle } from '@shared/models/entities.models';
+import { buildQueryParams } from '@shared/helpers';
 
 interface IArticlesStore {
   isLoading: boolean;

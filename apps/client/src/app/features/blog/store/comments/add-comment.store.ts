@@ -4,8 +4,8 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, map, of, pipe, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CommentDto } from '../../dto/filter-articles.dto';
-import { ToastrService } from '../../../../core/services/toast/toastr.service';
-import { IComment } from '../../../../shared/models/entities.models';
+import { ToastrService } from '@core/services/toast/toastr.service';
+import { IComment } from '@shared/models/entities.models';
 import { CommentsStore } from './comments.store';
 
 interface IAddCommentStore {

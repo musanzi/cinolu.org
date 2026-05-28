@@ -21,20 +21,20 @@ import {
   UserPlus
 } from 'lucide-angular';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { ArticleCardDetailSkeleton } from '../article-card-detail-skeleton/article-card-detail-skeleton';
 import { RecentArticlesStore } from '../../store/articles/recent-articles.store';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AddCommentStore } from '../../store/comments/add-comment.store';
-import { AuthStore } from '../../../../core/auth/auth.store';
+import { AuthStore } from '@core/auth/auth.store';
 import { UpdateCommentStore } from '../../store/comments/update-comment.store';
-import { IComment } from '../../../../shared/models/entities.models';
+import { IComment } from '@shared/models/entities.models';
 import { DeleteCommentStore } from '../../store/comments/delete-comment';
 import { CommentsStore } from '../../store/comments/comments.store';
 import { Subject, takeUntil } from 'rxjs';
 import { QuillViewComponent } from 'ngx-quill';
 import { ArticleStore } from '@features/blog/store/articles/article.store';
-import { AnalyticsService } from '../../../../core/services/analytics/analytics.service';
+import { AnalyticsService } from '@core/services/analytics/analytics.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ArticleDetailSidebarComponent } from '../../components/article-detail-sidebar/article-detail-sidebar';
 import { ArticleDetailNotFoundComponent } from '../../components/article-detail-not-found/article-detail-not-found';
@@ -66,7 +66,7 @@ import { SeoService } from '@core/services/seo';
     ArticleDetailNotFoundComponent
   ],
   templateUrl: './detail-article.html',
-  styleUrl: '../../../../shared/styles/quill-view.css',
+  styleUrl: '../../../../../../../../libs/client/shared/styles/quill-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailArticle implements OnInit, OnDestroy {

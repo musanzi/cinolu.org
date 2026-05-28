@@ -4,8 +4,8 @@ import { inject } from '@angular/core';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { FilterProjectsDto } from '../dto/filter-projects.dto';
-import { IProject } from '../../../shared/models';
-import { buildQueryParams } from '../../../shared/helpers';
+import { IProject } from '@shared/models';
+import { buildQueryParams } from '@shared/helpers';
 
 interface IProjectsStore {
   isLoading: boolean;

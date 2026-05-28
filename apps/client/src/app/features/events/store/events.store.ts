@@ -4,8 +4,8 @@ import { inject } from '@angular/core';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { FilterEventsDto } from '../dto/filter-events.dto';
-import { buildQueryParams } from '../../../shared/helpers';
-import { IEvent } from '../../../shared/models';
+import { buildQueryParams } from '@shared/helpers';
+import { IEvent } from '@shared/models';
 
 interface IEventsStore {
   isLoading: boolean;

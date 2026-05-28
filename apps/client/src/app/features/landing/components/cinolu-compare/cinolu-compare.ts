@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideAngularModule, ArrowRight, Briefcase, TrendingUp, Check } from 'lucide-angular';
-import { FadeInOnScrollDirective } from '../../../../shared/directives/animations-on-scroll.directive';
+import { FadeInOnScrollDirective } from '@shared/directives/animations-on-scroll.directive';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LandingSectionHeader } from '../landing-section-header/landing-section-header';

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BackButton } from '../../../shared/ui/back-button/back-button';
+import { BackButton } from '@shared/ui/back-button/back-button';
 
 @Component({
   selector: 'app-empty-layout',

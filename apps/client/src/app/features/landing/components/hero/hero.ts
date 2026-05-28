@@ -11,8 +11,8 @@ import {
   TrendingUp,
   LucideIconData
 } from 'lucide-angular';
-import { CountUpDirective } from '../../../../shared/directives/count-up.directive';
-import { FadeInOnScrollDirective } from '../../../../shared/directives/animations-on-scroll.directive';
+import { CountUpDirective } from '@shared/directives/count-up.directive';
+import { FadeInOnScrollDirective } from '@shared/directives/animations-on-scroll.directive';
 
 interface JourneyStep {
   key: string;

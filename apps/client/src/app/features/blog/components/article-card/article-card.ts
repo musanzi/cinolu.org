@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, effect, inject, Input, input, signal } from '@angular/core';
 import { Calendar1, Heart, LucideAngularModule, MessageCircleMore, MoveRight } from 'lucide-angular';
-import { IArticle } from '../../../../shared/models/entities.models';
+import { IArticle } from '@shared/models/entities.models';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ApiImgPipe } from '../../../../shared/pipes/api-img.pipe';
+import { ApiImgPipe } from '@shared/pipes/api-img.pipe';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ArticleLikesService } from '../../services/article-likes.service';

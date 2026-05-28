@@ -8,18 +8,18 @@ import {
 import { provideRouter, TitleStrategy, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions } from '@angular/platform-browser';
-import { PageTitleStrategy } from './core/strategies/page-title.strategy';
-import { provideApp } from './core/providers/app.provider';
+import { PageTitleStrategy } from '@core/strategies/page-title.strategy';
+import { provideApp } from '@core/providers/app.provider';
 import { HttpClient, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { httpInterceptor } from './core/interceptors/http.interceptor';
-import { LoadingInterceptor } from './core/services/loading';
+import { httpInterceptor } from '@core/interceptors/http.interceptor';
+import { LoadingInterceptor } from '@core/services/loading';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateModule, TranslateLoader, TranslationObject } from '@ngx-translate/core';
 import { importProvidersFrom, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { provideServiceWorker } from '@angular/service-worker';
 import { registerLocaleData } from '@angular/common';
-import { APP_CONFIG, AppConfig } from './core/services/config';
+import { APP_CONFIG, AppConfig } from '@core/services/config';
 
 export function provideLocaleInitializer() {
   return () =>

@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { buildQueryParams } from '../../../shared/helpers/http.helper';
-import { IOpportunity } from '../../../shared/models';
+import { buildQueryParams } from '@shared/helpers/http.helper';
+import { IOpportunity } from '@shared/models';
 import { FilterOpportunitiesDto } from '../dto/filter-opportunities.dto';
 
 interface OpportunitiesState {

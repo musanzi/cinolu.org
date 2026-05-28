@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { ISubprogram } from '../../../shared/models/entities.models';
+import { ISubprogram } from '@shared/models/entities.models';
 
 interface ISubprogramStore {
   isLoading: boolean;

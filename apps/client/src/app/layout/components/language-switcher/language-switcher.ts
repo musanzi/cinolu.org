@@ -1,6 +1,6 @@
 import { Component, inject, HostListener, input } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { LanguageService } from '../../../core/services/language';
+import { LanguageService } from '@core/services/language';
 import { TranslateModule } from '@ngx-translate/core';
 import { LucideAngularModule, ChevronDown, Check } from 'lucide-angular';
 

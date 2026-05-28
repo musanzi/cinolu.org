@@ -9,7 +9,7 @@ export const httpInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) 
   loadingService.show();
   const newReq: HttpRequest<unknown> = req.clone({
     url: environment.apiUrl + req.url,
-    withCredentials: true
+    withCredentials: true,
   });
   return next(newReq).pipe(finalize(() => loadingService.hide()));
 };

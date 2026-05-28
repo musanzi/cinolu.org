@@ -11,7 +11,7 @@ import { IS_DISCOVERING_ROUTES } from '@angular/ssr';
 import { LoadingService } from '../services/loading/loading.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
-import { IUser } from '../../shared/models/entities.models';
+import { IUser } from '@shared/models/entities.models';
 import { AuthStore } from '../auth/auth.store';
 import { AnalyticsService } from '@core/services/analytics';
 

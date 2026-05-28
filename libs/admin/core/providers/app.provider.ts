@@ -5,7 +5,6 @@ import {
   provideEnvironmentInitializer,
   Provider
 } from '@angular/core';
-import { appConfig } from '../../app.config';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
 import { AuthStore } from '../auth/auth.store';
@@ -15,7 +14,7 @@ import { NavigationLoadingService } from '@shared/services/loading/navigation.se
 
 export const provideApp = (): EnvironmentProviders[] => {
   const providers: Provider | EnvironmentProviders = [
-    { provide: APP_CONFIG, useValue: appConfig || {} },
+    { provide: APP_CONFIG, useValue: {} },
     provideEnvironmentInitializer(() => inject(NavigationLoadingService)),
     provideAppInitializer(() => {
       const authStore = inject(AuthStore);

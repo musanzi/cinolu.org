@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { unauthGuard } from '../../core/guards/no-auth.guard';
+import { unauthGuard } from '@core/guards/no-auth.guard';
 import { SEO_PUBLIC } from '@core/services/seo';
 
 export const authRoutes: Routes = [

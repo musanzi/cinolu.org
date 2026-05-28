@@ -3,7 +3,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, tap, catchError, of, exhaustMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { computed, inject } from '@angular/core';
-import { ToastrService } from '../../shared/services/toast/toastr.service';
+import { ToastrService } from '@shared/services/toast/toastr.service';
 import { Router } from '@angular/router';
 import { IUser } from '@shared/models';
 import { extractApiErrorMessage } from '@shared/helpers';
@@ -19,13 +19,13 @@ export const AuthStore = signalStore(
   withProps(() => ({
     http: inject(HttpClient),
     toast: inject(ToastrService),
-    router: inject(Router)
+    router: inject(Router),
   })),
   withComputed(({ user }) => ({
     hasRights: computed(() => {
       const roles = user()?.roles as unknown as string[];
       return roles?.some((role) => role === 'admin' || role === 'staff');
-    })
+    }),
   })),
   withMethods(({ http, toast, router, ...store }) => ({
     getProfile: rxMethod<void>(
@@ -39,10 +39,10 @@ export const AuthStore = signalStore(
             catchError(() => {
               patchState(store, { user: null, isCheckingAuth: false });
               return of(null);
-            })
-          )
-        )
-      )
+            }),
+          ),
+        ),
+      ),
     ),
     signOut: rxMethod<void>(
       pipe(
@@ -56,16 +56,16 @@ export const AuthStore = signalStore(
             catchError((error) => {
               toast.showError(extractApiErrorMessage(error, 'Erreur lors de la déconnexion'));
               return of(null);
-            })
-          )
-        )
-      )
+            }),
+          ),
+        ),
+      ),
     ),
     setUser: (user: IUser | null) => {
       patchState(store, { user });
     },
     setCheckingAuth: (isCheckingAuth: boolean) => {
       patchState(store, { isCheckingAuth });
-    }
-  }))
+    },
+  })),
 );

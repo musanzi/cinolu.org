@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { IOpportunity } from '../../../shared/models';
+import { IOpportunity } from '@shared/models';
 
 interface OpportunityState {
   isLoading: boolean;

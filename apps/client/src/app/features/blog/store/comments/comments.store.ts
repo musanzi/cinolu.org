@@ -3,9 +3,9 @@ import { inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { catchError, of, pipe, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IComment } from '../../../../shared/models/entities.models';
+import { IComment } from '@shared/models/entities.models';
 import { FilterCommentsDto } from '../../dto/filter-comments.dto';
-import { buildQueryParams } from '../../../../shared/helpers';
+import { buildQueryParams } from '@shared/helpers';
 
 interface ICommentsStore {
   isLoading: boolean;

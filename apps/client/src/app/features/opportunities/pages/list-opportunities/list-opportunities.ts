@@ -8,8 +8,8 @@ import { OpportunitiesStore } from '../../store/opportunities.store';
 import { OpportunityCard } from '../../components/opportunity-card/opportunity-card';
 import { OpportunityCardSkeleton } from '../../components/opportunity-card-skeleton/opportunity-card-skeleton';
 import { FilterOpportunitiesDto } from '../../dto/filter-opportunities.dto';
-import { OpportunityLanguage } from '../../../../shared/models';
-import { ButtonComponent } from '../../../../shared/ui';
+import { OpportunityLanguage } from '@shared/models';
+import { ButtonComponent } from '@shared/ui';
 import { PublicContainer, PublicPageHero, PublicSection } from '@shared/public';
 
 @Component({

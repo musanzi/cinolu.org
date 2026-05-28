@@ -1,11 +1,10 @@
 import { AbstractControl } from '@angular/forms';
-import { ICategory } from '@shared/models';
 
 export function parseDate(dateString: string | undefined): Date {
   return dateString ? new Date(dateString) : new Date();
 }
 
-export function extractCategoryIds(categories?: ICategory[]): string[] {
+export function extractCategoryIds<T extends { id: string }>(categories?: T[]): string[] {
   return categories?.map((c) => c.id) ?? [];
 }
 

@@ -1,4 +1,4 @@
-import { OpportunityLanguage } from '../../../shared/models';
+import { OpportunityLanguage } from '@shared/models';
 
 export interface FilterOpportunitiesDto {
   from?: string | null;

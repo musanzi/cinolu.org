@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, of, pipe, tap, switchMap } from 'rxjs';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { IUser } from '../../../shared/models';
+import { IUser } from '@shared/models';
 import { FilterAmbassadorsDto } from '../dto/filter-ambassadors.dto';
-import { buildQueryParams } from '../../../shared/helpers';
+import { buildQueryParams } from '@shared/helpers';
 
 interface IAmbassadorsStore {
   isLoading: boolean;

@@ -12,9 +12,9 @@ import {
 } from 'lucide-angular';
 import { PublicProductStore } from '../../store/product.store';
 import { ProductDetailSkeleton } from '../product-detail-skeleton/product-detail-skeleton';
-import { ApiImgPipe, resolveApiImageUrl } from '../../../../shared/pipes';
+import { ApiImgPipe, resolveApiImageUrl } from '@shared/pipes';
 import { TranslateModule } from '@ngx-translate/core';
-import { IImage } from '../../../../shared/models';
+import { IImage } from '@shared/models';
 import { ImageLightboxComponent } from '@shared/components/image-lightbox/image-lightbox';
 import { ImageLightboxItem } from '@shared/components/image-lightbox/image-lightbox.model';
 import { SeoService } from '@core/services/seo';

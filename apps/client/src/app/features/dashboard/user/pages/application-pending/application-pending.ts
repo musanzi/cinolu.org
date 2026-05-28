@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, computed, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthStore } from '../../../../../core/auth/auth.store';
+import { AuthStore } from '@core/auth/auth.store';
 import { MentorApplicationState } from '@core/auth/mentor-application.state';
 import { MentorProfileStore } from '@features/dashboard/shared/store/mentor-profile.store';
 import { ToastrService } from '@core/services/toast/toastr.service';

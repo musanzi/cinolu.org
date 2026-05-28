@@ -5,9 +5,9 @@ import { LucideAngularModule, ArrowLeft, CalendarDays, ExternalLink, Globe2, Lin
 import { TranslateModule } from '@ngx-translate/core';
 import { QuillViewComponent } from 'ngx-quill';
 import { OpportunityStore } from '../../store/opportunity.store';
-import { ApiImgPipe } from '../../../../shared/pipes';
-import { ButtonComponent, BadgeComponent } from '../../../../shared/ui';
-import { AnalyticsService } from '../../../../core/services/analytics/analytics.service';
+import { ApiImgPipe } from '@shared/pipes';
+import { ButtonComponent, BadgeComponent } from '@shared/ui';
+import { AnalyticsService } from '@core/services/analytics/analytics.service';
 import { SeoService } from '@core/services/seo';
 import { PublicContainer, PublicSection } from '@shared/public';
 
@@ -29,7 +29,7 @@ import { PublicContainer, PublicSection } from '@shared/public';
     PublicContainer
   ],
   templateUrl: './detail-opportunity.html',
-  styleUrl: '../../../../shared/styles/quill-view.css',
+  styleUrl: '../../../../../../../../libs/client/shared/styles/quill-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailOpportunity {
