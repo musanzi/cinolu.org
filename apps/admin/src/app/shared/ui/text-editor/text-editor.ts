@@ -8,7 +8,7 @@ import {
   ElementRef,
   AfterViewInit,
   ChangeDetectionStrategy,
-  computed
+  computed,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
@@ -19,11 +19,18 @@ import { UI_TEXT_EDITOR_ICONS } from '@shared/data';
   imports: [LucideAngularModule],
   templateUrl: './text-editor.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => UiTextEditor), multi: true }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => UiTextEditor),
+      multi: true,
+    },
+  ],
 })
 export class UiTextEditor implements ControlValueAccessor, AfterViewInit {
   icons = UI_TEXT_EDITOR_ICONS;
-  @ViewChild('editor', { static: false }) editorElement!: ElementRef<HTMLDivElement>;
+  @ViewChild('editor', { static: false })
+  editorElement!: ElementRef<HTMLDivElement>;
 
   placeholder = input<string>('Start typing...');
   disabled = input<boolean>(false);
