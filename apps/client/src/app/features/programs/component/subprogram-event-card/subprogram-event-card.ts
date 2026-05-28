@@ -34,7 +34,7 @@ import { ButtonComponent, TagComponent } from '@shared/ui';
     RouterLink
   ],
   templateUrl: './subprogram-event-card.html',
-  styleUrl: '../../../../../../../../libs/client/shared/styles/quill-view.css',
+  styleUrl: '../../../../shared/styles/quill-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubprogramEventCard {

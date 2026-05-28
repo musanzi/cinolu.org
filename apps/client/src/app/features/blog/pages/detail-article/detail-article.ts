@@ -66,7 +66,7 @@ import { SeoService } from '@core/services/seo';
     ArticleDetailNotFoundComponent
   ],
   templateUrl: './detail-article.html',
-  styleUrl: '../../../../../../../../libs/client/shared/styles/quill-view.css',
+  styleUrl: '../../../../shared/styles/quill-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailArticle implements OnInit, OnDestroy {

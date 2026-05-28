@@ -12,11 +12,9 @@
     "emitDecoratorMetadata": false,
     "module": "preserve",
     "paths": {
-      "@core/*": ["../../libs/client/core/*"],
-      "@shared/helpers/form.helper": ["../../libs/shared/src/helpers/form.helper.ts"],
-      "@shared/helpers/http.helper": ["../../libs/shared/src/helpers/http.helper.ts"],
-      "@shared/helpers/list-query.helper": ["../../libs/shared/src/helpers/list-query.helper.ts"],
-      "@shared/*": ["../../libs/client/shared/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@helpers/*": ["./src/app/shared/helpers/*"],
+      "@shared/*": ["./src/app/shared/*"],
       "@features/*": ["./src/app/features/*"],
       "@environments/*": ["./src/environments/*"]
     }

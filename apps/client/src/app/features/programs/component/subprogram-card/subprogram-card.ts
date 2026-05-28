@@ -26,7 +26,7 @@ import { TagComponent } from '@shared/ui';
   selector: 'app-subprogram-card',
   imports: [LucideAngularModule, CommonModule, NgOptimizedImage, ApiImgPipe, TagComponent, QuillViewComponent],
   templateUrl: './subprogram-card.html',
-  styleUrl: '../../../../../../../../libs/client/shared/styles/quill-view.css',
+  styleUrl: '../../../../shared/styles/quill-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubprogramCard {

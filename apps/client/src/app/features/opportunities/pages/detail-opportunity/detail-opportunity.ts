@@ -29,7 +29,7 @@ import { PublicContainer, PublicSection } from '@shared/public';
     PublicContainer
   ],
   templateUrl: './detail-opportunity.html',
-  styleUrl: '../../../../../../../../libs/client/shared/styles/quill-view.css',
+  styleUrl: '../../../../shared/styles/quill-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailOpportunity {

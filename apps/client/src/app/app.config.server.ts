@@ -5,17 +5,25 @@ import { serverRoutes } from './app.routes.server';
 import { TranslateLoader, TranslateModule, TranslationObject } from '@ngx-translate/core';
 import { importProvidersFrom } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { existsSync, readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const serverBundleDir = dirname(fileURLToPath(import.meta.url));
+const browserAssetsDir = join(serverBundleDir, '../browser/assets/i18n');
+const sourceAssetsDir = join(process.cwd(), 'apps', 'client', 'src', 'assets', 'i18n');
 
 class ServerTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<TranslationObject> {
-    try {
-      const filePath = join(process.cwd(), 'src', 'assets', 'i18n', `${lang}.json`);
-      return of(JSON.parse(readFileSync(filePath, 'utf8')));
-    } catch {
-      return of({});
+    const candidates = [join(browserAssetsDir, `${lang}.json`), join(sourceAssetsDir, `${lang}.json`)];
+
+    for (const filePath of candidates) {
+      if (existsSync(filePath)) {
+        return of(JSON.parse(readFileSync(filePath, 'utf8')));
+      }
     }
+
+    return of({});
   }
 }
 
